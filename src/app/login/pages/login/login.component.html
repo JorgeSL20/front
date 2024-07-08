@@ -1,112 +1,98 @@
 <!DOCTYPE html>
-<div class="navbar">
-  <a routerLink="/Login">Iniciar Sesión</a>
-  <a routerLink="/Registro">Crear Cuenta</a>
-</div>
+<app-header></app-header>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Iniciar Sesión</title>
-    <link rel="stylesheet" href="login.component.css">
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Iniciar Sesión</title>
+  <link rel="stylesheet" href="login.component.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+</head>
 
-  <body>
-    <div class="contenedor">
-      
-      <div class="wrapper">
-      <div class="title">Inicio de Sesión</div>
-      <img [src]="logosinfondo" alt="Logo">
+<body>
+  <div class="container">
+    <div class="row justify-content-center mt-5">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            Inicio de Sesión
+          </div>
+          <div class="card-body">
+            <form (submit)="auth()" [formGroup]="myForm" style="display: flex; flex-direction: column;">
 
-        <form (submit)="auth()" [formGroup]="myForm" style="display: flex; flex-direction: column;">
-
-              <!-- CORREO ELECTRÓNICO -->
-              <div class="field">
-                <input type="email" formControlName="email"  id="campoEmail" required (focus)="moveLabelUp()" (blur)="moveLabelDown()" (keyup)="handleKeyUp()" >
-                <label>Correo Electrónico</label>
-                <div class="input-group-append">
-                  <span *ngIf="myForm.get('email')?.invalid && myForm.get('email')?.touched">
-                  </span>
+              <!-- Correo Electrónico -->
+              <div class="mb-3">
+                <label for="email" class="form-label">Correo Electrónico</label>
+                <input type="email" formControlName="email" id="campoEmail" class="form-control" required (focus)="moveLabelUp()" (blur)="moveLabelDown()" (keyup)="handleKeyUp()">
+                <div class="invalid-feedback" *ngIf="myForm.get('email')?.invalid && myForm.get('email')?.touched">
+                  El campo es obligatorio.
                 </div>
-              </div>
-          <!-- MENSAJES DE ERROR -->
-          <div class="error-message text-danger"
-            *ngIf="myForm.get('email')?.hasError('required') && myForm.get('email')?.touched">
-            <i class="fas fa-exclamation-circle"></i>El campo es obligatorio.
-          </div>
-          <div class="error-message text-danger"
-            *ngIf="myForm.get('email')?.hasError('pattern') && myForm.get('email')?.touched">
-            <i class="fas fa-exclamation-circle"></i>Por favor, ingrese un correo electrónico válido.
-          </div>
-
-          
-          <!-- CONTRASEÑA -->
-          <div class="field">
-            <input formControlName="contrasena" [type]="passwordVisible ? 'text' : 'password'" id="contrasena" required (focus)="moveLabelUp()" (blur)="moveLabelDown()">
-            <label for="contrasena">Contraseña</label>
-            <span class="toggle-password" (click)="togglePasswordVisibility()">
-              <i class="fas fa-eye" *ngIf="!passwordVisible"></i>
-              <i class="fas fa-eye-slash" *ngIf="passwordVisible"></i>
-            </span>
-          </div>
-          <!-- MENSAJES DE ERROR -->
-          <div class="error-message text-danger"
-            *ngIf="myForm.get('contrasena')?.hasError('required') && myForm.get('contrasena')?.touched">
-            <i class="fas fa-exclamation-circle"></i>El campo es obligatorio.
-          </div>
-          <div class="error-message text-danger"
-            *ngIf="myForm.get('contrasena')?.hasError('pattern') && myForm.get('contrasena')?.touched">
-            <i class="fas fa-exclamation-circle"></i>La contraseña debe contener al menos 8 caracteres, incluyendo
-            mayúsculas, minúsculas, números y 2 caracteres especiales.
-          </div>
-              
-
-<!-- CAPTCHA -->
-   <ngx-recaptcha2 (success)="activarBtnCapcha($event)" class="captcha" #captchaElem
-        [siteKey]="siteKey"></ngx-recaptcha2>
-     
-
-              <div class="content">
-                <div>
-                  <label for="">¿Olvidaste tu contraseña?</label>
-                </div>
-                
-                <div class="pass-link">
-                  <a href="#" routerLink="/Recuperar" routerLinkActive="active-link" (mouseenter)="aplicarInterlineado()">Recuperar</a>
+                <div class="invalid-feedback" *ngIf="myForm.get('email')?.hasError('pattern') && myForm.get('email')?.touched">
+                  Por favor, ingrese un correo electrónico válido.
                 </div>
               </div>
 
+              <!-- Mensajes de error -->
 
-              <!-- eventos del mouse -->
+              <!-- Contraseña -->
+              <div class="mb-3">
+                <label for="password" class="form-label">Contraseña</label>
+                <div class="input-group">
+                  <input formControlName="password" [type]="passwordVisible ? 'text' : 'password'" class="form-control" id="password" required (focus)="moveLabelUp()" (blur)="moveLabelDown()">
+                  <button class="btn btn-outline-secondary" type="button" id="button-addon2" (click)="togglePasswordVisibility()">
+                    <i class="fas" [ngClass]="{'fa-eye': !passwordVisible, 'fa-eye-slash': passwordVisible}"></i>
+                  </button>
+                </div>
+                <div class="invalid-feedback" *ngIf="myForm.get('password')?.hasError('required') && myForm.get('password')?.touched">
+                  El campo es obligatorio.
+                </div>
+                <div class="invalid-feedback" *ngIf="myForm.get('password')?.hasError('pattern') && myForm.get('password')?.touched">
+                  La contraseña debe contener al menos 8 caracteres, incluyendo mayúsculas, minúsculas, números y 2 caracteres especiales.
+                </div>
+              </div>
 
-              <div class="botonIniciar" 
-                [ngClass]="{'resaltado': resaltarInput}">
-                <input id="register" type="submit" [disabled]="myForm.invalid || validRecatcha" value="Iniciar sesión">
+              <!-- Mensajes de error -->
+
+              <!-- Captcha -->
+              <ngx-recaptcha2 (success)="activarBtnCapcha($event)" class="captcha" #captchaElem [siteKey]="siteKey"></ngx-recaptcha2>
+
+              <!-- Recuperar contraseña -->
+              <div class="mb-3">
+                <p class="form-text">¿Olvidaste tu contraseña? <a href="#" routerLink="/user/recuperar-password" routerLinkActive="active-link" (mouseenter)="aplicarInterlineado()">Recuperar</a></p>
+              </div>
+
+              <!-- Botón de Iniciar Sesión -->
+              <div class="mb-3">
+                <button type="submit" class="btn btn-primary" [disabled]="myForm.invalid || validRecatcha">Iniciar sesión</button>
               </div>
 
               
-            
-            <script>
-              function cambiarColor() {
-                  document.getElementById("register").style.backgroundColor = "yellow"; // Cambia el color de fondo a amarillo
-                  document.getElementById("register").style.color = "red"; // Cambia el color del texto a rojo
-              }
-          </script>
+              <!-- ¿No tienes una cuenta? -->
+              <p>¿No tienes una cuenta?</p>
+              <a [routerLink]="['/user/registro']" >Registrarse</a>
             
 
-              <p style="font-weight: bold;"> ¿No tienes una cuenta?</p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-                  <a  id="register" [routerLink]="['/Registro']" routerLinkActive="active-link" >
-                    Registrarse
-                    <i class="fa-solid fa-arrow-right"></i>
-                  </a>
+  <!-- Font Awesome -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+</body>
+</html>
+<script>
+  function cambiarColor() {
+    document.getElementById("register").style.backgroundColor = "yellow"; // Cambia el color de fondo a amarillo
+    document.getElementById("register").style.color = "red"; // Cambia el color del texto a rojo
+  }
+</script>
+<br>
+<app-footer></app-footer>

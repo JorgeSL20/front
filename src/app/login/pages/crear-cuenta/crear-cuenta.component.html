@@ -1,373 +1,203 @@
-<div class="navbar">
-  <a routerLink="/Login">Iniciar Sesión</a>
-  <a routerLink="/Registro">Crear Cuenta</a>
-</div>
-<br>
-
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-
-<!--FORMULARIO REGISTRO-->
-<div class="container">
-  <div class="form-container">
-
-      <div class="title">Registro</div>
-
-    <form [formGroup]="myForm" (submit)="getData()">
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <!-- NOMBRE -->
-          <label for="">Nombre:</label>
-          <div class="input-group">
-            <input formControlName="nombre" type="text" class="form-control" id="campo1">
-            <div class="input-group-append">
-              <span class="input-group-text custom-icon-bg"
-                *ngIf="myForm.get('nombre')?.valid && myForm.get('nombre')?.touched">
-                <i class="fas fa-check-circle text-success"></i>
-              </span>
-              <span *ngIf="myForm.get('nombre')?.invalid && myForm.get('nombre')?.touched">
-              </span>
-            </div>
+<!DOCTYPE html>
+<body>
+  <app-header></app-header>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            Registro
           </div>
-          <!-- MENSAJES DE ERROR -->
-          <div class="error-message text-danger" *ngIf="myForm.get('nombre')?.invalid && myForm.get('nombre')?.touched">
-            <i class="fas fa-exclamation-circle"></i> Nombre es un campo obligatorio.
-          </div>
-          <div class="error-message text-danger"
-            *ngIf="myForm.get('nombre')?.hasError('minlength') && myForm.get('nombre')?.touched">
-            <i class="fas fa-exclamation-circle"></i>Debe tener al menos 3 caracteres.
-          </div>
-          <div class="error-message text-danger"
-            *ngIf="myForm.get('nombre')?.hasError('pattern') && myForm.get('nombre')?.touched">
-            <i class="fas fa-exclamation-circle"></i>El nombre no debe contener números.
-          </div>
-        </div>
+          <div class="card-body">
+            <form [formGroup]="myForm" (submit)="getData()">
 
-        
-        <div class="form-group col-md-6">
-          <!-- APELLIDO PATERNO -->
-          <label for="">Apellido paterno:</label>
-          <div class="input-group">
-            <input formControlName="apellidop" type="text" class="form-control" id="campoApellidoPaterno">
-            <div class="input-group-append">
-              <span class="input-group-text custom-icon-bg"
-                  *ngIf="myForm.get('apellidop')?.valid && myForm.get('apellidop')?.touched">
-                  <i class="fas fa-check-circle text-success"></i>
-                </span>
-                <span *ngIf="myForm.get('apellidop')?.invalid && myForm.get('apellidop')?.touched">
-                </span>
+              <div class="row mb-3">
+                <!-- Nombre y Apellido Paterno -->
+                <div class="col-md-6">
+                  <label for="name" class="form-label">Nombre:</label>
+                  <input formControlName="name" type="text" class="form-control" id="campo1">
+                  <!-- Mensajes de error -->
+                  <div class="error-message text-danger" *ngIf="myForm.get('name')?.invalid && myForm.get('name')?.touched">
+                    <i class="fas fa-exclamation-circle"></i> Nombre es un campo obligatorio.
+                  </div>
+                  <div class="error-message text-danger"
+                    *ngIf="myForm.get('name')?.hasError('minlength') && myForm.get('name')?.touched">
+                    <i class="fas fa-exclamation-circle"></i>Debe tener al menos 3 caracteres.
+                  </div>
+                  <div class="error-message text-danger"
+                    *ngIf="myForm.get('name')?.hasError('pattern') && myForm.get('name')?.touched">
+                    <i class="fas fa-exclamation-circle"></i>El nombre no debe contener números.
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label for="lastNameP" class="form-label">Apellido paterno:</label>
+                  <input formControlName="lastNameP" type="text" class="form-control" id="campoApellidoPaterno">
+                  <!-- Mensajes de error -->
+                  <div class="error-message text-danger"
+                    *ngIf="myForm.get('lastNameP')?.hasError('required') && myForm.get('lastNameP')?.touched">
+                    <i class="fas fa-exclamation-circle"></i>El campo es obligatorio.
+                  </div>
+                  <div class="error-message text-danger"
+                    *ngIf="myForm.get('lastNameP')?.hasError('minlength') && myForm.get('lastNameP')?.touched">
+                    <i class="fas fa-exclamation-circle"></i>El apellido paterno debe tener al menos 3 caracteres.
+                  </div>
+                  <div class="error-message text-danger"
+                    *ngIf="myForm.get('lastNameP')?.hasError('pattern') && myForm.get('lastNameP')?.touched">
+                    <i class="fas fa-exclamation-circle"></i>El apellido no debe contener números.
+                  </div>
+                </div>
               </div>
-            </div>
-            <!-- MENSAJES DE ERROR -->
-            <div class="error-message text-danger"
-              *ngIf="myForm.get('apellidop')?.hasError('required') && myForm.get('apellidop')?.touched">
-              <i class="fas fa-exclamation-circle"></i>El campo es obligatorio.
-            </div>
-            <div class="error-message text-danger"
-              *ngIf="myForm.get('apellidop')?.hasError('minlength') && myForm.get('apellidop')?.touched">
-              <i class="fas fa-exclamation-circle"></i>El apellido paterno debe tener al menos 3 caracteres.
-            </div>
-            <div class="error-message text-danger"
-              *ngIf="myForm.get('apellidop')?.hasError('pattern') && myForm.get('apellidop')?.touched">
-              <i class="fas fa-exclamation-circle"></i>El apellido no debe contener números.
-            </div>
-          </div>
-          
-        </div>
-      
 
+              <div class="row mb-3">
+                <!-- Apellido Materno y Correo Electrónico -->
+                <div class="col-md-6">
+                  <label for="lastNameM" class="form-label">Apellido materno:</label>
+                  <input formControlName="lastNameM" type="text" class="form-control" id="campoApellidoMaterno">
+                  <!-- Mensajes de error -->
+                  <div class="error-message text-danger"
+                    *ngIf="myForm.get('lastNameM')?.hasError('required') && myForm.get('lastNameM')?.touched">
+                    <i class="fas fa-exclamation-circle"></i>El campo es obligatorio.
+                  </div>
+                  <div class="error-message text-danger"
+                    *ngIf="myForm.get('lastNameM')?.hasError('minlength') && myForm.get('lastNameM')?.touched">
+                    <i class="fas fa-exclamation-circle"></i>El apellido materno debe tener al menos 3 caracteres.
+                  </div>
+                  <div class="error-message text-danger"
+                    *ngIf="myForm.get('lastNameM')?.hasError('pattern') && myForm.get('lastNameM')?.touched">
+                    <i class="fas fa-exclamation-circle"></i>El apellido no debe contener números.
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label for="email" class="form-label">Correo electrónico:</label>
+                  <input (focus)='onFocusEvent()' formControlName="email" type="email" class="form-control" id="campoEmail">
+                  <!-- Mensajes de error -->
+                  <div class="error-message text-danger"
+                    *ngIf="myForm.get('email')?.hasError('required') && myForm.get('email')?.touched">
+                    <i class="fas fa-exclamation-circle"></i>El campo es obligatorio.
+                  </div>
+                  <div class="error-message text-danger"
+                    *ngIf="myForm.get('email')?.hasError('pattern') && myForm.get('email')?.touched">
+                    <i class="fas fa-exclamation-circle"></i>Por favor, ingrese un correo electrónico válido.
+                  </div>
+                </div>
+              </div>
 
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <!-- APELLIDO MATERNO -->
-          <label for="">Apellido materno</label>
-          <div class="input-group">
-            <input formControlName="apellidom" type="text" class="form-control" id="campoApellidoMaterno">
-            <div class="input-group-append">
-              <span class="input-group-text custom-icon-bg"
-                *ngIf="myForm.get('apellidom')?.valid && myForm.get('apellidom')?.touched">
-                <i class="fas fa-check-circle text-success"></i>
-              </span>
-              <span *ngIf="myForm.get('apellidom')?.invalid && myForm.get('apellidom')?.touched">
-              </span>
-            </div>
-          </div>
-          <!-- MENSAJES DE ERROR -->
-          <div class="error-message text-danger"
-            *ngIf="myForm.get('apellidom')?.hasError('required') && myForm.get('apellidom')?.touched">
-            <i class="fas fa-exclamation-circle"></i>El campo es obligatorio.
-          </div>
-          <div class="error-message text-danger"
-            *ngIf="myForm.get('apellidom')?.hasError('minlength') && myForm.get('apellidom')?.touched">
-            <i class="fas fa-exclamation-circle"></i>El apellido materno debe tener al menos 3 caracteres.
-          </div>
-          <div class="error-message text-danger"
-            *ngIf="myForm.get('apellidom')?.hasError('pattern') && myForm.get('apellidom')?.touched">
-            <i class="fas fa-exclamation-circle"></i>El apellido no debe contener números.
-          </div>
-          </div>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="password" class="form-label">Contraseña:</label>
+                  <div class="input-group">
+                    <input formControlName="password" [type]="passwordVisible1 ? 'text' : 'password'" class="form-control" id="password">
+                    <button class="btn btn-outline-secondary" type="button" (click)="togglePasswordVisibility(1)">
+                      <i class="fas" [ngClass]="{'fa-eye': !passwordVisible1, 'fa-eye-slash': passwordVisible1}"></i>
+                    </button>
+                  </div>
+                  <!-- Mensajes de error -->
+                  <div class="error-message text-danger"
+                    *ngIf="myForm.get('password')?.hasError('required') && myForm.get('password')?.touched">
+                    <i class="fas fa-exclamation-circle"></i>El campo es obligatorio.
+                  </div>
+                  <div class="error-message text-danger"
+                    *ngIf="myForm.get('password')?.hasError('pattern') && myForm.get('password')?.touched">
+                    <i class="fas fa-exclamation-circle"></i>La contraseña debe contener al menos 8 caracteres, incluyendo mayúsculas, minúsculas, números y 2 caracteres especiales.
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label for="password2" class="form-label">Repita contraseña:</label>
+                  <div class="input-group">
+                    <input formControlName="password2" [type]="passwordVisible2 ? 'text' : 'password'" class="form-control" id="contrasena2">
+                    <button class="btn btn-outline-secondary" type="button" (click)="togglePasswordVisibility(2)">
+                      <i class="fas" [ngClass]="{'fa-eye': !passwordVisible2, 'fa-eye-slash': passwordVisible2}"></i>
+                    </button>
+                  </div>
+                  <!-- Mensajes de error -->
+                  <div class="error-message text-danger"
+                    *ngIf="myForm.get('password2')?.hasError('required') && myForm.get('password2')?.touched">
+                    <i class="fas fa-exclamation-circle"></i>El campo es obligatorio.
+                  </div>
+                  <div class="error-message text-danger" *ngIf="myForm.hasError('notEqual') && myForm.get('password2')?.touched">
+                    <i class="fas fa-exclamation-circle"></i>Las contraseñas no coinciden.
+                  </div>
+                </div>
+              </div>
 
-        <div class="form-group col-md-6">
-          <!-- FECHA NACIMIENTO-->
-          <label for="">Fecha de nacimiento</label>
-          <div class="input-group">
-            <input formControlName="fecha" type="date" class="form-control" id="campoFechaNacimiento" required>
-            <div class="input-group-append">
-              <span class="input-group-text custom-icon-bg"
-                *ngIf="myForm.get('fecha')?.valid && myForm.get('fecha')?.touched">
-                <i class="fas fa-check-circle text-success"></i>
-              </span>
-              <span *ngIf="myForm.get('fecha')?.invalid && myForm.get('fecha')?.touched">
-              </span>
-            </div>
-          </div>
-          <!-- MENSAJES DE ERROR -->
-          <div class="error-message text-danger"
-            *ngIf="myForm.get('fecha')?.hasError('required') && myForm.get('fecha')?.touched">
-            <i class="fas fa-exclamation-circle"></i> El campo es obligatorio.
-          </div>
-          <div class="error-message text-danger"
-            *ngIf="myForm.get('fecha')?.hasError('futureDate') && myForm.get('fecha')?.touched">
-            <i class="fas fa-exclamation-circle"></i> La fecha no puede ser del futuro.
-          </div>
-          <div class="error-message text-danger"
-            *ngIf="myForm.get('fecha')?.hasError('underage') && myForm.get('fecha')?.touched">
-            <i class="fas fa-exclamation-circle"></i> La persona debe ser mayor de 18 años.
-          </div>
-        </div>
-      </div>
-
-
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <!-- Sexo -->
-          <label for="">Sexo:</label>
-          <div class="input-group">
-            <select formControlName="sexo" class="form-control" id="campoSexo" (change)="mostrarSeleccion($event)">
-              <option value="" disabled selected>Selecciona</option>
-              <option value="Hombre">Hombre</option>
-              <option value="Mujer">Mujer</option>
-            </select>
-            <div class="input-group-append">
-              <span *ngIf="myForm.get('sexo')?.invalid && myForm.get('sexo')?.touched">
-              </span>
-            </div>
-          </div>
-          <!-- Mensajes de error -->
-          <div class="error-message text-danger"
-            *ngIf="myForm.get('sexo')?.hasError('required') && myForm.get('sexo')?.touched">
-            <i class="fas fa-exclamation-circle"></i> El campo es obligatorio.
-          </div>
-
-        </div>
-
-        <div class="form-group col-md-6">
-          <!-- TELÉFONO-->
-          <label for="telefono">Telefono:</label>
-          <div class="input-group">
-            <input formControlName="telefono" type="number" class="form-control" id="campotelefono">
-            <div class="input-group-append">
-              <span class="input-group-text custom-icon-bg"
-                *ngIf="myForm.get('telefono')?.valid && myForm.get('telefono')?.touched">
-                <i class="fas fa-check-circle text-success"></i>
-              </span>
-              <span *ngIf="myForm.get('telefono')?.invalid && myForm.get('telefono')?.touched">
-              </span>
-            </div>
-          </div>
-
-
-          <!-- MENSAJES DE ERROR -->
-          <div class="error-message text-danger"
-            *ngIf="myForm.get('telefono')?.hasError('required') && myForm.get('telefono')?.touched">
-            <i class="fas fa-exclamation-circle"></i>El campo es obligatorio.
-          </div>
-          <div class="error-message text-danger"
-            *ngIf="myForm.get('telefono')?.hasError('pattern') && myForm.get('telefono')?.touched">
-            <i class="fas fa-exclamation-circle"></i>Por favor, ingrese un número de teléfono válido (10 dígitos).
-          </div>
-        </div>
-      </div>
-
-
-
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <!-- CORREO ELECTRÓNICO -->
-          <label for="">Correo electrónico</label>
-          <div class="input-group">
-            <input (focus) = 'onFocusEvent()' formControlName="email" type="email" class="form-control" id="campoEmail">
-            <div class="input-group-append">
-              <span class="input-group-text custom-icon-bg"
-                *ngIf="myForm.get('email')?.valid && myForm.get('email')?.touched">
-                <i class="fas fa-check-circle text-success"></i>
-              </span>
-              <span *ngIf="myForm.get('email')?.invalid && myForm.get('email')?.touched">
-              </span>
-            </div>
-          </div>
-          <!-- MENSAJES DE ERROR -->
-          <div class="error-message text-danger"
-            *ngIf="myForm.get('email')?.hasError('required') && myForm.get('email')?.touched">
-            <i class="fas fa-exclamation-circle"></i>El campo es obligatorio.
-          </div>
-          <div class="error-message text-danger"
-            *ngIf="myForm.get('email')?.hasError('pattern') && myForm.get('email')?.touched">
-            <i class="fas fa-exclamation-circle"></i>Por favor, ingrese un correo electrónico válido.
-          </div>
-        </div>
-
-        <div class="form-group col-md-6">
-
-
-          <!-- NOMBRE DE USUARIO-->
-          <label for="">Nombre de usuario</label>
-          <div class="input-group">
-            <input formControlName="nombreu" type="text" class="form-control" id="campoNombreUsuario">
-            <div class="input-group-append">
-              <span class="input-group-text custom-icon-bg"
-                *ngIf="myForm.get('nombreu')?.valid && myForm.get('nombreu')?.touched">
-                <i class="fas fa-check-circle text-success"></i>
-              </span>
-              <span *ngIf="myForm.get('nombreu')?.invalid && myForm.get('nombreu')?.touched">
-              </span>
-            </div>
-          </div>
-          <!-- MENSAJES DE ERROR -->
-          <div class="error-message text-danger"
-            *ngIf="myForm.get('nombreu')?.hasError('required') && myForm.get('nombreu')?.touched">
-            <i class="fas fa-exclamation-circle"></i>El campo es obligatorio.
-          </div>
-          <div class="error-message text-danger"
-            *ngIf="myForm.get('nombreu')?.hasError('minlength') && myForm.get('nombreu')?.touched">
-            <i class="fas fa-exclamation-circle"></i>El nombre de usuario debe tener al menos 5 caracteres.
-          </div>
-
-
-          
-        </div>
-      </div>
-
-
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <!-- PREGUNTA -->
-          <label for="">Pregunta:</label>
-          <div class="input-group">
-            <select formControlName="pregunta" class="form-control" id="campoPregunta" (change)="mostrarSeleccion($event)">
-              <option value="" disabled selected>Selecciona</option>
-              <option value="¿Nombre de tu perro?">¿Nombre de tu perro?</option>
-              <option value="¿Nombre de tu gato?">¿Nombre de tu gato?</option>
-              <option value="¿Videojuego favorito?">¿Videojuego favorito?</option>
-              <option value="¿Comida favorita?">¿Comida favorita?</option>
-            </select>
-            <div class="input-group-append">
-              <span *ngIf="myForm.get('pregunta')?.invalid && myForm.get('pregunta')?.touched">
-              </span>
-            </div>
-          </div>
-          <!-- Mensajes de error -->
-          <div class="error-message text-danger"
-            *ngIf="myForm.get('pregunta')?.hasError('required') && myForm.get('pregunta')?.touched">
-            <i class="fas fa-exclamation-circle"></i> El campo es obligatorio.
-          </div>
-      
-        </div>
-      
-        <div class="form-group col-md-6">
-          <!-- RESPUESTA-->
-          <label for="respuesta">Respuesta:</label>
-          <div class="input-group">
-            <input formControlName="respuesta" type="text" class="form-control" id="campoRyyespuesta">
-            <div class="input-group-append">
-              <span class="input-group-text custom-icon-bg"
-                *ngIf="myForm.get('respuesta')?.valid && myForm.get('respuesta')?.touched">
-                <i class="fas fa-check-circle text-success"></i>
-              </span>
-              <span *ngIf="myForm.get('respuesta')?.invalid && myForm.get('respuesta')?.touched">
-              </span>
-            </div>
-          </div>
-      
-      
-          <!-- MENSAJES DE ERROR -->
-          <div class="error-message text-danger"
-            *ngIf="myForm.get('respuesta')?.hasError('required') && myForm.get('respuesta')?.touched">
-            <i class="fas fa-exclamation-circle"></i>El campo es obligatorio.
-          </div>
-          <div class="error-message text-danger"
+              <div class="row mb-3">
+                <!-- Pregunta y Respuesta -->
+                <div class="col-md-6">
+                  <label for="pregunta" class="form-label">Pregunta:</label>
+                  <select formControlName="pregunta" class="form-select" id="campoPregunta" (change)="mostrarSeleccion($event)">
+                    <option value="" disabled selected>Selecciona</option>
+                    <option value="¿Como se llama tu perro?">¿Como se llama tu perro?</option>
+                    <option value="¿Comida favorita?">¿Comida favorita?</option>
+                    <option value="¿Lugar Favorito?">¿Lugar Favorito?</option>
+                    <option value="¿Cuál es tu deporte favorito?">¿Cuál es tu deporte favorito?</option>
+                    <option value="¿Cuál es tu libro favorito?">¿Cuál es tu libro favorito?</option>
+                    <option value="¿Cuál es tu color favorito?">¿Cuál es tu color favorito?</option>
+                    <option value="¿Como se llama tu gato?">¿Como se llama tu gato?</option>
+                  </select>
+                  <!-- Mensajes de error -->
+                  <div class="error-message text-danger"
+                    *ngIf="myForm.get('pregunta')?.hasError('required') && myForm.get('pregunta')?.touched">
+                    <i class="fas fa-exclamation-circle"></i> El campo es obligatorio.
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label for="respuesta" class="form-label">Respuesta:</label>
+                  <input formControlName="respuesta" type="text" class="form-control" id="campoRyyespuesta">
+                  <!-- Mensajes de error -->
+                  <div class="error-message text-danger"
+                    *ngIf="myForm.get('respuesta')?.hasError('required') && myForm.get('respuesta')?.touched">
+                    <i class="fas fa-exclamation-circle"></i>El campo es obligatorio.
+                  </div>
+                  <div class="error-message text-danger"
                     *ngIf="myForm.get('respuesta')?.hasError('pattern') && myForm.get('respuesta')?.touched">
                     <i class="fas fa-exclamation-circle"></i>La respuesta no debe contener números.
                   </div>
-        </div>
-      </div>
-      
-
-
-
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <!-- CONTRASEÑA -->
-          <div class="form-group">
-            <label for="contrasena">Contraseña:</label>
-            <div class="input-group">
-              <input formControlName="contrasena" [type]="passwordVisible1 ? 'text' : 'password'" class="form-control"
-            id="contrasena">
-        <div class="input-group-append">
-            <span class="input-group-text" (click)="togglePasswordVisibility(1)">
-                <i class="fas" [ngClass]="{'fa-eye': !passwordVisible1, 'fa-eye-slash': passwordVisible1}"></i>
-                </span>
+                </div>
               </div>
-            </div>
-          </div>
-          <!-- MENSAJES DE ERROR -->
-          <div class="error-message text-danger"
-            *ngIf="myForm.get('contrasena')?.hasError('required') && myForm.get('contrasena')?.touched">
-            <i class="fas fa-exclamation-circle"></i>El campo es obligatorio.
-          </div>
-          <div class="error-message text-danger"
-            *ngIf="myForm.get('contrasena')?.hasError('pattern') && myForm.get('contrasena')?.touched">
-            <i class="fas fa-exclamation-circle"></i>La contraseña debe contener al menos 8 caracteres, incluyendo
-            mayúsculas, minúsculas, números y 2 caracteres especiales.
+
+              <!-- Checkbox de términos y condiciones -->
+              <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" id="checkboxTerminos" required>
+                <label class="form-check-label" for="checkboxTerminos">
+                  Acepto los términos y condiciones
+                </label>
+                <div class="invalid-feedback">
+                  Debes aceptar los términos y condiciones.
+                </div>
+              </div>
+            
+
+              <!-- CAPTCHA -->
+              <ngx-recaptcha2 (success)="activarBtnCapcha($event)" class="captcha" #captchaElem [siteKey]="siteKey"></ngx-recaptcha2>
+
+              <!-- Mensaje de "¿Ya tienes una cuenta?" -->
+              <p class="text-center mb-3">¿Ya tienes una cuenta? <a  routerLink="/user/login">Iniciar sesión</a></p>
+
+              <!-- Botón de enviar -->
+              <button [disabled]="activarBtnCrear()" type="submit" class="btn btn-primary">Crear cuenta</button>
+
+            </form>
           </div>
         </div>
-
-        <div class="form-group col-md-6">
-          <!-- REPITA CONTRASEÑA -->
-          <label for="contrasena2">Repita contraseña:</label>
-<div class="input-group">
-  <input formControlName="contrasena2" [type]="passwordVisible2 ? 'text' : 'password'" class="form-control" id="contrasena2">
-  <div class="input-group-append">
-    <span class="input-group-text" (click)="togglePasswordVisibility(2)">
-      <i class="fas" [ngClass]="{'fa-eye-slash': passwordVisible2, 'fa-eye': !passwordVisible2}"></i>
-    </span>
-  </div>
-</div>
-          <!-- MENSAJES DE ERROR -->
-          <div class="error-message text-danger"
-            *ngIf="myForm.get('contrasena2')?.hasError('required') && myForm.get('contrasena2')?.touched">
-            <i class="fas fa-exclamation-circle"></i>El campo es obligatorio.
-          </div>
-          <div class="error-message text-danger"
-            *ngIf="myForm.hasError('notEqual') && myForm.get('contrasena2')?.touched">
-            <i class="fas fa-exclamation-circle"></i>Las contraseñas no coinciden.
-          </div>
-        </div>
-
       </div>
+    </div>
+  </div>
 
-      <label class="checkboxE">Acepto los términos y condiciones
-        <input type="checkbox">
-        <span class="checkmark"></span>
-      </label>
-
-      <!-- CAPTCHA -->
-      <ngx-recaptcha2 (success)="activarBtnCapcha($event)" class="captcha" #captchaElem
-        [siteKey]="siteKey"></ngx-recaptcha2>
-      <p class="text-center mb-3">¿Ya tienes una cuenta? 
-        <a href="#" routerLink="/Login">Iniciar sesión</a></p>
-
-      <button [disabled]="activarBtnCrear()" type="submit">Crear cuenta</button>
-      
-
-    </form>
+  <!-- Bootstrap Bundle JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Font Awesome -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+</body>
+</html>
+<br>
+<br>
+<app-footer></app-footer>

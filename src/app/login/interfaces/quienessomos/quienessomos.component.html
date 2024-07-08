@@ -1,137 +1,123 @@
 <!DOCTYPE html>
-<html>
-  
+<html lang="en">
+  <app-header></app-header>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dental Crown</title>
-  <link rel="stylesheet" href="quienessomos.component.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <title>About Us - Gayeway Soluciones En T.I.</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.box {
+  width: 50%;
+  height: 100px;
+  border: 1px solid black;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: border-color 0.3s ease; /* Transición para el color del borde */
+}
+
+.box:hover {
+  border-color: #3498db; /* Cambia el color del borde al pasar el ratón */
+}
+
+.box1 {
+  background-color: #e0e0e0;
+}
+
+.box2 {
+  background-color: #f0f0f0;
+}
+
+label {
+  font-size: 18px;
+  text-align: center;
+}
+
+/* Nuevo estilo para la información adicional */
+.additional-info {
+  background-color: #fff;
+  padding: 10px;
+  border: 1px solid #ccc;
+  display: none;
+  position: absolute;
+  width: 350px;
+  text-align: center;
+  z-index: 1;
+  margin-left: -175px;
+  left: 50%;
+  bottom: 100%;
+  opacity: 0;
+  transition: opacity 0.3s ease; /* Transición para la opacidad */
+}
+
+.box:hover .additional-info {
+  display: block;
+  opacity: 1;
+}
+  </style>
 </head>
-
-
 <body>
+  <div class="container-fluid mt-5">
+    <h2 class="text-center">Sobre Gayeway Soluciones En T.I.</h2>
 
-  
-  
- <app-header></app-header>
+    <div class="row justify-content-between mt-4">
 
-
-<div style="text-align: center; margin-top: 50px;">
-    <h2>Sobre Dental Crown</h2>
-  
-    <div style="display: flex; justify-content: space-between; margin: 0 50px;">
-  
-      <div style="width: 30%;">
-        <img src="assets/images/somos.jpg" alt="logo" style="width: 100%;">
+      <div class="col-md-6">
+        <img src="../assets/logo3.jpg" alt="logo" class="img-fluid">
       </div>
-  
-      <div style="width: 55%; text-align: left;">
-        <p>
-          En nuestros 6 años de trayectoria, hemos visto más de 20,000 de pacientes. No te preocupes, tu boca está en buenas manos.
-          En Den  tal Crown, utilizamos el más alto nivel de tecnologías y profesionales médicos. Nos preocupamos no solo por tu salud dental, sino también por tu salud en general.
-        </p>
-        <p>
-          Una buena sonrisa aumenta tu autoestima, te da confianza y felicidad.
-        </p>
-        <p>
-          Nuestros profesionales médicos reconocen la frustración que significa ir al dentista. Saben que el servicio dental, en general, no funciona como debería y quieren mejorarlo.
-        </p>
-        <p>
-          En DentalCrown, decidimos rehacer toda la experiencia dental, nunca juzgando y recomendando solo los tratamientos que necesitas. Lo que queremos es verte sonreír.
-        </p>
-      </div>
-  
-    </div>
-  <br>
 
-
- 
-  
-  <body>
-    <div class="container">
-    <div class="card-container">
-      <div class="card" (click)="toggleMission()">
-          <div class="front-content">
-              <p>Misión</p>
+      <div class="col-md-6">
+        <strong>Acerca de Nosotros: Gateway Soluciones En T.I.</strong>
+        <p>
+          Bienvenido a Gateway Soluciones En T.I., tu socio confiable en el emocionante mundo de la tecnología. Nos enorgullece ser una empresa líder dedicada a proporcionar soluciones en Tecnologías de la Información (T.I.). Nuestra misión es facilitar el acceso a productos electrónicos de alta calidad y servicios tecnológicos innovadores para satisfacer las necesidades de nuestros clientes.
+        </p>
+        <p>
+          En Gateway Soluciones En T.I., no solo vendemos productos; construimos comunidades. Únete a nuestra comunidad tecnológica, donde compartimos noticias, consejos, y experiencias. Estamos emocionados de ser tu socio en el emocionante viaje tecnológico.
+          Gracias por elegir Gateway Soluciones En T.I. ¡Esperamos ser parte de tu experiencia tecnológica!
+        </p>
+          <div class="container">
+            <!-- Cajas como antes -->
+            <div class="box box1">
+                <label for="label1">Nuestro Compromiso</label>
+                <!-- Información adicional -->
+                <div class="additional-info">
+                  >Calidad y Variedad: Nos esforzamos por ofrecer productos electrónicos de la más alta calidad. Desde dispositivos móviles y computadoras hasta accesorios y componentes, nuestro catálogo está cuidadosamente seleccionado para brindarte la mejor experiencia tecnológica.
+                  <br>
+                  >Atención Personalizada: En Gateway Soluciones En T.I., valoramos a cada cliente. Nuestro equipo dedicado está aquí para proporcionar asesoramiento personalizado, responder a tus preguntas y asegurarse de que encuentres exactamente lo que necesitas.
+                </div>
+            </div>
           </div>
-          <div class="content" [hidden]="!showMission">
-            <p class="letras">
-                Somos una clínica odontológica que se dedica a mejorar la calidad de vida de nuestros pacientes,
-                proporcionando diagnósticos y tratamientos óptimos. 
-                Además, promovemos activamente la cultura de la salud bucodental, enfocándonos en la prevención 
-                y educación para fomentar un mayor cuidado oral en la sociedad.
-            </p>
-        </div>
+            <div class="container">
+            <div class="box box2">
+                <label for="label2">¿Por Qué Elegirnos?</label>
+                <!-- Información adicional -->
+                <div class="additional-info">
+                  >Experiencia Confiable: Con años de experiencia en el sector, somos un nombre confiable en el mercado de productos electrónicos.
+                  <br>>Transparencia y Honestidad: Valoramos la transparencia en todas nuestras transacciones.
+                  <br>>Entrega Rápida: Entendemos la importancia de recibir tus productos a tiempo. Garantizamos procesos de envío eficientes para que disfrutes de tus compras rápidamente.
+                  Únete a Nuestra Comunidad Tecnológica
+                </div>
+            </div>
+          </div>
+          
+      
       </div>
+
+    </div>
   </div>
-</div>
-
-<div class="container">
-  <div class="card-container">
-    <div class="card" (click)="toggleMission()">
-        <div class="front-content">
-            <p>Visión</p>
-        </div>
-        <div class="content" [hidden]="!showMission">
-          <p class="letras">
-            Trascender como líderes en el ámbito odontológico, siendo reconocidos por nuestra 
-            dedicación a la excelencia y la satisfacción del paciente. Visualizamos 
-            un futuro en el que Dental Crown sea sinónimo de confianza y calidad en servicios dentales.
-          </p>
-      </div>
-    </div>
-</div>
-</div>
-
-
-
- <!-- Video añadir controls-->
- <video id="video" src="assets/images/video.mp4" onclick="togglePlayPause()"></video>
-
- <!-- Botones de reproducción y pausa -->
- <div>
-   <button (click)="play()" style="font-size: 40px; border: none; background: none;">▶️</button>
-   <button (click)="pause()" style="font-size: 40px; border: none; background: none;">⏸️</button>
- </div>
- 
-
-
-
-    
-    
-    
-  
- 
-  
-    <h2>Equipo Médico</h2>
-  
-    <div style="display: flex; justify-content: space-around; margin: 20px 50px;">
-      <div class="doctor-info">
-        <div class="circle">
-          <img src="assets/images/imagesDoctores/doctora1.jpg" alt="Doctor 1" class="doctor-image" (touchstart)="handleTouchStart()" [style.width.px]="imageSize" [style.height.px]="imageSize">
-        </div>
-        <h3>Dr. Nombre 1</h3>
-        <p>Descripción breve del Dr. Nombre 1.</p>
-      </div>
-  
-      <div class="doctor-info">
-        <div class="circle">
-          <img src="assets/images/imagesDoctores/doctor2.jpg" alt="Doctor 2" class="doctor-image">
-        </div>
-        <h3>Dr. Nombre 2</h3>
-        <p>Descripción breve del Dr. Nombre 2.</p>
-      </div>
-  
-      <div class="doctor-info">
-        <div class="circle">
-          <img src="assets/images/imagesDoctores/doctora3.jpg" alt="Doctor 3" class="doctor-image">
-        </div>
-        <h3>Dr. Nombre 3</h3>
-        <p>Descripción breve del Dr. Nombre 3.</p>
-      </div>
-    </div>
-  
-  
   
 </body>
+<br>
+<br>
+<app-footer></app-footer>
+</html>

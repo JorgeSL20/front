@@ -1,38 +1,52 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import * as AOS from 'aos';
 
 @Component({
   selector: 'app-inicio',
   templateUrl: './inicio.component.html',
-  styleUrl: './inicio.component.css'
+  styleUrls: ['./inicio.component.css']
 })
 export class InicioComponent {
+  @ViewChild('reproductorVideo') reproductorVideo: any;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private el: ElementRef) {}
+
   ngOnInit(): void {
-    AOS.init()
-    window.addEventListener('load', AOS.refresh)
-    
-
-  }
-  navegar() {
-    this.router.navigate(['/login'])
+    // Inicializar el componente, si es necesario
   }
 
-  logosinfondo: string = "assets/images/logosinfondo.png"
-  logoblanco: string = "assets/images/logoblanco.png"
-  logo: string = "assets/images/logo.png";
+  @HostListener('window:scroll', ['$event'])
+  onScroll(event: Event): void {
+    // Lógica que quieres ejecutar cuando ocurre el evento de desplazamiento
 
-  servicio1: string = "assets/images/servicio1.jpg";
-  servicio2: string = "assets/images/servicio2.jpg";
-  servicio3: string = "assets/images/servicio3.jpg";
-  servicio4: string = "assets/images/servicio4.jpg";
-  servicio5: string = "assets/images/servicio5.jpg";
-  servicio6: string = "assets/images/servicio6.jpg";
-  brackets: string = "assets/images/brackets.jpg";
-  implante: string = "assets/images/implante.jpg";
-  valoracion: string = "assets/images/valoracion.jpg";
-  extraccion: string = "assets/images/extraccion.jpg";
-  limpieza: string = "assets/images/limpieza.jpg";
+    // Por ejemplo, puedes verificar si un elemento está en la vista y realizar alguna acción
+    const cards = this.el.nativeElement.querySelectorAll('.card');
+    cards.forEach((card: HTMLElement) => {
+      const rect = card.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom >= 0) {
+        // La tarjeta está en la vista, puedes realizar alguna acción aquí
+        // Por ejemplo, añadir una clase, cargar datos adicionales, etc.
+        card.classList.add('visible');
+      } else {
+        // La tarjeta no está en la vista, puedes revertir la acción si es necesario
+        card.classList.remove('visible');
+      }
+    });
+  }
+  reproducirVideo(): void {
+    if (this.reproductorVideo) {
+      this.reproductorVideo.nativeElement.play()
+        .catch((error: any) => console.error('Error al reproducir el video:', error));
+    }
+  }
+  
+  pausarVideo(): void {
+    if (this.reproductorVideo) {
+      this.reproductorVideo.nativeElement.pause();
+    }
+  }
+
+  navegar(): void {
+    this.router.navigate(['/']);
+  }
 }

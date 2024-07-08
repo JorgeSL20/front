@@ -1,4 +1,4 @@
-* {
+/** {
     margin: 0;
     padding: 0;
     font-family: 'Poppins', sans-serif;
@@ -10,35 +10,19 @@
 }
 
 
-/*IMAGEN*/
+IMAGEN
 .home {
     display: flex;
     align-items: center;
     min-height: 100vh;
     min-width: 100vh;
-    position: relative; /* Añadimos posición relativa para poder posicionar el div con la imagen */
-    overflow: hidden; /* Para ocultar partes de la imagen que se salgan del contenedor */
-}
-
-.home::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    background: url('/assets/images/dentist2.jpg') no-repeat;
     background-size: cover;
     background-position: center;
-    animation: cambiarImagen 10s infinite; /* Animación para cambiar la imagen cada 10 segundos */
+
 }
 
-@keyframes cambiarImagen {
-    0% { background-image: url('/assets/images/dentist2.jpg'); } /* Primera imagen */
-    33% { background-image: url('/assets/images/dentist3.jpg'); } /* Segunda imagen */
-    66% { background-image: url('/assets/images/dentist4.jpg'); } /* Tercera imagen */
-    100% { background-image: url('/assets/images/dentist2.jpg'); } /* Volver a la primera imagen */
-}
-/* media queries */
+
 @media (max-width:991x) {
 
     html {
@@ -96,7 +80,7 @@
     }
 }
 
-/* media queries */
+
 @media (max-width:450x) {
 
     html {
@@ -105,11 +89,6 @@
 }
 
 
-
-/* SERVICIOS */
-
-
-/*Cards*/
 .container-card {
     width: 100%;
     display: flex;
@@ -195,10 +174,6 @@
     }
 }
 
-/*Fin-Cards*/
-
-
-
 
 
 .btn {
@@ -237,3 +212,4 @@
 .btn:hover::before {
     width: 160%;
 }
+*/

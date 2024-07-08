@@ -1,129 +1,109 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <app-header></app-header>
+<app-header></app-header>
+<h1>AGENDAR CITA</h1>
+<form [formGroup]="myForm" (submit)="addCita()">
+  <!-- FECHA -->
 
-<br>
-
-<div class="calendar-container">
-<div class="calendar">
-  <div class="date">
-      <h3>MARZO 2024</h3>
-      <div class="days">
-          <div class="day">D</div>
-          <div class="day">L</div>
-          <div class="day">M</div>
-          <div class="day">M</div>
-          <div class="day">J</div>
-          <div class="day">V</div>
-          <div class="day">S</div>
-          <div class="number"></div>
-          <div class="number"></div>
-          <div class="number"></div>
-          <div class="number"></div>
-          <div class="number"></div>
-          <div class="number desactivado">1</div>
-          <div class="number desactivado">2</div>
-          <div class="number">3</div>
-          <div class="number desactivado">4</div>
-          <div class="number desactivado">5</div>
-          <div class="number desactivado">6</div>
-          <div class="number desactivado">7</div>
-          <div class="number desactivado">8</div>
-          <div class="number desactivado">9</div>
-          <div class="number">10</div>
-          <div class="number desactivado">11</div>
-          <div class="number desactivado">12</div>
-          <div class="number active">13</div>
-          <div class="number">14</div>
-          <div class="number">15</div>
-          <div class="number">16</div>
-          <div class="number">17</div>
-          <div class="number">18</div>
-          <div class="number">19</div>
-          <div class="number">20</div>
-          <div class="number">21</div>
-          <div class="number">22</div>
-          <div class="number">23</div>
-          <div class="number">24</div>
-          <div class="number">25</div>
-          <div class="number">26</div>
-          <div class="number">27</div>
-          <div class="number">28</div>
-          <div class="number">29</div>
-          <div class="number">30</div>
-          <div class="number">31</div>
+  <div class="form-group col-md-6">
+    <label for="">Fecha</label>
+    <div class="input-group">
+      <input formControlName="fecha" type="date" class="form-control" id="campoFecha" required>
+      <div class="input-group-append">
+        <span class="input-group-text custom-icon-bg"
+          *ngIf="myForm.get('fecha')?.valid && myForm.get('fecha')?.touched">
+          <i class="fas fa-check-circle text-success"></i>
+        </span>
+        <span *ngIf="myForm.get('fecha')?.invalid && myForm.get('fecha')?.touched">
+        </span>
       </div>
+    </div>
+    <!-- MENSAJES DE ERROR -->
+    <div class="error-message text-danger"
+      *ngIf="myForm.get('fecha')?.hasError('required') && myForm.get('fecha')?.touched">
+      <i class="fas fa-exclamation-circle"></i> El campo es obligatorio.
+    </div>
+    <div class="error-message text-danger"
+      *ngIf="myForm.get('fecha')?.hasError('futureDate') && myForm.get('fecha')?.touched">
+      <i class="fas fa-exclamation-circle"></i> La fecha no puede ser pasada.
+    </div>
   </div>
+
+  <!-- HORA-->
+  <div class="form-group col-md-6">
+    <label for="">Seleccioen la Hora:</label>
+    <div class="input-group">
+      <select formControlName="hora" class="form-control" id="campoHora" (change)="mostrarSeleccion($event)">
+        <option value="" disabled selected>Selecciona</option>
+        <option value="Hora 1">9:00 AM</option>
+        <option value="Hora 2">9:30 AM</option>
+        <option value="Hora 3">10:00 AM</option>
+        <option value="Hora 4">10:30 AM</option>
+      </select>
+      <div class="input-group-append">
+        <span *ngIf="myForm.get('hora')?.invalid && myForm.get('hora')?.touched">
+        </span>
+      </div>
+    </div>
+    <!-- Mensajes de error -->
+    <div class="error-message text-danger"
+      *ngIf="myForm.get('hora')?.hasError('required') && myForm.get('hora')?.touched">
+      <i class="fas fa-exclamation-circle"></i> El campo es obligatorio.
+    </div>
+
+  </div>
+
+  <!-- MOTIVO -->
+  <div class="form-group col-md-6">
+    <label for="">Motivo:</label>
+    <div class="input-group">
+      <input formControlName="motivo" type="text" class="form-control" id="campoMotivo">
+      <div class="input-group-append">
+        <span class="input-group-text custom-icon-bg"
+          *ngIf="myForm.get('motivo')?.valid && myForm.get('motivo')?.touched">
+          <i class="fas fa-check-circle text-success"></i>
+        </span>
+        <span *ngIf="myForm.get('motivo')?.invalid && myForm.get('motivo')?.touched">
+        </span>
+      </div>
+    </div>
+    <!-- MENSAJES DE ERROR -->
+    <div class="error-message text-danger" *ngIf="myForm.get('motivo')?.invalid && myForm.get('motivo')?.touched">
+      <i class="fas fa-exclamation-circle"></i> El Motivo es un campo obligatorio.
+    </div>
+    <div class="error-message text-danger"
+      *ngIf="myForm.get('motivo')?.hasError('minlength') && myForm.get('motivo')?.touched">
+      <i class="fas fa-exclamation-circle"></i>Debe tener al menos 5 caracteres.
+    </div>
+    <div class="error-message text-danger"
+      *ngIf="myForm.get('motivo')?.hasError('pattern') && myForm.get('motivo')?.touched">
+      <i class="fas fa-exclamation-circle"></i>El Motivo no debe contener números.
+    </div>
+  </div>
+
+  <!-- DENTISTA -->
+
+  <div class="form-group col-md-6">
+    <label for="">Dentista:</label>
+    <div class="input-group">
+      <select formControlName="dentista" class="form-control" id="campoDentista" (change)="mostrarSeleccion($event)">
+        <option value="" disabled selected>Selecciona</option>
+        <option value="Juan Perez">Juan Perez</option>
+        <option value="Luis Hernandez">Luis Hernandez</option>
+        <option value="Steven Univers">Steven Univers</option>
+      </select>
+      <div class="input-group-append">
+        <span *ngIf="myForm.get('dentista')?.invalid && myForm.get('dentista')?.touched">
+        </span>
+      </div>
+    </div>
+    <!-- Mensajes de error -->
+    <div class="error-message text-danger"
+      *ngIf="myForm.get('dentista')?.hasError('required') && myForm.get('dentista')?.touched">
+      <i class="fas fa-exclamation-circle"></i> El campo es obligatorio.
+    </div>
+
+  </div>
+
   <br>
-  <div class="img">
-      <img src="https://github.com/CarlosMeyer400400/Cifrado-de-Transposici-n-en-Vue-y-la-libreria-crypto-js/blob/main/logo.png?raw=true" alt="" width="400" height="400">
-
-  </div>
-</div>
-
-
-  <form class="agendar-form">
-    <div class="form-group">
-      <label for="fecha">Fecha:</label>
-      <input type="date" id="fecha" name="fecha" class="form-control" >
-    </div>
-  
-    <div class="form-group">
-      <label for="tratamiento">Tratamiento:</label>
-      <select id="tratamiento" name="tratamiento" class="form-control">
-        <option value="">Seleccione el Tratamiento </option>
-        <option value="Extraccion">Extracción de muela</option>
-        <option value="Brakets">Colocación de brackets</option>
-        <option value="Dentadura">Colocación de dentadura</option>
-      </select>
-    </div>
-  
-    <div class="form-group">
-      <label for="hora">Hora:</label>
-      <select id="hora" name="hora" class="form-control">
-        <option value="">Seleccione la Hora</option>
-        <option value="hora 1">9:00 AM</option>
-        <option value="hora 2">9:40 AM</option>
-        <option value="hora 3">10:20 AM</option>
-        <option value="hora 4">11:00 AM</option>
-      </select>
-    </div>
-  
-    <div class="form-group">
-      <label for="motivo">Motivo:</label>
-      <textarea id="motivo" name="motivo" class="form-control"></textarea>
-    </div>
-  
-    <div class="form-group">
-      <label for="dentista">Dentista:</label>
-      <select id="dentista" name="dentista" class="form-control" >
-        <option value="1">Dr. García</option>
-        <option value="2">Dra. Martínez</option>
-        <option value="3">Dr. López</option>
-      </select>
-    </div>
-  
-    <div class="form-group">
-      <label for="metodoPago">Método de Pago:</label>
-      <select id="metodoPago" name="metodoPago" class="form-control" >
-        <option value="Efectivo">Efectivo</option>
-        <option value="Tarjeta">Tarjeta de crédito/débito</option>
-        <option value="Transferencia">Transferencia bancaria</option>
-      </select>
-    </div>
-  
-    <button type="submit" class="btn btn-primary">Agendar Cita</button>
-  </form>
-</div>
-
-
-</body>
+  <button type="submit">Agendar</button>
+</form>
 <app-footer></app-footer>
-
-</html>

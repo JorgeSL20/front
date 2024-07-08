@@ -1,16 +1,29 @@
-import { Component } from '@angular/core';
-import * as AOS from 'aos'
+import { Component, OnInit } from '@angular/core';
+import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  title = 'login';
+export class AppComponent implements OnInit {
+  inputValue: string = '';
+  outputValue: string = ''; // Asegúrate de que esta línea está presente en tu código.
 
-  ngOnInit(){
-    AOS.init()
-    window.addEventListener('load', AOS.refresh)
+  handleInput(): void {
+    this.outputValue = "Output: " + this.inputValue;
+  }
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
+
+  title = '404';
+  ngOnInit() {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        // Verifica si la URL no coincide con ninguna ruta existente
+        if (!this.activatedRoute.firstChild) {
+          this.router.navigate(['/404']);
+        }
+      }
+    });
   }
 }

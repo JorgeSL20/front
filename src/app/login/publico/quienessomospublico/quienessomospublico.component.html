@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dental Crown</title>
+  <link rel="stylesheet" href="quienessomospublico.component.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+  <app-headerpublico></app-headerpublico>
+
+  <div style="text-align: center; margin-top: 50px;">
+    <h2>Sobre Dental Crown</h2>
+  
+    <div style="display: flex; justify-content: space-between; margin: 0 50px;">
+  
+      <div style="width: 30%;">
+        <img src="assets/images/somos.jpg" alt="logo" style="width: 100%;">
+      </div>
+  
+      <div style="width: 55%; text-align: left;">
+        <p>{{ dataInformacion.quienessomos }}</p>
+      </div>
+  
+    </div>
+  </div>
+  
+  <div class="container">
+    <div class="card-container">
+      <div class="card" (click)="toggleMission()">
+        <div class="front-content">
+          <p>Misión</p>
+        </div>
+        <div class="content" [hidden]="!showMission">
+          <p class="letras">{{ dataInformacion.mision }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+  <div class="card-container">
+    <div class="card" (click)="toggleMission()">
+      <div class="front-content">
+        <p>Visión</p>
+      </div>
+      <div class="content" [hidden]="!showMission">
+        <p class="letras">{{ dataInformacion.vision }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <h2 style="text-align: center;">Equipo Médico</h2>
+  
+  <div style="display: flex; justify-content: space-around; margin: 20px 50px;">
+    <div class="doctor-info">
+      <div class="circle">
+        <img src="assets/images/imagesDoctores/doctora1.jpg" alt="Doctor 1" class="doctor-image" (touchstart)="handleTouchStart()" [style.width.px]="imageSize" [style.height.px]="imageSize">
+      </div>
+      <h3>Dr. Nombre 1</h3>
+      <p>Descripción breve del Dr. Nombre 1.</p>
+    </div>
+  
+    <div class="doctor-info">
+      <div class="circle">
+        <img src="assets/images/imagesDoctores/doctor2.jpg" alt="Doctor 2" class="doctor-image">
+      </div>
+      <h3>Dr. Nombre 2</h3>
+      <p>Descripción breve del Dr. Nombre 2.</p>
+    </div>
+  
+    <div class="doctor-info">
+      <div class="circle">
+        <img src="assets/images/imagesDoctores/doctora3.jpg" alt="Doctor 3" class="doctor-image">
+      </div>
+      <h3>Dr. Nombre 3</h3>
+      <p>Descripción breve del Dr. Nombre 3.</p>
+    </div>
+  </div>
+
+  <app-footerpublico></app-footerpublico>
+</body>
+</html>
+

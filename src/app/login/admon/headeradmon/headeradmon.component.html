@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="headeradmon.component.css">
+</head>
+<body>
+    <header>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-9 col-sm-9 col-9" style="text-align: end;">
+            <div class="menu_icon" [class.menu_icon_Class]="menu_icon_variable" (click)="openMenu()">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <div class="menu" [class.menuClass]="menuVariable">
+              <ul>
+                <br>
+                <li routerLink="/user/inicio" routerLinkActive="active-link">Inicio General</li>
+                <li routerLink="/user/admonusuarios" routerLinkActive="active-link">Todos los Usuarios</li>
+                <button (click)="cerrarSesion()">Cerrar sesion</button>
+              </ul>
+
+    <!-- Agregar breadcrumbs después del menú -->
+    <div class="container">
+    </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </header>
+</body>
+</html>

@@ -1,12 +1,12 @@
-header {
+/*header {
     padding: 10px;
-    background-color: #1367c2;
+    background-color: #031d40;
 }
 
 body{
     margin: 0;
     padding: 0;
-    overflow-x: hidden; /* Evita el desplazamiento horizontal */
+    overflow-x: hidden; 
 }
 
 .row {
@@ -24,7 +24,7 @@ body{
   
 .container{
     width: 100%;
-  padding: 0 20px; /* Agrega espaciado opcional a los lados */
+  padding: 0 20px; 
   box-sizing: border-box;
 }
 
@@ -88,7 +88,6 @@ body{
     .menuClass{
         right: 0;
         transition: 0.4s ease-in-out;
-    }
-    
-
+    } 
 }
+*/

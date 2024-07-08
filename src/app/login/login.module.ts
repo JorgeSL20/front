@@ -4,6 +4,8 @@ import { LoginComponent } from './pages/login/login.component';
 import { CrearCuentaComponent } from './pages/crear-cuenta/crear-cuenta.component';
 import { RecuperarPasswordComponent } from './pages/recuperar-password/recuperar-password.component';
 
+import { ListarProductosComponent } from './pages/listar-producto/listar-producto.component';
+import { CrearProductoComponent } from './pages/crear-producto/crear-producto.component';
 import { LayoutComponent } from './pages/layout/layout.component';
 import { LoginRoutingModule } from './login-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -20,16 +22,24 @@ import { PreguntasComponent } from './interfaces/preguntas/preguntas.component';
 import { TerminosCondicionesComponent } from './interfaces/terminosCondiciones/terminosCondiciones.component';
 import { PoliticaCookiesComponent } from './interfaces/politicaCookies/politicaCookies.component';
 import { AvisoPrivacidadComponent } from './interfaces/avisoPrivacidad/avisoPrivacidad.component';
-import { E404Component } from './interfaces/e404/e404.component';
-
-
+import { NotFoundComponent } from './interfaces/not-found/not-found.component'
+import { PerfilComponent } from './pages/perfil/perfil.component';
+import { EditarPerfilComponent } from './pages/editar-perfil/editar-perfil.component';
+import { ServiciospublicoComponent } from './publico/serviciospublico/serviciospublico.component';
+import { PreguntaspublicoComponent } from './publico/preguntaspublico/preguntaspublico.component';
+import { AdmonpreguntasComponent } from './admon/admonpreguntas/admonpreguntas.component';
+import { AdmonusuariosComponent } from './admon/admonusuarios/admonusuarios.component';
+import { HeaderadmonComponent } from './admon/headeradmon/headeradmon.component';
 //CAPTCHA//
 import { NgxCaptchaModule } from 'ngx-captcha';
+import { LoginService } from './services/login.service';
 
 @NgModule({
   declarations: [
     LoginComponent,
     CrearCuentaComponent,
+    ListarProductosComponent,
+    CrearProductoComponent,
     RecuperarPasswordComponent,
     LayoutComponent,
     InicioComponent,
@@ -45,14 +55,22 @@ import { NgxCaptchaModule } from 'ngx-captcha';
     PoliticaCookiesComponent,
     TerminosCondicionesComponent,
     PreguntasComponent,
-    E404Component,
-    UbicacionComponent
+    NotFoundComponent,
+    PerfilComponent,
+    EditarPerfilComponent,
+    ServiciospublicoComponent,
+
+        //admon
+        HeaderadmonComponent,
+        AdmonusuariosComponent,
+        AdmonpreguntasComponent,
   ],
   imports: [
     CommonModule,
     LoginRoutingModule,
     ReactiveFormsModule,
     NgxCaptchaModule
-  ]
+  ],
+  providers:[LoginService]
 })
 export class LoginModule { }

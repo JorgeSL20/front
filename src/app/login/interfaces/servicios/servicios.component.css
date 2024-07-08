@@ -1,4 +1,5 @@
-    /* SERVICIOS */
+
+    /* SERVICIOS 
     @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
     *{
         margin: 0;
@@ -7,7 +8,7 @@
         font-family: 'Montserrat', sans-serif;
     }
     
-    /*Cards*/
+
     .container-card{
         width: 100%;
         display: flex;
@@ -81,7 +82,6 @@
             margin: 20px;
         }
     }
-    /*Fin-Cards*/
     
     
     
@@ -123,9 +123,5 @@
       .btn:hover::before {
         width: 160%;
       }
+    */
     
-      .seleccionada {
-        transform: translateY(-90px); /* Eleva la imagen 5px hacia arriba */
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Agrega una sombra para resaltar */
-      }
-      

@@ -12,32 +12,12 @@
 
 <body>
 
-    <div class="container">
-        <h1>Preguntas Frecuentes</h1>
-        <div class="faq">
-            <div class="question">
-                <div class="card" (click)="toggleAnswer()">
-                    <div class="front-content">
-                    <h2>¿Cuál es el horario de atención?</h2>
-                    </div>
-                    <p>Nuestro horario de atención es de lunes a viernes de 9:00 am a 7:00 pm y los sábados de 9:00 am a
-                        1:00 pm.</p>
-                </div>
-            </div>
-
-
-            <div class="question">
-                <h2>¿Aceptan seguros dentales?</h2>
-                <p>Sí, aceptamos la mayoría de los seguros dentales. Por favor, contacta con nosotros para más
-                    información sobre tu cobertura.</p>
-            </div>
-            <div class="question">
-                <h2>¿Cuál es el procedimiento para agendar una cita?</h2>
-                <p>Puedes agendar una cita llamando a nuestra clínica o llenando el formulario de contacto en nuestra
-                    página web. Nos pondremos en contacto contigo para confirmar la cita.</p>
-            </div>
-        </div>
-    </div>
+    <div *ngFor="let pregunta of preguntas">
+        <h3>{{ pregunta.preguntas }}</h3>
+        <p>{{ pregunta.respuestas }}</p>
+      </div>
+      
+      
 
    
 </body>

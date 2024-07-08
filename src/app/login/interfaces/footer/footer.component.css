@@ -18,7 +18,7 @@ a{
   justify-content: center;
   padding: 25px 25px;
   gap: 20px;
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.055);
+  background-color: #031d40;
 }
 /* for all social containers*/
 .socialContainer {
@@ -38,17 +38,17 @@ a{
 }
 /* Instagram*/
 .containerOne:hover {
-  background-color: #d62976;
+  background-color: #031d40;
   transition-duration: .3s;
 }
 /* Facebook*/
 .containerThree:hover {
-  background-color: #001bb1;
+  background-color: #031d40;
   transition-duration: .3s;
 }
 /* Whatsapp*/
 .containerFour:hover {
-  background-color: #128C7E;
+  background-color: #031d40;
   transition-duration: .3s;
 }
 .socialContainer:active {
@@ -71,7 +71,7 @@ a{
 /*:::::Pie de Pagina*/
 .pie-pagina{
     width: 100%;
-    background-color: #0a141d;
+    background-color: #031d40;
 }
 .pie-pagina .grupo-1{
     width: 100%;

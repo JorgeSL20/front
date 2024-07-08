@@ -18,7 +18,7 @@ export class LoginComponent {
   validRecatcha: boolean = true;
   myForm: FormGroup = this.fb.group({
     email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
-    contrasena: ['', [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]).{8,}$/)]],
+    password: ['', [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]).{8,}$/)]],
   });
 
   auth() {
@@ -28,29 +28,56 @@ export class LoginComponent {
     }
 
     try {
-      this.loginService.validarUsuario(this.myForm.value).subscribe(res => {
-        console.log(res);
-        if (res.status === 200) {
-          this.router.navigate(['/inicio']);
-        } else if (res.status === 400) {
-          alert('Contraseña incorrecta');
-        } else if (res.status === 409) {
-          alert('Número de intentos alcanzados, espera 5 minutos');
-        } else if (res.status === 302) {
-          alert('Email no registrado');
-        } else {
-          alert('Error de lo que sea pero error');
+      let fecha = new Date().toLocaleDateString();
+      this.loginService.getIp().subscribe(data => {
+        this.loginService.validarUsuario({
+          email: this.myForm.controls['email'].value,
+          password: this.myForm.controls['password'].value,
+          fecha: fecha,
+          ip: data.ip
+        }).subscribe(res => {
+          console.log(res);
+          if (res.status === 200) {
+            localStorage.setItem("token", res.token.toString())
+            this.router.navigate(['/user/inicio']);
+            this.showAlert('Sesion iniciada con exito, Bienvenida@', 'alert-success');
+
+          } else if (res.status === 400) {
+            this.showAlert('Contraseña incorrecta', 'alert-danger');
+          } else if (res.status === 409) {
+            this.showAlert('Sobrepasaste el numero de intentos, espere 5 minutos', 'alert-danger');
+          } else if (res.status === 302) {
+            this.showAlert('Email incorrecto', 'alert-danger');
+          } else {
+            this.showAlert('Error de lo que sea pero error', 'alert-danger');
+          }
+        });
+      })
+
+    } 
+    catch (error) {
+          this.showAlert('Email no encontrado', 'alert-danger');
+          console.log(error);
         }
-      });
-    } catch (error) {
-      alert('Email no encontrado');
-      console.log(error);
-    }
+  }
+
+  showAlert(message: string, alertClass: string) {
+    // Crea un div para el mensaje
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert ${alertClass} fixed-top d-flex align-items-center justify-content-center`;
+    alertDiv.textContent = message;
+    alertDiv.style.fontSize = '20px'; // Cambia el tamaño del texto
+
+    // Agrega el mensaje al cuerpo del documento
+    document.body.appendChild(alertDiv);
+
+    // Elimina el mensaje después de unos segundos
+    setTimeout(() => {
+      alertDiv.remove();
+    }, 2000);
   }
 
 
-
-  
 
   togglePasswordVisibility() {
     this.passwordVisible = !this.passwordVisible;
@@ -98,13 +125,6 @@ export class LoginComponent {
 
   activarBtnCapcha(event: string) {
     this.validRecatcha = false;
-    this.loginService.validarUsuario(this.myForm.value).subscribe(res=>{
-      console.log(res)
-      if(res.status === 200)
-        this.router.navigate(['/inicio'])
-      else
-        return console.log(false, "no se pudo iniciar sesion")
-    })
   }
 }
 

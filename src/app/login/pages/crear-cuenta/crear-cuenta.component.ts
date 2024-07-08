@@ -4,6 +4,7 @@ import { LoginService } from '../../services/login.service';
 import { Router } from '@angular/router';
 
 
+
 @Component({
   selector: 'app-crear-cuenta',
   templateUrl: './crear-cuenta.component.html',
@@ -28,16 +29,12 @@ export class CrearCuentaComponent implements OnInit {
 
   myForm: FormGroup = this.fb.group({
 
-    nombre: ['', [Validators.required, Validators.minLength(3), Validators.pattern(/^[a-zA-Z\s]*$/)]],
-    apellidop: ['', [Validators.required, Validators.minLength(3), Validators.pattern(/^[a-zA-ZáéíóúüÁÉÍÓÚÜ\s]*$/)]],
-    apellidom: ['', [Validators.required, Validators.minLength(3), Validators.pattern(/^[a-zA-ZáéíóúüÁÉÍÓÚÜ\s]*$/)]],
+    name: ['', [Validators.required, Validators.minLength(3), Validators.pattern(/^[a-zA-Z\s]*$/)]],
+    lastNameP: ['', [Validators.required, Validators.minLength(3), Validators.pattern(/^[a-zA-ZáéíóúüÁÉÍÓÚÜ\s]*$/)]],
+    lastNameM: ['', [Validators.required, Validators.minLength(3), Validators.pattern(/^[a-zA-ZáéíóúüÁÉÍÓÚÜ\s]*$/)]],
     email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
-    sexo: ['', [Validators.required]],
-    fecha: ['', [Validators.required, this.validateAge.bind(this)]],
-    nombreu: ['', [Validators.required, Validators.minLength(5)]],
-    contrasena: ['', [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]).{8,}$/)]],
-    contrasena2: ['', [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]).{8,}$/)]],
-    telefono: ['', [Validators.pattern(/^\d{10}$/), Validators.required]],
+    password: ['', [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]).{8,}$/)]],
+    password2: ['', [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]).{8,}$/)]],
     pregunta: ['', [Validators.required]],
     respuesta: ['', [Validators.required, Validators.minLength(3), Validators.pattern(/^[a-zA-ZáéíóúüÁÉÍÓÚÜñÑ\s]*$/)]]
 
@@ -67,25 +64,6 @@ export class CrearCuentaComponent implements OnInit {
     }
 
   }
-  // FUNCIÓN PARA VALIDACIÓN DE LA FECHA DE NACIMIENTO
-  validateAge(control: AbstractControl): ValidationErrors | null {
-    const birthdate = new Date(control.value);
-    const today = new Date();
-
-    // Validar que la fecha no sea del futuro
-    if (birthdate > today) {
-      return { 'futureDate': 'La fecha no puede ser del futuro' };
-    }
-
-    // Validar que la persona sea mayor de 18 años
-    const age = today.getFullYear() - birthdate.getFullYear();
-    if (age < 18) {
-      return { 'underage': 'La persona debe ser mayor de 18 años' };
-    }
-
-    return null;
-  }
-
 
 
   getData() {
@@ -98,16 +76,15 @@ export class CrearCuentaComponent implements OnInit {
         // Muestra un mensaje de éxito con diseño Bootstrap
         this.showAlert('Cuenta creada correctamente', 'alert-success');
 
-        // Redirige al usuario a la página de inicio después de un breve tiempo
         setTimeout(() => {
-          this.router.navigate(['/inicio']);
+          this.router.navigate(['/user/login']);
         }, 1000);
       },
       error => {
         // Maneja errores aquí
         console.error(error);
         // Muestra un mensaje de error al usuario con diseño Bootstrap
-        this.showAlert('Error al crear la cuenta. Por favor, revise si los datos son correctos.', 'alert-danger');
+        this.showAlert('El Correo ya registrado, Intente con otro correo.', 'alert-danger');
       }
     );
   }
@@ -125,7 +102,7 @@ export class CrearCuentaComponent implements OnInit {
     // Elimina el mensaje después de unos segundos
     setTimeout(() => {
       alertDiv.remove();
-    }, 5000);
+    }, 2000);
   }
 
   activarBtnCapcha(event: string) {
@@ -158,13 +135,13 @@ mouseOver: boolean = false;
   onMouseOver() {
     this.mouseOver = true;
   }
- 
+
   mostrarSeleccion(event: any) {
     const sexoSeleccionado = event.target.value;
     if (sexoSeleccionado === "") {
       alert("El campo es obligatorio");
     } else {
-      alert("Has seleccionado: " + sexoSeleccionado);
+      this.showAlert("Has seleccionado: " + sexoSeleccionado, 'alert-success');
       // Aquí puedes realizar otras acciones basadas en la selección, como enviar el formulario o actualizar la interfaz de usuario.
     }
   }
@@ -174,7 +151,8 @@ mouseOver: boolean = false;
   }
 
   ngOnInit() {
+    
 
 
   }
-}
+} 

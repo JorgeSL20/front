@@ -1,42 +1,59 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <link rel="stylesheet" href="header.component.css">
-</head>
-<body>
-    <header>
-      <div class="container">
-        <div class="row">
-          <div class="col-md-3 col-sm-3 col-3">
-            <div class="logo">
-              <img [src]="logoblanco"[style.width.px]="200" [style.height.px]="100">
-            </div>
-          </div>
-          <div class="col-md-9 col-sm-9 col-9" style="text-align: end;">
-            <div class="menu_icon" [class.menu_icon_Class]="menu_icon_variable" (click)="openMenu()">
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-            <div class="menu" [class.menuClass]="menuVariable">
-              <ul>
-                <br>
-                <li routerLink="/Inicio" routerLinkActive="active-link">Inicio</li>
-                <li routerLink="/Servicios" routerLinkActive="active-link">Servicios</li>
-                <li routerLink="/QuienesSomos" routerLinkActive="active-link">¿Quiénes somos?</li>
-                <li routerLink="/Contacto" routerLinkActive="active-link">Contacto</li>
-                <li routerLink="/Agendar" routerLinkActive="active-link">Agendar</li>
-                <li routerLink="/Preguntas" routerLinkActive="active-link" class="fas fa-question"></li>
-                <li routerLink="/Login" routerLinkActive="active-link" class="fas fa-user"></li>
-              </ul>
-    <!-- Agregar breadcrumbs después del menú -->
+    <style>
+    header {
+        background-color: #031d40; /* Fondo azul */
+    }
+    /* Cambiar el color del texto dentro de los elementos <a> dentro de los elementos <li> */
+    .menu li a {
+        color: white;
+    }
+</style>
+<header>
     <div class="container">
-     <app-breadcrumbs></app-breadcrumbs>
-    </div>
+        <div class="row align-items-center">
+            <div class="col-md-3 col-sm-3 col-3">
+                <div class="logo">
+                    <img src="../assets/logoblanco.jpg" alt="" srcset="">
+                </div>
             </div>
-          </div>
+            <div class="col-md-9 col-sm-9 col-9">
+                <div class="menu_icon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="menu text-end">
+                    <ul class="nav justify-content-end">
+                        <!-- Si el usuario está autenticado, muestra estos enlaces -->
+                        <ng-container *ngIf="isLoggedIn">
+                            <li class="nav-item">
+                                <a class="nav-link active" routerLink="/user/inicio" routerLinkActive="active-link">Inicio</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" routerLink="/user/productospublicos" routerLinkActive="active-link">Productos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" routerLink="/user/perfil" routerLinkActive="active-link">Mi perfil</a>
+                            </li>
+                            <li class="nav-item">
+                                <button (click)="cerrarSesion()" class="btn btn-outline-light">Cerrar sesión</button>
+                            </li>
+                        </ng-container>
+                        <!-- Si el usuario no está autenticado, muestra estos enlaces -->
+                        <ng-container *ngIf="!isLoggedIn">
+                            <li class="nav-item">
+                                <a class="nav-link" routerLink="/user/productos" routerLinkActive="active-link">Productos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" routerLink="/user/login" routerLinkActive="active-link">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <button class="btn btn-outline-light" routerLink="/user/registro" routerLinkActive="active-link">Registrarse</button>
+                            </li>
+                            
+                        </ng-container>
+                    </ul>
+                </div>
+            </div>
         </div>
-      </div>
-      </header>
-</body>
-</html>
+    </div>
+</header>

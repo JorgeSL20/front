@@ -1,33 +1,34 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-servicios',
   templateUrl: './servicios.component.html',
   styleUrls: ['./servicios.component.css']
 })
-export class ServiciosComponent {
-
-  servicio1: string="assets/images/servicio1.jpg";
-  servicio2: string="assets/images/servicio2.jpg";
-  servicio3: string="assets/images/servicio3.jpg";
-  servicio4: string="assets/images/servicio4.jpg";
-  servicio5: string="assets/images/servicio5.jpg";
-  servicio6: string="assets/images/servicio6.jpg";
-  brackets: string="assets/images/brackets.jpg";
-  implante: string="assets/images/implante.jpg";
-  valoracion: string="assets/images/valoracion.jpg";
-  extraccion: string="assets/images/extraccion.jpg";
-  limpieza: string="assets/images/limpieza.jpg";
-
-  imagenSeleccionada: boolean = false;
+export class ServiciosComponent implements OnInit {
 
   
-  seleccionarImagen() {
-    this.imagenSeleccionada = true;
+
+  ngOnInit(): void {
+    // Puedes realizar inicializaciones o lógica adicional aquí
   }
+  constructor(private el: ElementRef) { }
+  @HostListener('window:scroll', ['$event'])
+  onScroll(event: Event): void {
+    // Lógica que quieres ejecutar cuando ocurre el evento de desplazamiento
   
-  deseleccionarImagen() {
-    this.imagenSeleccionada = false;
+    // Por ejemplo, puedes verificar si un elemento está en la vista y realizar alguna acción
+    const cards = this.el.nativeElement.querySelectorAll('.card');
+    cards.forEach((card: HTMLElement) => {  // Agrega el tipo HTMLElement
+      const rect = card.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom >= 0) {
+        // La tarjeta está en la vista, puedes realizar alguna acción aquí
+        // Por ejemplo, añadir una clase, cargar datos adicionales, etc.
+        card.classList.add('visible');
+      } else {
+        // La tarjeta no está en la vista, puedes revertir la acción si es necesario
+        card.classList.remove('visible');
+      }
+    });
   }
-  
 }

@@ -1,15 +1,12 @@
-
 export interface User {
-  id_usuario: number;
-  nombre:     string;
+  id:         number;
+  name:       string;
   email:      string;
-  apellidop:  string;
-  apellidom:  string;
-  sexo:       string;
-  fecha:      null;
-  nombreu:    string;
-  contrasena: string;
-  telefono: number;
+  lastNameP:  string;
+  lastNameM:  string;
+  password:   string;
+  pregunta:   string;
+  respuesta:  string;
 }
 
 export interface Email{
@@ -24,7 +21,9 @@ export interface Response{
 }
 
 export interface Password{
-  contrasena:string
+  password:string
+  ip:string
+  fecha:string
 }
 
 export interface responseValid{

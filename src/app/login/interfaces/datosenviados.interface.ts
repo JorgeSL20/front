@@ -1,4 +1,6 @@
 export interface DatosEnviados{
     email: string
-    contrasena: string
+    password: string
+    ip:string
+    fecha:string
 }

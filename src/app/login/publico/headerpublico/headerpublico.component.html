@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="headerpublico.component.css">
+</head>
+<body>
+    <header>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3 col-sm-3 col-3">
+            <div class="logo">
+              <img [src]="logoblanco"[style.width.px]="200" [style.height.px]="100">
+            </div>
+          </div>
+          <div class="col-md-9 col-sm-9 col-9" style="text-align: end;">
+            <div class="menu_icon" [class.menu_icon_Class]="menu_icon_variable" (click)="openMenu()">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <div class="menu" [class.menuClass]="menuVariable">
+              <ul>
+                <br>
+                <li routerLink="/user/iniciopublico" routerLinkActive="active-link">Inicio</li>
+                <li routerLink="/user/serviciospublico" routerLinkActive="active-link">Servicios</li>
+                <li routerLink="/user/quienessomospublico" routerLinkActive="active-link">¿Quiénes somos?</li>
+                <li routerLink="/user/contactopublico" routerLinkActive="active-link">Contacto</li>
+                <li routerLink="/user/preguntaspublico" routerLinkActive="active-link" class="fas fa-question"></li>
+                <li routerLink="/">Iniciar Sesión</li>
+                <li routerLink="/user/crear-cuenta">Crear Cuenta</li>
+              
+                
+              </ul>
+
+    <!-- Agregar breadcrumbs después del menú -->
+    
+            </div>
+          </div>
+        </div>
+      </div>
+      </header>
+</body>
+</html>

@@ -2,6 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CrearCuentaComponent } from './pages/crear-cuenta/crear-cuenta.component';
 import { RecuperarPasswordComponent } from './pages/recuperar-password/recuperar-password.component';
+
+import { ListarProductosComponent } from './pages/listar-producto/listar-producto.component';
+import { CrearProductoComponent } from './pages/crear-producto/crear-producto.component';
 import { LayoutComponent } from './pages/layout/layout.component';
 import { LoginComponent } from './pages/login/login.component';
 import { InicioComponent } from './pages/inicio/inicio.component';
@@ -12,43 +15,73 @@ import { ContactoComponent } from './interfaces/contacto/contacto.component';
 import { ServiciosComponent } from './interfaces/servicios/servicios.component';
 import { UbicacionComponent } from './interfaces/ubicacion/ubicacion.component';
 import { QuienessomosComponent } from './interfaces/quienessomos/quienessomos.component';
+import { AvisoPrivacidadComponent } from './interfaces/avisoPrivacidad/avisoPrivacidad.component';
+import { TerminosCondicionesComponent } from './interfaces/terminosCondiciones/terminosCondiciones.component';
+import { PoliticaCookiesComponent } from './interfaces/politicaCookies/politicaCookies.component';
+import { PreguntasComponent } from './interfaces/preguntas/preguntas.component';
+import { NotFoundComponent } from './interfaces/not-found/not-found.component'
+import { PerfilComponent } from './pages/perfil/perfil.component';
+import { EditarPerfilComponent } from './pages/editar-perfil/editar-perfil.component';
+import { canActivate, canMatch } from './guards/guards.guard';
+import { ServiciospublicoComponent } from './publico/serviciospublico/serviciospublico.component';
+import { PreguntaspublicoComponent } from './publico/preguntaspublico/preguntaspublico.component';
+import { AdmonpreguntasComponent } from './admon/admonpreguntas/admonpreguntas.component';
+//administrador
+import { HeaderadmonComponent} from './admon/headeradmon/headeradmon.component';
+import { AdmonusuariosComponent } from './admon/admonusuarios/admonusuarios.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'user',
     component: LayoutComponent,
     children: [
       {
-        path: 'login',
-        component: LoginComponent
-      },
-      {
         path: 'inicio',
-        component: InicioComponent
+        component: InicioComponent,
+        canActivate: [canActivate],
+        canMatch: [canMatch]
       },
       {
         path: 'header',
-        component: HeaderComponent
+        component: HeaderComponent,
+        canActivate: [canActivate],
+        canMatch: [canMatch]
+      },
+      {
+        path: 'crear-producto',
+        component: CrearProductoComponent
+      },
+      {
+        path: 'listar-producto',
+        component: ListarProductosComponent
       },
       {
         path: 'footer',
-        component: FooterComponent
+        component: FooterComponent,
+        canActivate: [canActivate],
+        canMatch: [canMatch]
       },
       {
         path: 'contacto',
         component: ContactoComponent
       },
       {
-        path: 'servicios',
+        path: 'productos',
         component: ServiciosComponent
+      },
+      {
+        path: 'productospublicos',
+        component: ServiciospublicoComponent,
+        canActivate: [canActivate],
+        canMatch: [canMatch]
       },
       {
         path: 'ubicacion',
         component: UbicacionComponent
       },
-      
+
       {
-        path: 'crear-cuenta',
+        path: 'registro',
         component: CrearCuentaComponent
       },
       {
@@ -60,14 +93,60 @@ const routes: Routes = [
         component: QuienessomosComponent
       },
       {
-      path: 'agendar',
-      component: AgendarComponent
-    },
+        path: 'avisoprivacidad', 
+        component: AvisoPrivacidadComponent,
+      },
+      {
+        path: 'terminoscondiciones', 
+        component: TerminosCondicionesComponent,
+      },
+      {
+        path: 'politicacookies', 
+        component: PoliticaCookiesComponent,
+      },
+      {
+        path: 'preguntas', component: PreguntasComponent,
+
+      },
+      {
+        path: 'perfil', component: PerfilComponent,
+        canActivate: [canActivate],
+        canMatch:[canMatch]
+      },
+      {
+        path: 'editarperfil', component: EditarPerfilComponent,
+        canActivate: [canActivate],
+        canMatch:[canMatch]
+      },
+      {
+        path: 'login', component: LoginComponent
+
+      },
+      {
+        path: 'preguntaspublico',
+        component: PreguntaspublicoComponent
+      },
+      {
+        path: 'adminusuarios',
+        component: AdmonusuariosComponent ,
+        canActivate: [canActivate],
+        canMatch: [canMatch]
+      },
+      {
+        path: 'adminpreguntas',
+        component: AdmonpreguntasComponent ,
+        canActivate: [canActivate],
+        canMatch: [canMatch]
+      },
+      {
+        path: '',
+        component: NotFoundComponent
+      },
       {
         path: '**',
-        redirectTo: 'login'
+        component: NotFoundComponent
 
-      }
+      },
     ]
   }
 ];
