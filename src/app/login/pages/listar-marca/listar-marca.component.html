@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Listado de Marcas</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<app-header></app-header>
+<body>
+  <div class="container mt-5">
+    <h1>Listado de Marcas</h1>
+    <table class="table table-striped">
+      <!-- Encabezados de la tabla -->
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Marca</th>
+          <th>Acción</th> <!-- Nueva columna para el botón de eliminar -->
+        </tr>
+      </thead>
+      <!-- Cuerpo de la tabla -->
+      <tbody>
+        <tr *ngFor="let marca of marca">
+          <td>{{ marca.id }}</td>
+          <td>{{ marca.marca }}</td>
+          <td>
+            <!-- Botón de eliminar con estilo Bootstrap -->
+            <button class="btn btn-danger" (click)="eliminarMarca(marca.id)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- Botón para agregar producto -->
+    <button class="btn btn-primary" (click)="irAFormulario()">Agregar Marca</button>
+  </div>
+  <br>
+  <br>
+  <br>
+
+  <!-- Scripts de Bootstrap y Angular -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/2.0.0-beta.17/angular2.min.js"></script>
+</body>
+</html>
+<app-footer></app-footer>

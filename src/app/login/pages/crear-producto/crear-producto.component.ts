@@ -1,20 +1,27 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductoService } from '../../services/producto.service';
-import { Router } from '@angular/router'; // Importa Router desde @angular/router
+import { CategoriaService } from '../../services/categoria.service'; 
+import { MarcaService } from '../../services/marca.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-crear-producto',
   templateUrl: './crear-producto.component.html',
   styleUrls: ['./crear-producto.component.css']
 })
-export class CrearProductoComponent {
+export class CrearProductoComponent implements OnInit {
   myForm: FormGroup;
+  categorias: any[] = []; // Propiedad para almacenar las categorías
+  marcas: any[] = [];
+
 
   constructor(
     private formBuilder: FormBuilder,
-    private productoService: ProductoService, // Cambia el nombre de ProductoService a productoService
-    private router: Router // Agrega Router al constructor
+    private productoService: ProductoService,
+    private categoriaService: CategoriaService, // Inyecta CategoriaService
+    private marcaService: MarcaService,
+    private router: Router
   ) {
     this.myForm = this.formBuilder.group({
       imagenP: ['', Validators.required],
@@ -27,27 +34,49 @@ export class CrearProductoComponent {
     });
   }
 
+  ngOnInit(): void {
+    this.obtenerCategorias();
+    this.obtenerMarcas();
+  }
+
+  obtenerMarcas(): void {
+    this.marcaService.obtenerMarca().subscribe(
+      (marcas: any[]) => {
+        this.marcas = marcas;
+      },
+      (error) => {
+        console.error('Error al obtener marcas:', error);
+      }
+    );
+  }
+
+  obtenerCategorias(): void {
+    this.categoriaService.obtenerCategoria().subscribe(
+      (categorias: any[]) => {
+        this.categorias = categorias;
+      },
+      (error) => {
+        console.error('Error al obtener categorías:', error);
+      }
+    );
+  }
+
   guardarProducto() {
     if (this.myForm.valid) {
-      // Obtener los valores del formulario
       const productoData = this.myForm.value;
-
-      // Llamar al servicio para crear el producto
       this.productoService.crearProducto(productoData).subscribe(
         response => {
-          console.log(response); // Puedes mostrar la respuesta del backend en la consola
-          // Aquí puedes manejar la respuesta del backend, como mostrar mensajes de éxito, redirigir, etc.
-          this.router.navigate(['/user/listar-producto']); // Redirige después de guardar el producto
+          console.log(response);
+          this.router.navigate(['/user/listar-producto']);
         },
         error => {
-          console.error(error); // Manejar errores en caso de que la solicitud falle
-          // Aquí puedes mostrar mensajes de error al usuario
+          console.error(error);
         }
       );
     }
   }
 
   regresar() {
-    this.router.navigate(['/user/listar-producto']); // Redirige al componente listar-producto
+    this.router.navigate(['/user/listar-producto']);
   }
 }

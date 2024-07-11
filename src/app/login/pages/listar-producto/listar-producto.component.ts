@@ -2,6 +2,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Producto } from '../../interfaces/producto.interface';
 import { ProductoService } from '../../services/producto.service';
+import { CategoriaService } from '../../services/categoria.service'; 
+import { MarcaService } from '../../services/marca.service';
 
 @Component({
   selector: 'app-listar-productos',
@@ -10,18 +12,44 @@ import { ProductoService } from '../../services/producto.service';
 })
 export class ListarProductosComponent implements OnInit {
   productos: Producto[] = [];
+  categorias: any[] = [];
+  marcas: any[] = [];
 
-  constructor(private router: Router, @Inject(ProductoService) private productoService: ProductoService) { }
+  constructor(
+    private router: Router,
+    @Inject(ProductoService) private productoService: ProductoService,
+    @Inject(MarcaService) private marcaService: MarcaService,
+    @Inject(CategoriaService) private categoriaService: CategoriaService
+  ) { }
 
   ngOnInit(): void {
-    this.obtenerProductos();
+    this.cargarDatosIniciales();
+  }
+
+  cargarDatosIniciales(): void {
+    this.categoriaService.obtenerCategoria().subscribe(
+      (categorias: any[]) => {
+        this.categorias = categorias;
+        this.marcaService.obtenerMarca().subscribe(
+          (marcas: any[]) => {
+            this.marcas = marcas;
+            this.obtenerProductos();
+          },
+          (error) => {
+            console.error('Error al obtener marcas:', error);
+          }
+        );
+      },
+      (error) => {
+        console.error('Error al obtener categorías:', error);
+      }
+    );
   }
 
   obtenerProductos(): void {
     this.productoService.obtenerProductos().subscribe(
       (productos: Producto[]) => {
         this.productos = productos;
-        console.log(this.productos); // Puedes hacer lo que necesites con los productos
       },
       (error) => {
         console.error('Error al obtener productos:', error);
@@ -34,7 +62,6 @@ export class ListarProductosComponent implements OnInit {
       this.productoService.eliminarProducto(id).subscribe(
         () => {
           console.log('Producto eliminado correctamente');
-          // Volver a cargar los productos después de eliminar
           this.obtenerProductos();
         },
         (error) => {
@@ -44,9 +71,9 @@ export class ListarProductosComponent implements OnInit {
     }
   }
 
-  
-
   irAFormulario(): void {
     this.router.navigate(['/user/crear-producto']);
   }
+
+  
 }

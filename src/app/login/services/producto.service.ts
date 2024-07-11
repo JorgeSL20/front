@@ -6,8 +6,10 @@ import { Producto } from '../interfaces/producto.interface';
 @Injectable({
   providedIn: 'root'
 })
+
 export class ProductoService {
-  private url: string = 'http://localhost:3000/producto/';
+  //private url: string = 'http://localhost:3000/producto/';
+  private url: string = 'https://main--gatewaysoluciones.netlify.app/producto/';
 
   constructor(private http: HttpClient) { }
 

@@ -3,7 +3,10 @@ import { CommonModule } from '@angular/common';
 import { LoginComponent } from './pages/login/login.component';
 import { CrearCuentaComponent } from './pages/crear-cuenta/crear-cuenta.component';
 import { RecuperarPasswordComponent } from './pages/recuperar-password/recuperar-password.component';
-
+import { CrearMarcaComponent } from './pages/crear-marca/crear-marca.component';
+import { ListarMarcaComponent } from './pages/listar-marca/listar-marca.component';
+import { CrearCategoriaComponent } from './pages/crear-categoria/crear-categoria.component';
+import { ListarCategoriaComponent } from './pages/listar-categoria/listar-categoria.component';
 import { ListarProductosComponent } from './pages/listar-producto/listar-producto.component';
 import { CrearProductoComponent } from './pages/crear-producto/crear-producto.component';
 import { LayoutComponent } from './pages/layout/layout.component';
@@ -38,8 +41,12 @@ import { LoginService } from './services/login.service';
   declarations: [
     LoginComponent,
     CrearCuentaComponent,
+    ListarMarcaComponent,
     ListarProductosComponent,
+    ListarCategoriaComponent,
     CrearProductoComponent,
+    CrearMarcaComponent,
+    CrearCategoriaComponent,
     RecuperarPasswordComponent,
     LayoutComponent,
     InicioComponent,
