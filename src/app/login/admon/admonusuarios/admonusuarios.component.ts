@@ -27,16 +27,5 @@ export class AdmonusuariosComponent implements OnInit {
     );
   }
 
-  eliminarUsuario(email: string) {
-    this.loginService.deleteUser(email).subscribe(
-      response => {
-        console.log(response); // Maneja la respuesta según tu lógica
-        // Actualiza la lista de usuarios después de eliminar uno
-        this.getUserData();
-      },
-      error => {
-        console.error('Error al eliminar el usuario:', error);
-      }
-    );
-  }
+  
 }

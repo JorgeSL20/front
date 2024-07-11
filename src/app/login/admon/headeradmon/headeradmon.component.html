@@ -2,32 +2,67 @@
 <html>
 <head>
     <link rel="stylesheet" href="headeradmon.component.css">
+    <style>
+        header {
+            background-color: #031d40; /* Fondo azul */
+        }
+        /* Cambiar el color del texto dentro de los elementos <a> dentro de los elementos <li> */
+        .menu li a {
+            color: white;
+        }
+        .menu_icon span {
+            background-color: white;
+        }
+        .menu ul {
+            list-style: none;
+            padding: 0;
+        }
+        .menu li {
+            margin: 10px 0;
+        }
+        .menu button {
+            background-color: transparent;
+            border: 1px solid white;
+            color: white;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .menu button:hover {
+            background-color: white;
+            color: #031d40;
+        }
+    </style>
 </head>
 <body>
     <header>
-      <div class="container">
-        <div class="row">
-          <div class="col-md-9 col-sm-9 col-9" style="text-align: end;">
-            <div class="menu_icon" [class.menu_icon_Class]="menu_icon_variable" (click)="openMenu()">
-              <span></span>
-              <span></span>
-              <span></span>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9 col-sm-9 col-9" style="text-align: end;">
+                    <div class="menu_icon" [class.menu_icon_Class]="menu_icon_variable" (click)="openMenu()">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <div class="menu" [class.menuClass]="menuVariable">
+                        <ul>
+                            <br>
+                            <li class="nav-item">
+                              <a routerLink="/user/inicio" routerLinkActive="active-link">Inicio General</a>
+                            </li>
+                            <li class="nav-item">
+                            <a routerLink="/user/admonusuarios" routerLinkActive="active-link">Todos los Usuarios</a>
+                            </li>
+                            <li class="nav-item">
+                            <button (click)="cerrarSesion()" class="btn btn-outline-light" >Cerrar sesión</button>
+                            </li>
+                        </ul>
+                        <!-- Agregar breadcrumbs después del menú -->
+                        <div class="container">
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="menu" [class.menuClass]="menuVariable">
-              <ul>
-                <br>
-                <li routerLink="/user/inicio" routerLinkActive="active-link">Inicio General</li>
-                <li routerLink="/user/admonusuarios" routerLinkActive="active-link">Todos los Usuarios</li>
-                <button (click)="cerrarSesion()">Cerrar sesion</button>
-              </ul>
-
-    <!-- Agregar breadcrumbs después del menú -->
-    <div class="container">
-    </div>
-            </div>
-          </div>
         </div>
-      </div>
-      </header>
+    </header>
 </body>
 </html>
