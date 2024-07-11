@@ -9,16 +9,15 @@ import { LoginService } from '../../services/login.service';
 })
 export class HeaderComponent implements OnInit {
 
+  menuVariable: boolean = false;
+  isLoggedIn: boolean = false; // Variable para almacenar el estado de autenticación
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private loginService: LoginService // Inyecta el servicio LoginService
   ) { }
 
-  menuVariable: boolean = false;
-  menu_icon_variable: boolean = false;
-  isLoggedIn: boolean = false; // Variable para almacenar el estado de autenticación
-  
   showAlert(message: string, alertClass: string) {
     // Crea un div para el mensaje
     const alertDiv = document.createElement('div');
@@ -37,9 +36,7 @@ export class HeaderComponent implements OnInit {
 
   openMenu() {
     this.menuVariable = !this.menuVariable;
-    this.menu_icon_variable = !this.menu_icon_variable;
   }
-
 
   checkLoggedIn() {
     this.loginService.isLoggedIn().subscribe((loggedIn: boolean) => {
@@ -48,9 +45,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loginService.isLoggedIn().subscribe((loggedIn: boolean) => {
-      this.isLoggedIn = loggedIn;
-    });
+    this.checkLoggedIn();
   }
 
   scrollToSection(sectionId: string): void {
@@ -70,14 +65,15 @@ export class HeaderComponent implements OnInit {
   }
 
   navegar() {
-    this.router.navigate(['/user/login'])
+    this.router.navigate(['/user/login']);
   }
 
   cerrarSesion() {
     this.loginService.logout(); 
     this.checkLoggedIn();
-    localStorage.clear()
-    this.router.navigate(['/user/login'])
-    this.showAlert('Sesion cerrada con exito', 'alert-success');
+    localStorage.clear();
+    this.router.navigate(['/user/login']);
+    this.showAlert('Sesión cerrada con éxito', 'alert-success');
   }
+
 }
