@@ -8,8 +8,8 @@ import { Marca } from '../interfaces/marca.interface';
 })
 
 export class MarcaService {
-  //private url: string = 'http://localhost:3000/marca/';
-  private url: string = 'https://back-production.up.railway.app/marca/';
+  private url: string = 'http://localhost:3000/marca/';
+  //private url: string = 'https://back-production.up.railway.app/marca/';
 
   constructor(private http: HttpClient) { }
 
