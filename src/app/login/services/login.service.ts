@@ -20,7 +20,7 @@ export class LoginService {
 
   constructor(private http:HttpClient) { }
 
-  url:string = 'http://back-production.up.railway.app/'
+  url:string = 'http://localhost:3000/'
 
   getUserByEmail(emai:string){
     return this.http.get<User>(this.url + 'auth/'+emai)
@@ -110,6 +110,7 @@ getPreguntas() {
       })
     );
   }
+
 logout(): void {
     localStorage.removeItem('token');
   }
