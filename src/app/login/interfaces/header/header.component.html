@@ -1,5 +1,5 @@
 <style>
-    header {
+header {
   background-color: #031d40; /* Fondo azul */
   padding: 10px 0;
   position: relative;
@@ -34,13 +34,30 @@
 }
 
 .menu li {
-  display: inline;
-  margin-left: 20px;
+  display: block;
+  margin-left: 0; /* Eliminado el margen izquierdo para las opciones del menú */
+  margin-bottom: 10px; /* Espacio entre cada elemento del menú */
+}
+
+.menu li:last-child {
+  margin-bottom: 0; /* Sin margen inferior para el último elemento del menú */
 }
 
 .menu li a {
   color: white;
   text-decoration: none;
+  padding: 10px 20px;
+  transition: all 0.3s ease; /* Transición suave para efectos hover */
+  display: block; /* Hacer que los enlaces ocupen todo el ancho del menú */
+}
+
+.menu li a:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* Color de fondo al hacer hover */
+  border-radius: 5px; /* Bordes redondeados */
+}
+
+.menu .logout-btn {
+  text-align: center; /* Centrar el botón de cerrar sesión */
 }
 
 @media (max-width: 768px) {
@@ -79,61 +96,68 @@
     width: 100%;
     padding: 10px 20px;
   }
+
+  .menu li a:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Color de fondo al hacer hover */
+    border-radius: 5px; /* Bordes redondeados */
+  }
+
+  .menu .logout-btn {
+    text-align: center; /* Centrar el botón de cerrar sesión */
+  }
 }
 
-    </style>
+</style>
     
     
     
-    <header>
-        <div class="container">
-          <div class="row align-items-center">
-            <div class="col-md-3 col-sm-3 col-3">
-              <!-- Botón del menú hamburguesa -->
-              <div class="menu_icon" (click)="openMenu()">
-                <span></span>
-                <span></span>
-                <span></span>
-              </div>
-              <!-- Logo -->
-              <div class="logo">
-                <img src="../assets/logoblanco.jpg" alt="" srcset="">
-              </div>
-            </div>
-            <div class="col-md-9 col-sm-9 col-9">
-              <!-- Opciones del menú -->
-              <div class="menu" [class.active]="menuVariable">
-                <ul class="nav">
-                  <!-- Opciones si está autenticado -->
-                  <ng-container *ngIf="isLoggedIn">
-                    <li class="nav-item">
-                      <a class="nav-link active" routerLink="/user/inicio" routerLinkActive="active-link">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" routerLink="/user/productospublicos" routerLinkActive="active-link">Productos</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" routerLink="/user/perfil" routerLinkActive="active-link">Mi perfil</a>
-                    </li>
-                    <li class="nav-item">
-                      <button (click)="cerrarSesion()" class="btn btn-outline-light">Cerrar sesión</button>
-                    </li>
-                  </ng-container>
-                  <!-- Opciones si no está autenticado -->
-                  <ng-container *ngIf="!isLoggedIn">
-                    <li class="nav-item">
-                      <a class="nav-link" routerLink="/user/productos" routerLinkActive="active-link">Productos</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" routerLink="/user/login" routerLinkActive="active-link">Login</a>
-                    </li>
-                    <li class="nav-item">
-                      <button class="btn btn-outline-light" routerLink="/user/registro" routerLinkActive="active-link">Registrarse</button>
-                    </li>
-                  </ng-container>
-                </ul>
-              </div>
-            </div>
+<header>
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-3 col-sm-3 col-3">
+          <div class="menu_icon" (click)="openMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <div class="logo">
+            <img src="../assets/logoblanco.jpg" alt="" srcset="">
           </div>
         </div>
-      </header>      
+        <div class="col-md-9 col-sm-9 col-9">
+          <div class="menu text-end" [class.active]="menuVariable">
+            <ul class="nav">
+              <ng-container *ngIf="isLoggedIn">
+                <li class="nav-item">
+                  <a class="nav-link active" routerLink="/user/inicio" routerLinkActive="active-link">Inicio</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" routerLink="/user/productospublicos" routerLinkActive="active-link">Productos</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" routerLink="/user/perfil" routerLinkActive="active-link">Mi perfil</a>
+                </li>
+                <li class="nav-item">
+                  <div class="logout-btn">
+                    <button (click)="cerrarSesion()" class="btn btn-outline-light">Cerrar sesión</button>
+                  </div>
+                </li>
+              </ng-container>
+              <ng-container *ngIf="!isLoggedIn">
+                <li class="nav-item">
+                  <a class="nav-link" routerLink="/user/productos" routerLinkActive="active-link">Productos</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" routerLink="/user/login" routerLinkActive="active-link">Login</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" routerLink="/user/registro" routerLinkActive="active-link">Registrarse</a>
+                </li>
+              </ng-container>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  
