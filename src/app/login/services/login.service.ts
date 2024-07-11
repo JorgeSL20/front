@@ -110,6 +110,7 @@ getPreguntas() {
       })
     );
   }
+
 logout(): void {
     localStorage.removeItem('token');
   }
