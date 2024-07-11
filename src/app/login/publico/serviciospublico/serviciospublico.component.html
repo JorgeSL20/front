@@ -7,25 +7,80 @@
 <app-header></app-header>
 <H1>Productos publicos</H1>
 <style>
-  .card {
-/* Estilos generales de las tarjetas */
-opacity: 0; /* Inicialmente invisibles */
-transform: translateY(20px); /* Puedes animar la entrada si lo deseas */
-transition: opacity 0.5s, transform 0.5s;
+.card-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
 }
+
+.card {
+  width: 18rem;
+  margin: 0 10px 20px 10px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s, transform 0.5s;
+}
+
 .card.visible {
-opacity: 1; /* Hacer visible cuando está en la vista */
-transform: translateY(0);
+  opacity: 1;
+  transform: translateY(0);
 }
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.card img {
+  height: 200px; /* Ajusta la altura de la imagen según sea necesario */
+}
+
+.card-body {
+  text-align: center;
+}
+
+.card-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.card-text {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+.btn-success {
+  background-color: #28a745;
+  border-color: #28a745;
+}
+
+.btn-success:hover {
+  background-color: #218838;
+  border-color: #218838;
+}
+
+.carousel-item img {
+  max-height: 300px; /* Altura máxima de las imágenes del carrusel */
+  width: auto; /* Ancho automático para mantener la proporción */
+  margin: auto; /* Centra horizontalmente */
+}
+
 #elemento {
-            display: none;
-        }
- /* Estilos para ajustar el tamaño de las imágenes del carrusel */
-        .carousel-item img {
-            max-height: 300px; /* Altura máxima de las imágenes */
-            width: auto; /* Ancho automático para mantener la proporción */
-            margin: auto; /* Centra horizontalmente */
-        }
+  display: none;
+}
+
+
 </style>
 
 
