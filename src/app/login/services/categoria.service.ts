@@ -9,7 +9,7 @@ import { Categoria } from '../interfaces/categoria.interface';
 
 export class CategoriaService {
   //private url: string = 'http://localhost:3000/categoria/';
-  private url: string = 'https://main--gatewaysoluciones.netlify.app/categoria/';
+  private url: string = 'https://back-production.up.railway.app/categoria/';
   
 
   constructor(private http: HttpClient) { }

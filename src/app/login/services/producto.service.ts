@@ -9,7 +9,7 @@ import { Producto } from '../interfaces/producto.interface';
 
 export class ProductoService {
   //private url: string = 'http://localhost:3000/producto/';
-  private url: string = 'https://main--gatewaysoluciones.netlify.app/producto/';
+  private url: string = 'https://back-production.up.railway.app/producto/';
 
   constructor(private http: HttpClient) { }
 
