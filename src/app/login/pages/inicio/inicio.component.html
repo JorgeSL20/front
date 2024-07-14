@@ -1,18 +1,13 @@
-<!--
-<div class="video-container">
-  <video #reproductorVideo width="640" height="360" controls>
-    <source src="../assets/videoGateWay.mp3" type="video/mp4">
-    Tu navegador no soporta el elemento de video.
-  </video>
-
-  <div class="controles">
-    <button class="boton-control" (click)="reproducirVideo()">Reproducir</button>
-    <button class="boton-control" (click)="pausarVideo()">Pausar</button>
-  </div>
-</div>
--->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
 <app-header></app-header>
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 <style>
   .carousel-item-next,
   .carousel-item-prev,
@@ -112,8 +107,25 @@
     background-color: #218838;
     border-color: #218838;
   }
-</style>
+ .video-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh; /* Altura ajustada */
+  padding: 60px; /* Espacio adicional alrededor del video */
+}
 
+video {
+  border: 5px solid #007bff; /* Borde azul */
+  border-radius: 10px; /* Esquinas redondeadas */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para un efecto elevado */
+  max-width: 100%; /* Asegurar que el video sea responsivo */
+  height: auto; /* Mantener la proporción del video */
+}
+
+
+</style>
+<br>
 
 <!-- Carousel -->
 <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel" style="max-width: 1200px; margin: auto;">
@@ -161,6 +173,13 @@
     <img src="../assets/samsung-galaxy-a03.jpg" alt="Smartphones">
     <p>Smartphones</p>
   </div>
+</div>
+
+<div class="video-container">
+  <video #reproductorVideo width="640" height="360" autoplay muted>
+    <source src="../assets/videoGateWay.mp3" type="video/mp4">
+    Tu navegador no soporta el elemento de video.
+  </video>
 </div>
 
 <!-- Productos destacados -->
@@ -246,6 +265,9 @@
   </div>
 </div>
 
+
+
+
 <!-- Testimonios de clientes -->
 <div class="testimonials">
   <h3>Lo que dicen nuestros clientes</h3>
@@ -256,7 +278,8 @@
     <p>"Gran experiencia de compra, volveré pronto." - María López</p>
   </div>
 </div>
-
+</body>
+</html>
 <app-footer></app-footer>
 
 <!-- Incluye Bootstrap JS y dependencias -->
