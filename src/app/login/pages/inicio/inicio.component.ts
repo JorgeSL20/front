@@ -12,8 +12,8 @@ export class InicioComponent implements AfterViewInit {
   constructor(private router: Router) {}
 
   ngAfterViewInit(): void {
-    // Iniciar la reproducción del video automáticamente sin sonido
     this.reproducirVideo();
+    this.agregarEventoTermino();
   }
 
   reproducirVideo(): void {
@@ -23,6 +23,15 @@ export class InicioComponent implements AfterViewInit {
       videoElement.play()
         .catch((error: any) => console.error('Error al reproducir el video:', error));
     }
+  }
+
+  agregarEventoTermino(): void {
+    const videoElement = this.reproductorVideo.nativeElement;
+    videoElement.addEventListener('ended', () => {
+      videoElement.currentTime = 0;
+      videoElement.play()
+        .catch((error: any) => console.error('Error al reiniciar el video:', error));
+    });
   }
 
   navegar(): void {
