@@ -145,17 +145,7 @@
 <h2 class="mt-3 mb-3 ml-3">Ofertas</h2>
 <div class="card-container d-flex justify-content-around flex-wrap mb-4 ml-3 mr-3">
 
-  <div class="card" style="width: 18rem; margin: 0 10px 20px 10px;" onmouseover="enlargeCard(this)" onmouseout="shrinkCard(this)">
-    <img src="../assets/tablet-htc.jpg" class="card-img-top" alt="...">
-    <div class="card-body">
-        <h5 class="card-title">Tablet HTC</h5>
-        <p class="card-text">$3,999</p>
-        <!-- Agrega el data-toggle y data-target para mostrar el modal -->
-        <button class="btn btn-primary" style="margin-right: 10px;" data-toggle="modal" data-target="#detallesModal">Detalles</button>
-        
-        <a href="#" class="btn btn-success">Añadir al carrito</a>
-    </div>
-</div>
+
 
 <!-- Modal de Detalles -->
 <div class="modal" id="detallesModal" tabindex="-1" role="dialog" aria-labelledby="detallesModalLabel" aria-hidden="true">
@@ -179,7 +169,7 @@
     </div>
   </div>
 </div>
-// (mouseover)="enlargeCard($event)" (mouseout)="shrinkCard($event)
+ <!-- (mouseover)="enlargeCard($event)" (mouseout)="shrinkCard($event) -->
 <div class="card" *ngFor="let producto of productos" style="width: 18rem; margin: 0 10px 20px 10px;">
   <img [src]="producto.imagenP" class="card-img-top" alt="Imagen del producto">
   <div class="card-body">
