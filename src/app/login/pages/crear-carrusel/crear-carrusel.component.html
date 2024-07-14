@@ -50,17 +50,30 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <h2>Crear Carrusel</h2>
-        <form [formGroup]="myForm" (ngSubmit)="guardarCarrusel()">
-          <div class="mb-3">
-            <label for="file" class="form-label">Seleccione una imagen</label>
-            <input type="file" class="form-control" id="file" formControlName="file">
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-header">
+                Agregar Carrusel
+              </div>
+              <div class="card-body">
+                <form [formGroup]="myForm" (ngSubmit)="guardarCarrusel()">
+                  <div class="mb-3">
+                    <label for="file" class="form-label">Imagen:</label>
+                    <input formControlName="file" type="file" class="form-control" id="file">
+                  </div>
+                  <div class="d-flex justify-content-between">
+                    <button type="button" class="btn btn-secondary" (click)="regresar()">Regresar</button>
+                    <button type="submit" class="btn btn-primary">Guardar Carrusel</button>
+                  </div>
+                </form>
+              </div>
+            </div>
           </div>
-          <button type="submit" class="btn btn-primary" [disabled]="myForm.invalid">Guardar</button>
-          <button type="button" class="btn btn-secondary" (click)="regresar()">Cancelar</button>
-        </form>
+        </div>
       </div>
+      
   
    <!-- Bootstrap Bundle JS -->
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
