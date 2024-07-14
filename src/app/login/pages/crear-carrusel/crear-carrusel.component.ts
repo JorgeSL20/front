@@ -11,7 +11,6 @@ import { Carrusel } from '../../interfaces/carrusel.interface';
 })
 export class CrearCarruselComponent {
   myForm: FormGroup;
-  selectedFile: File | null = null;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -23,22 +22,18 @@ export class CrearCarruselComponent {
     });
   }
 
-  onFileChange(event: any) {
-    if (event.target.files.length > 0) {
-      this.selectedFile = event.target.files[0];
-    }
-  }
-
   guardarCarrusel() {
-    if (this.myForm.valid && this.selectedFile) {
+    if (this.myForm.valid) {
       const formData = new FormData();
-      formData.append('file', this.selectedFile);
+      const fileInput = this.myForm.get('file')!.value;
+
+      formData.append('file', fileInput.files[0]);
 
       this.carruselService.uploadImage(formData).subscribe(
         (response: any) => {
           console.log('Imagen subida:', response);
           const createCarruselDto: Carrusel = {
-            id: 0, // Proporciona un valor válido para 'id'
+            id: 0,
             url: response.secure_url,
             publicId: response.public_id
           };

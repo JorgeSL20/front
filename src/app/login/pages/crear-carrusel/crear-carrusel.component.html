@@ -50,30 +50,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-          <div class="col-md-6">
-            <div class="card">
-              <div class="card-header">
-                Agregar Carrusel
-              </div>
-              <div class="card-body">
-                <form [formGroup]="myForm" (ngSubmit)="guardarCarrusel()">
-                  <div class="mb-3">
-                    <label for="file" class="form-label">Imagen:</label>
-                    <input formControlName="file" type="file" class="form-control" id="file" (change)="onFileChange($event)">
-                  </div>
-                  <div class="d-flex justify-content-between">
-                    <button type="button" class="btn btn-secondary" (click)="regresar()">Regresar</button>
-                    <button type="submit" class="btn btn-primary">Guardar Carrusel</button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
+    
       
   
    <!-- Bootstrap Bundle JS -->
