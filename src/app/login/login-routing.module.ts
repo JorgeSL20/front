@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CrearCuentaComponent } from './pages/crear-cuenta/crear-cuenta.component';
 import { RecuperarPasswordComponent } from './pages/recuperar-password/recuperar-password.component';
+import { CrearCarruselComponent } from './pages/crear-carrusel/crear-carrusel.component';
 import { CrearMarcaComponent } from './pages/crear-marca/crear-marca.component';
 import { ListarMarcaComponent } from './pages/listar-marca/listar-marca.component';
 import { CrearCategoriaComponent } from './pages/crear-categoria/crear-categoria.component';
@@ -61,6 +62,10 @@ const routes: Routes = [
       {
         path: 'crear-categoria',
         component: CrearCategoriaComponent
+      },
+      {
+        path: 'crear-carrusel',
+        component: CrearCarruselComponent
       },
       {
         path: 'listar-producto',
