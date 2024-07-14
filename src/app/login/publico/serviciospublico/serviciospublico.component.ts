@@ -4,6 +4,7 @@ import { Producto } from '../../interfaces/producto.interface';
 import { ProductoService } from '../../services/producto.service';
 import { CategoriaService } from '../../services/categoria.service'; 
 import { MarcaService } from '../../services/marca.service';
+import { FormsModule } from '@angular/forms';  // Importa FormsModule
 
 @Component({
   selector: 'app-serviciospublico',
@@ -14,6 +15,8 @@ export class ServiciospublicoComponent implements OnInit {
   productos: Producto[] = [];
   categorias: any[] = [];
   marcas: any[] = [];
+  terminoBusqueda: string = '';
+  productosFiltrados: Producto[] = [];
 
   constructor(
     private el: ElementRef,
@@ -55,6 +58,16 @@ export class ServiciospublicoComponent implements OnInit {
       (error) => {
         console.error('Error al obtener productos:', error);
       }
+    );
+  }
+
+  buscar(): void {
+    const termino = this.terminoBusqueda.toLowerCase();
+    this.productosFiltrados = this.productos.filter(producto => 
+      producto.producto.toLowerCase().includes(termino) ||
+      producto.categoria.toLowerCase().includes(termino) ||
+      producto.marca.toLowerCase().includes(termino) ||
+      producto.descripcion.toLowerCase().includes(termino)
     );
   }
 

@@ -110,9 +110,21 @@
         </li>
       </ul>
       <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
+        <input 
+          class="form-control me-2" 
+          type="search" 
+          placeholder="Buscar" 
+          aria-label="Search" 
+          [(ngModel)]="terminoBusqueda" 
+          name="terminoBusqueda" 
+          (input)="buscar()"
+        >
         <button class="btn btn-outline-primary" type="submit">Buscar</button>
       </form>
+      
+      <div *ngIf="productosFiltrados.length === 0">
+        No se encontraron productos.
+      </div>
     </div>
   </div>
 </nav>
