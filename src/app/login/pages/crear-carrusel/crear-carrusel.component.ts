@@ -25,33 +25,36 @@ export class CrearCarruselComponent {
 
   guardarCarrusel() {
     if (this.myForm.valid) {
-      const formData = new FormData();
-      const fileInput = this.myForm.get('file')!.value;
+      const fileInput = this.myForm.get('file')?.value;
+      if (fileInput && fileInput.files && fileInput.files[0]) {
+        const formData = new FormData();
+        formData.append('file', fileInput.files[0]);
 
-      formData.append('file', fileInput.files[0]);
-
-      this.carruselService.uploadImage(formData).subscribe(
-        (response: any) => {
-          console.log('Imagen subida:', response);
-          const createCarruselDto: Carrusel = {
-            id: 0,
-            url: response.secure_url,
-            publicId: response.public_id
-          };
-          this.carruselService.createCarrusel(createCarruselDto).subscribe(
-            (carrusel: Carrusel) => {
-              console.log('Carrusel creado:', carrusel);
-              this.router.navigate(['/user/listar-carruseles']);
-            },
-            error => {
-              console.error('Error al crear carrusel:', error);
-            }
-          );
-        },
-        error => {
-          console.error('Error al subir imagen:', error);
-        }
-      );
+        this.carruselService.uploadImage(formData).subscribe(
+          (response: any) => {
+            console.log('Imagen subida:', response);
+            const createCarruselDto: Carrusel = {
+              id: 0,
+              url: response.secure_url,
+              publicId: response.public_id
+            };
+            this.carruselService.createCarrusel(createCarruselDto).subscribe(
+              (carrusel: Carrusel) => {
+                console.log('Carrusel creado:', carrusel);
+                this.router.navigate(['/user/listar-carruseles']);
+              },
+              error => {
+                console.error('Error al crear carrusel:', error);
+              }
+            );
+          },
+          error => {
+            console.error('Error al subir imagen:', error);
+          }
+        );
+      } else {
+        console.error('No se ha seleccionado ningún archivo');
+      }
     }
   }
 
