@@ -61,11 +61,12 @@
                 <form [formGroup]="myForm" (ngSubmit)="guardarCarrusel()">
                   <div class="mb-3">
                     <label for="file" class="form-label">Imagen:</label>
-                    <input formControlName="file" type="file" class="form-control" id="file">
+                    <input type="file" class="form-control" id="file" (change)="onFileChange($event)">
+                    <div *ngIf="isFileInvalid" class="invalid-feedback d-block">Debe seleccionar un archivo</div>
                   </div>
                   <div class="d-flex justify-content-between">
                     <button type="button" class="btn btn-secondary" (click)="regresar()">Regresar</button>
-                    <button type="submit" class="btn btn-primary">Guardar Carrusel</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="myForm.invalid || !selectedFile">Guardar Carrusel</button>
                   </div>
                 </form>
               </div>
@@ -73,6 +74,7 @@
           </div>
         </div>
       </div>
+      
       
   
    <!-- Bootstrap Bundle JS -->
