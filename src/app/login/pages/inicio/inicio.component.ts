@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -6,44 +6,32 @@ import { Router } from '@angular/router';
   templateUrl: './inicio.component.html',
   styleUrls: ['./inicio.component.css']
 })
-export class InicioComponent {
-  @ViewChild('reproductorVideo') reproductorVideo: any;
+export class InicioComponent implements AfterViewInit {
+  @ViewChild('reproductorVideo') reproductorVideo!: ElementRef<HTMLVideoElement>;
 
-  constructor(private router: Router, private el: ElementRef) {}
+  constructor(private router: Router) {}
 
-  ngOnInit(): void {
-    // Inicializar el componente, si es necesario
+  ngAfterViewInit(): void {
+    this.reproducirVideo();
+    this.agregarEventoTermino();
   }
 
-  @HostListener('window:scroll', ['$event'])
-  onScroll(event: Event): void {
-    // Lógica que quieres ejecutar cuando ocurre el evento de desplazamiento
-
-    // Por ejemplo, puedes verificar si un elemento está en la vista y realizar alguna acción
-    const cards = this.el.nativeElement.querySelectorAll('.card');
-    cards.forEach((card: HTMLElement) => {
-      const rect = card.getBoundingClientRect();
-      if (rect.top < window.innerHeight && rect.bottom >= 0) {
-        // La tarjeta está en la vista, puedes realizar alguna acción aquí
-        // Por ejemplo, añadir una clase, cargar datos adicionales, etc.
-        card.classList.add('visible');
-      } else {
-        // La tarjeta no está en la vista, puedes revertir la acción si es necesario
-        card.classList.remove('visible');
-      }
-    });
-  }
   reproducirVideo(): void {
     if (this.reproductorVideo) {
-      this.reproductorVideo.nativeElement.play()
+      const videoElement = this.reproductorVideo.nativeElement;
+      videoElement.muted = true; // Asegurar que el video esté sin sonido
+      videoElement.play()
         .catch((error: any) => console.error('Error al reproducir el video:', error));
     }
   }
-  
-  pausarVideo(): void {
-    if (this.reproductorVideo) {
-      this.reproductorVideo.nativeElement.pause();
-    }
+
+  agregarEventoTermino(): void {
+    const videoElement = this.reproductorVideo.nativeElement;
+    videoElement.addEventListener('ended', () => {
+      videoElement.currentTime = 0;
+      videoElement.play()
+        .catch((error: any) => console.error('Error al reiniciar el video:', error));
+    });
   }
 
   navegar(): void {
