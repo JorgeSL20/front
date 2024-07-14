@@ -12,8 +12,6 @@ import { Carrusel } from '../../interfaces/carrusel.interface';
 })
 export class CrearCarruselComponent {
   myForm: FormGroup;
-  selectedFile: File | null = null;
-  isFileInvalid: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -25,47 +23,39 @@ export class CrearCarruselComponent {
     });
   }
 
-  onFileChange(event: any) {
-    const file = event.target.files && event.target.files[0];
-    if (file) {
-      this.selectedFile = file;
-      this.isFileInvalid = false; // Reseteamos la bandera si se selecciona un archivo
-    } else {
-      this.selectedFile = null;
-      this.isFileInvalid = true; // Mostramos el mensaje de error si no hay archivo seleccionado
-    }
-  }
-
   guardarCarrusel() {
-    if (this.myForm.valid && this.selectedFile) {
+    if (this.myForm.valid) {
       const formData = new FormData();
-      formData.append('file', this.selectedFile);
+      const fileInput = (document.getElementById('file') as HTMLInputElement).files;
 
-      this.carruselService.uploadImage(formData).subscribe(
-        (response: any) => {
-          console.log('Imagen subida:', response);
-          const createCarruselDto: Carrusel = {
-            id: 0,
-            url: response.secure_url,
-            publicId: response.public_id
-          };
-          this.carruselService.createCarrusel(createCarruselDto).subscribe(
-            (carrusel: Carrusel) => {
-              console.log('Carrusel creado:', carrusel);
-              this.router.navigate(['/user/listar-carruseles']);
-            },
-            error => {
-              console.error('Error al crear carrusel:', error);
-            }
-          );
-        },
-        error => {
-          console.error('Error al subir imagen:', error);
-        }
-      );
-    } else {
-      this.isFileInvalid = true;
-      console.error('No se ha seleccionado ningún archivo');
+      if (fileInput && fileInput.length > 0) {
+        formData.append('file', fileInput[0]);
+
+        this.carruselService.uploadImage(formData).subscribe(
+          (response: any) => {
+            console.log('Imagen subida:', response);
+            const createCarruselDto: Carrusel = {
+              id: 0,
+              url: response.secure_url,
+              publicId: response.public_id
+            };
+            this.carruselService.createCarrusel(createCarruselDto).subscribe(
+              (carrusel: Carrusel) => {
+                console.log('Carrusel creado:', carrusel);
+                this.router.navigate(['/user/listar-carruseles']);
+              },
+              error => {
+                console.error('Error al crear carrusel:', error);
+              }
+            );
+          },
+          error => {
+            console.error('Error al subir imagen:', error);
+          }
+        );
+      } else {
+        console.error('No se ha seleccionado ningún archivo');
+      }
     }
   }
 
