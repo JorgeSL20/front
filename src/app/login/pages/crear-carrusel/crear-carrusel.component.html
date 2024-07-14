@@ -61,7 +61,7 @@
                 <form [formGroup]="myForm" (ngSubmit)="guardarCarrusel()">
                   <div class="mb-3">
                     <label for="file" class="form-label">Imagen:</label>
-                    <input formControlName="file" type="file" class="form-control" id="file">
+                    <input formControlName="file" type="file" class="form-control" id="file" (change)="onFileChange($event)">
                   </div>
                   <div class="d-flex justify-content-between">
                     <button type="button" class="btn btn-secondary" (click)="regresar()">Regresar</button>
@@ -73,6 +73,7 @@
           </div>
         </div>
       </div>
+      
       
   
    <!-- Bootstrap Bundle JS -->
