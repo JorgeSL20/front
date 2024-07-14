@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CarruselService } from '../../services/carrusel.service';
 import { Router } from '@angular/router';
-import { Carrusel } from '../../interfaces/carrusel.interface'; // Ajusta la ruta según sea necesario
+import { Carrusel } from '../../interfaces/carrusel.interface';
 
 @Component({
   selector: 'app-crear-carrusel',
@@ -25,13 +25,15 @@ export class CrearCarruselComponent {
   guardarCarrusel() {
     if (this.myForm.valid) {
       const formData = new FormData();
-      formData.append('file', this.myForm.get('file')!.value);
+      const fileInput = this.myForm.get('file')!.value;
+
+      formData.append('file', fileInput.files[0]);
 
       this.carruselService.uploadImage(formData).subscribe(
         (response: any) => {
           console.log('Imagen subida:', response);
           const createCarruselDto: Carrusel = {
-            id: 0, // Aquí debes proporcionar un valor válido para 'id'
+            id: 0,
             url: response.secure_url,
             publicId: response.public_id
           };

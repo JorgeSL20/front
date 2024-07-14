@@ -7,23 +7,23 @@ import { Carrusel } from '../interfaces/carrusel.interface';
   providedIn: 'root'
 })
 export class CarruselService {
-  private url: string = 'https://proyectogatewayback-production.up.railway.app/carrusel/upload';
+  private baseUrl: string = 'https://proyectogatewayback-production.up.railway.app/carrusel';
 
   constructor(private http: HttpClient) { }
 
   uploadImage(formData: FormData): Observable<any> {
-    return this.http.post<any>(`${this.url}upload`, formData);
+    return this.http.post<any>(`${this.baseUrl}/upload`, formData);
   }
 
-  createCarrusel(newCarrusel: any): Observable<Carrusel> {
-    return this.http.post<Carrusel>(this.url, newCarrusel);
+  createCarrusel(newCarrusel: Carrusel): Observable<Carrusel> {
+    return this.http.post<Carrusel>(this.baseUrl, newCarrusel);
   }
 
   findAllCarruseles(): Observable<Carrusel[]> {
-    return this.http.get<Carrusel[]>(this.url);
+    return this.http.get<Carrusel[]>(this.baseUrl);
   }
 
   removeCarrusel(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.url}${id}`);
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 }
