@@ -7,7 +7,7 @@ import { Carrusel } from '../interfaces/carrusel.interface';
   providedIn: 'root'
 })
 export class CarruselService {
-  private url: string = 'https://proyectogatewayback-production.up.railway.app/carrusel/';
+  private url: string = 'https://proyectogatewayback-production.up.railway.app/carrusel/upload';
 
   constructor(private http: HttpClient) { }
 
