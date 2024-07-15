@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<style>
+  header {
+      background-color: #031d40; /* Fondo azul */
+  }
+  /* Cambiar el color del texto dentro de los elementos <a> dentro de los elementos <li> */
+  .menu li a {
+      color: white;
+  }
+</style>
+
+<body>
+  <header>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-3 col-sm-3 col-3">
+                <div class="logo">
+                    <img src="../assets/logoblanco.jpg" alt="" srcset="">
+                </div>
+            </div>
+            <div class="col-md-9 col-sm-9 col-9">
+                <div class="menu_icon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="menu text-end">
+                    <ul class="nav justify-content-end">
+                      <li class="nav-item">
+                        <a class="nav-link" routerLink="/user/servicios" routerLinkActive="active-link">Productos</a>
+                      </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/user/crear-cuenta" routerLinkActive="active-link">Registrarse</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/" routerLinkActive="active-link">Login</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-header">
+                Agregar Carrusel
+              </div>
+              <div class="card-body">
+                <form [formGroup]="myForm" (ngSubmit)="guardarCarrusel()">
+                  <div class="mb-3">
+                    <label for="file" class="form-label">Imagen:</label>
+                    <input type="file" class="form-control" id="file" formControlName="file" name="file">
+                    <div *ngIf="myForm.get('file')?.invalid && myForm.get('file')?.touched" class="invalid-feedback d-block">Debe seleccionar un archivo</div>
+                  </div>
+                  <div class="d-flex justify-content-between">
+                    <button type="button" class="btn btn-secondary" (click)="regresar()">Regresar</button>
+                    <button type="submit" class="btn btn-primary">Guardar Carrusel</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      
+      
+  
+   <!-- Bootstrap Bundle JS -->
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+   <!-- Font Awesome -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+</body>
+</html>
+<br>
+<br>
+<app-footer></app-footer>
+</body>
+
