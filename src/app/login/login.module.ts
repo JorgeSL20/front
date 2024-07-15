@@ -67,6 +67,7 @@ import { LoginService } from './services/login.service';
     PerfilComponent,
     EditarPerfilComponent,
     ServiciospublicoComponent,
+    
 
         //admon
         HeaderadmonComponent,
@@ -75,10 +76,11 @@ import { LoginService } from './services/login.service';
   ],
   imports: [
     CommonModule,
+    
     LoginRoutingModule,
     ReactiveFormsModule,
     NgxCaptchaModule,
-    FormsModule
+    FormsModule,
   ],
   providers:[LoginService]
 })

@@ -137,6 +137,7 @@ const routes: Routes = [
         canActivate: [canActivate],
         canMatch:[canMatch]
       },
+
       {
         path: 'login', component: LoginComponent
 

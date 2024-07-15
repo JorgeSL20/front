@@ -54,8 +54,7 @@ export class LoginService {
   getDataUser(id:string){
     return this.http.get<DataUser>(this.url + 'auth/user/'+id)
   }
-
-
+  
   updateUser(id:string,data:UpdateUser){
     return this.http.patch<UpdateUser>(this.url + 'auth/perfil/'+parseInt(id),data)
   }
