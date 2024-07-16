@@ -35,6 +35,7 @@ import { AdmonpreguntasComponent } from './admon/admonpreguntas/admonpreguntas.c
 import { AdmonusuariosComponent } from './admon/admonusuarios/admonusuarios.component';
 import { HeaderadmonComponent } from './admon/headeradmon/headeradmon.component';
 import { CrearCarruselComponent } from './pages/crear-carrusel/crear-carrusel.component';
+import { ListarCarruselComponent } from './pages/listar-carrusel/listar-carrusel.component';
 //CAPTCHA//
 import { NgxCaptchaModule } from 'ngx-captcha';
 import { LoginService } from './services/login.service';
@@ -46,6 +47,7 @@ import { LoginService } from './services/login.service';
     ListarMarcaComponent,
     ListarProductosComponent,
     ListarCategoriaComponent,
+    ListarCarruselComponent,
     CrearProductoComponent,
     CrearMarcaComponent,
     CrearCategoriaComponent,
