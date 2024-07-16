@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';  
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon'; // Importa MatIconModule
+
 import { LoginComponent } from './pages/login/login.component';
 import { CrearCuentaComponent } from './pages/crear-cuenta/crear-cuenta.component';
 import { RecuperarPasswordComponent } from './pages/recuperar-password/recuperar-password.component';
@@ -12,7 +15,6 @@ import { ListarProductosComponent } from './pages/listar-producto/listar-product
 import { CrearProductoComponent } from './pages/crear-producto/crear-producto.component';
 import { LayoutComponent } from './pages/layout/layout.component';
 import { LoginRoutingModule } from './login-routing.module';
-import { ReactiveFormsModule } from '@angular/forms';
 import { InicioComponent } from './pages/inicio/inicio.component';
 import { AgendarComponent } from './pages/agendar/agendar.component';
 import { HeaderComponent } from './interfaces/header/header.component';
@@ -26,7 +28,7 @@ import { PreguntasComponent } from './interfaces/preguntas/preguntas.component';
 import { TerminosCondicionesComponent } from './interfaces/terminosCondiciones/terminosCondiciones.component';
 import { PoliticaCookiesComponent } from './interfaces/politicaCookies/politicaCookies.component';
 import { AvisoPrivacidadComponent } from './interfaces/avisoPrivacidad/avisoPrivacidad.component';
-import { NotFoundComponent } from './interfaces/not-found/not-found.component'
+import { NotFoundComponent } from './interfaces/not-found/not-found.component';
 import { PerfilComponent } from './pages/perfil/perfil.component';
 import { EditarPerfilComponent } from './pages/editar-perfil/editar-perfil.component';
 import { ServiciospublicoComponent } from './publico/serviciospublico/serviciospublico.component';
@@ -36,6 +38,7 @@ import { AdmonusuariosComponent } from './admon/admonusuarios/admonusuarios.comp
 import { HeaderadmonComponent } from './admon/headeradmon/headeradmon.component';
 import { CrearCarruselComponent } from './pages/crear-carrusel/crear-carrusel.component';
 import { CarritoComponent } from './pages/carrito/carrito.component';
+
 //CAPTCHA//
 import { NgxCaptchaModule } from 'ngx-captcha';
 import { LoginService } from './services/login.service';
@@ -71,21 +74,20 @@ import { LoginService } from './services/login.service';
     EditarPerfilComponent,
     ServiciospublicoComponent,
     CarritoComponent,
-    
 
-        //admon
-        HeaderadmonComponent,
-        AdmonusuariosComponent,
-        AdmonpreguntasComponent,
+    //admon
+    HeaderadmonComponent,
+    AdmonusuariosComponent,
+    AdmonpreguntasComponent,
   ],
   imports: [
     CommonModule,
-    
     LoginRoutingModule,
     ReactiveFormsModule,
     NgxCaptchaModule,
     FormsModule,
+    MatIconModule // Asegúrate de importar MatIconModule aquí también
   ],
-  providers:[LoginService]
+  providers: [LoginService]
 })
 export class LoginModule { }
