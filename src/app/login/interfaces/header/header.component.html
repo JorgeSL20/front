@@ -105,6 +105,12 @@ header {
   .menu .logout-btn {
     text-align: center; /* Centrar el botón de cerrar sesión */
   }
+  .nav-item mat-icon {
+  font-size: 24px; /* Ajusta el tamaño del icono */
+  color: #000; /* Ajusta el color del icono */
+}
+
+  
 }
 
 </style>
@@ -137,6 +143,13 @@ header {
                 <li class="nav-item">
                   <a class="nav-link" routerLink="/user/perfil" routerLinkActive="active-link">Mi perfil</a>
                 </li>
+                <br>
+                <li class="nav-item">
+                  <a class="nav-link active" routerLink="/user/mi-carrito" routerLinkActive="active-link">
+                    <mat-icon> shopping_cart</mat-icon>
+                  </a>
+                </li>
+
                 <li class="nav-item">
                   <div class="logout-btn">
                     <button (click)="cerrarSesion()" class="btn btn-outline-light">Cerrar sesión</button>

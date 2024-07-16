@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <app-header></app-header>
-<H1>Productos publicos</H1>
+
 <style>
 .card-container {
   display: flex;
@@ -160,8 +160,8 @@
   <div class="card-body">
     <h5 class="card-title">{{ producto.producto }}</h5>
     <p class="card-text">{{ producto.precio | currency }}</p>
-    <a href="#" class="btn btn-primary" style="margin-right: 10px;">Detalles</a>
-    <a href="#" class="btn btn-success">Añadir al carrito</a>
+    <a routerLink="/user/login" class="btn btn-primary" style="margin-right: 10px;">Detalles</a>
+    <a routerLink="/user/login" class="btn btn-success">Añadir al carrito</a>
   </div>
 </div>
 

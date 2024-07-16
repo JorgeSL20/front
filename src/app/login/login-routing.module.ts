@@ -31,6 +31,7 @@ import { canActivate, canMatch } from './guards/guards.guard';
 import { ServiciospublicoComponent } from './publico/serviciospublico/serviciospublico.component';
 import { PreguntaspublicoComponent } from './publico/preguntaspublico/preguntaspublico.component';
 import { AdmonpreguntasComponent } from './admon/admonpreguntas/admonpreguntas.component';
+import { CarritoComponent } from './pages/carrito/carrito.component';
 //administrador
 import { HeaderadmonComponent} from './admon/headeradmon/headeradmon.component';
 import { AdmonusuariosComponent } from './admon/admonusuarios/admonusuarios.component';
@@ -147,6 +148,7 @@ const routes: Routes = [
         canActivate: [canActivate],
         canMatch:[canMatch]
       },
+
       {
         path: 'login', component: LoginComponent
 
