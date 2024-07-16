@@ -1,3 +1,4 @@
+// src/app/components/crear-producto/crear-producto.component.ts
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductoService } from '../../services/producto.service';
@@ -12,14 +13,14 @@ import { Router } from '@angular/router';
 })
 export class CrearProductoComponent implements OnInit {
   myForm: FormGroup;
-  categorias: any[] = []; // Propiedad para almacenar las categorías
+  categorias: any[] = [];
   marcas: any[] = [];
-
+  selectedFile: File | null = null;
 
   constructor(
     private formBuilder: FormBuilder,
     private productoService: ProductoService,
-    private categoriaService: CategoriaService, // Inyecta CategoriaService
+    private categoriaService: CategoriaService,
     private marcaService: MarcaService,
     private router: Router
   ) {
@@ -61,10 +62,22 @@ export class CrearProductoComponent implements OnInit {
     );
   }
 
+  onFileChange(event: any): void {
+    this.selectedFile = event.target.files[0];
+  }
+
   guardarProducto() {
-    if (this.myForm.valid) {
-      const productoData = this.myForm.value;
-      this.productoService.crearProducto(productoData).subscribe(
+    if (this.myForm.valid && this.selectedFile) {
+      const formData = new FormData();
+      formData.append('file', this.selectedFile);
+      formData.append('producto', this.myForm.get('producto')?.value);
+      formData.append('categoria', this.myForm.get('categoria')?.value);
+      formData.append('marca', this.myForm.get('marca')?.value);
+      formData.append('descripcion', this.myForm.get('descripcion')?.value);
+      formData.append('precio', this.myForm.get('precio')?.value);
+      formData.append('existencias', this.myForm.get('existencias')?.value);
+
+      this.productoService.crearProducto(formData).subscribe(
         response => {
           console.log(response);
           this.router.navigate(['/user/listar-producto']);

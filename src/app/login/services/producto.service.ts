@@ -1,3 +1,4 @@
+// src/app/services/producto.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -6,9 +7,7 @@ import { Producto } from '../interfaces/producto.interface';
 @Injectable({
   providedIn: 'root'
 })
-
 export class ProductoService {
-  //private url: string = 'http://localhost:3000/producto/';
   private url: string = 'https://proyectogatewayback-production.up.railway.app/producto/';
 
   constructor(private http: HttpClient) { }
@@ -24,6 +23,4 @@ export class ProductoService {
   eliminarProducto(id: number): Observable<void> {
     return this.http.delete<void>(`${this.url}${id}`);
   }
-
-  // Otros métodos del servicio, como actualizarProducto(), eliminarProducto(), etc.
 }
