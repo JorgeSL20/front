@@ -60,6 +60,6 @@ export class CrearCarruselComponent {
   }
 
   regresar() {
-    this.router.navigate(['/user/listar-carruseles']);
+    this.router.navigate(['/user/listar-carrusel']);
   }
 }
