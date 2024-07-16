@@ -74,6 +74,12 @@ const routes: Routes = [
         component: ListarProductosComponent
       },
       {
+        path: 'mi-carrito',
+        component: CarritoComponent,
+        canActivate: [canActivate],
+        canMatch: [canMatch]
+      },
+      {
         path: 'listar-marca',
         component: ListarMarcaComponent
       },

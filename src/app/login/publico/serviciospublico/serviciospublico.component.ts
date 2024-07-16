@@ -4,7 +4,7 @@ import { Producto } from '../../interfaces/producto.interface';
 import { ProductoService } from '../../services/producto.service';
 import { CategoriaService } from '../../services/categoria.service'; 
 import { MarcaService } from '../../services/marca.service';
-import { FormsModule } from '@angular/forms';  // Importa FormsModule
+import { CarritoService } from '../../services/carrito.service'; // Importa el CarritoService
 
 @Component({
   selector: 'app-serviciospublico',
@@ -23,7 +23,8 @@ export class ServiciospublicoComponent implements OnInit {
     private router: Router,
     @Inject(ProductoService) private productoService: ProductoService,
     @Inject(MarcaService) private marcaService: MarcaService,
-    @Inject(CategoriaService) private categoriaService: CategoriaService
+    @Inject(CategoriaService) private categoriaService: CategoriaService,
+    private carritoService: CarritoService // Inyecta el CarritoService
   ) { }
 
   ngOnInit(): void {
@@ -71,7 +72,21 @@ export class ServiciospublicoComponent implements OnInit {
     );
   }
 
+  agregarAlCarrito(productoId: number): void {
+    const usuarioId = 1; // Asegúrate de reemplazar esto con el ID del usuario real
+    const cantidad = 1; // Puedes ajustar esto según sea necesario
 
+    this.carritoService.agregarItem(usuarioId, productoId, cantidad).subscribe(
+      response => {
+        console.log('Producto agregado al carrito:', response);
+        // Puedes mostrar una notificación o alerta aquí
+      },
+      error => {
+        console.error('Error al agregar producto al carrito:', error);
+        // Puedes manejar el error aquí
+      }
+    );
+  }
 
   @HostListener('window:scroll', ['$event'])
   onScroll(event: Event): void {
