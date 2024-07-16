@@ -23,8 +23,9 @@
       <tbody>
         <tr *ngFor="let carrusel of carrusel">
           <td>{{ carrusel.id }}</td>
-          <td>{{ carrusel.url }}</td>
-          <td>{{ carrusel.publicId }}</td>
+          <td>
+            <img [src]="carrusel.url" alt="Imagen de Carrusel" width="100"> <!-- Mostrar imagen -->
+          </td>
           <td>
             <!-- Botón de eliminar con estilo Bootstrap -->
             <button class="btn btn-danger" (click)="eliminarCarrusel(carrusel.id)">Eliminar</button>
