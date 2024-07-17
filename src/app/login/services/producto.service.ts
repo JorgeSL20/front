@@ -7,6 +7,7 @@ import { Producto } from '../interfaces/producto.interface';
 @Injectable({
   providedIn: 'root'
 })
+
 export class ProductoService {
   private url: string = 'https://proyectogatewayback-production.up.railway.app/producto/upload';
 
