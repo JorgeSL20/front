@@ -78,7 +78,7 @@ export class CrearProductoComponent implements OnInit {
       formData.append('precio', this.myForm.get('precio')?.value);
       formData.append('existencias', this.myForm.get('existencias')?.value);
   
-      console.log('FormData:', formData); // Log para verificar datos
+      console.log('FormData:', formData); // Verificar datos
   
       this.productoService.crearProducto(formData).subscribe(
         response => {
@@ -91,6 +91,7 @@ export class CrearProductoComponent implements OnInit {
       );
     }
   }
+  
   
   
 
