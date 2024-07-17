@@ -1,177 +1,145 @@
+<!-- src/app/login/publico/serviciospublico/serviciospublico.component.html -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrito</title>
 </head>
 <app-header></app-header>
-<H1>Productos publicos</H1>
-<style>
-.card-container {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
-}
-
-.card {
-  width: 18rem;
-  margin: 0 0px 0px 0px; /* Reducido el margen entre las tarjetas */
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.5s, transform 0.5s;
-}
-
-.card.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.card:hover {
-  transform: scale(1.05);
-}
-
-.card img {
-  height: 200px; /* Ajusta la altura de la imagen según sea necesario */
-}
-
-.card-body {
-  text-align: center;
-}
-
-.card-title {
-  font-size: 1.2rem;
-  font-weight: bold;
-}
-
-.card-text {
-  font-size: 1rem;
-  color: #555;
-  margin-bottom: 10px;
-}
-
-.btn-primary {
-  background-color: #007bff;
-  border-color: #007bff;
-}
-
-.btn-primary:hover {
-  background-color: #0056b3;
-  border-color: #0056b3;
-}
-
-.btn-success {
-  background-color: #28a745;
-  border-color: #28a745;
-}
-
-.btn-success:hover {
-  background-color: #218838;
-  border-color: #218838;
-}
-
-.carousel-item img {
-  max-height: 300px; /* Altura máxima de las imágenes del carrusel */
-  width: auto; /* Ancho automático para mantener la proporción */
-  margin: auto; /* Centra horizontalmente */
-}
-
-#elemento {
-  display: none;
-}
-
-
-</style>
-
-<nav class="navbar navbar-expand-lg navbar-light ">
-  <div class="container-fluid">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#" onmouseover="hoverLink(this)" onmouseout="unhoverLink(this)">Ofertas</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" onmouseover="hoverLink(this)" onmouseout="unhoverLink(this)">
-            Categoria
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/" onmouseover="hoverLink(this)" onmouseout="unhoverLink(this)">Mis compras</a>
-        </li>
-      </ul>
-      <form class="d-flex">
-        <input 
-          class="form-control me-2" 
-          type="search" 
-          placeholder="Buscar" 
-          aria-label="Search" 
-          [(ngModel)]="terminoBusqueda" 
-          name="terminoBusqueda" 
-          (input)="buscar()"
-        >
-        <button class="btn btn-outline-primary" type="submit">Buscar</button>
-      </form>
-      
-      <div *ngIf="productosFiltrados.length === 0">
-        No se encontraron productos.
-      </div>
-    </div>
-  </div>
-</nav>
 <body>
+  <h1>Productos Públicos</h1>
+  <style>
+    .card-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
 
-<div class="card-container d-flex justify-content-around flex-wrap mb-4 ml-3 mr-3">
+    .card {
+      width: 18rem;
+      margin: 0 0px 0px 0px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s, transform 0.5s;
+    }
 
-<!-- Modal de Detalles -->
-<div class="modal" id="detallesModal" tabindex="-1" role="dialog" aria-labelledby="detallesModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="detallesModalLabel">Detalles del Producto</h5>
-        <!-- Botón para cerrar el modal -->
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+    .card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+    }
+
+    .card img {
+      height: 200px;
+    }
+
+    .card-body {
+      text-align: center;
+    }
+
+    .card-title {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    .card-text {
+      font-size: 1rem;
+      color: #555;
+      margin-bottom: 10px;
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      border-color: #007bff;
+    }
+
+    .btn-primary:hover {
+      background-color: #0056b3;
+      border-color: #0056b3;
+    }
+
+    .btn-success {
+      background-color: #28a745;
+      border-color: #28a745;
+    }
+
+    .btn-success:hover {
+      background-color: #218838;
+      border-color: #218838;
+    }
+
+    .carousel-item img {
+      max-height: 300px;
+      width: auto;
+      margin: auto;
+    }
+
+    #elemento {
+      display: none;
+    }
+  </style>
+
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#" onmouseover="hoverLink(this)" onmouseout="unhoverLink(this)">Ofertas</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" onmouseover="hoverLink(this)" onmouseout="unhoverLink(this)">
+              Categoria
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/" onmouseover="hoverLink(this)" onmouseout="unhoverLink(this)">Mis compras</a>
+          </li>
+        </ul>
+        <form class="d-flex">
+          <input 
+            class="form-control me-2" 
+            type="search" 
+            placeholder="Buscar" 
+            aria-label="Search" 
+            [(ngModel)]="terminoBusqueda" 
+            name="terminoBusqueda" 
+            (input)="buscar()"
+          >
+          <button class="btn btn-outline-primary" type="button">Buscar</button>
+        </form>
+        <div *ngIf="productosFiltrados.length === 0">
+          No se encontraron productos.
+        </div>
       </div>
-      <div class="modal-body">
-        <!-- Contenido de los detalles del producto -->
-        <p>Información detallada sobre el producto aquí.</p>
-      </div>
-      <div class="modal-footer">
-        <!-- Botón para cerrar el modal -->
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+    </div>
+  </nav>
+
+  <div class="card-container">
+    <div class="card" *ngFor="let producto of productos" style="width: 18rem; margin: 0 10px 20px 10px;">
+      <img [src]="producto.url" class="card-img-top" alt="Imagen del producto">
+      <div class="card-body">
+        <h5 class="card-title">{{ producto.producto }}</h5>
+        <p class="card-text">{{ producto.precio }}</p>
+        <a class="btn btn-primary" style="margin-right: 10px;" >Detalles</a>
+        <button class="btn btn-success" (click)="agregarAlCarrito(producto.id)">Añadir al carrito</button>
       </div>
     </div>
   </div>
-</div>
- <!-- (mouseover)="enlargeCard($event)" (mouseout)="shrinkCard($event) -->
- <div class="card" *ngFor="let producto of productos" style="width: 18rem; margin: 0 10px 20px 10px;">
-  <img [src]="producto.url" class="card-img-top" alt="Imagen del producto">
-  <div class="card-body">
-    <h5 class="card-title">{{ producto.producto }}</h5>
-    <p class="card-text">{{ producto.precio }}</p>
-    <a class="btn btn-primary" style="margin-right: 10px;">Detalles</a>
-    <a routerLink="/user/productospublicos" class="btn btn-success" (click)="agregarAlCarrito(producto.id)">Añadir al carrito</a>
-  </div>
-</div>
 
-</div>
-
-
-
-
-<app-footer></app-footer>
-
-
-
+  <app-footer></app-footer>
 </body>
 </html>

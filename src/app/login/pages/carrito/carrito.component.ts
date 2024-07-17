@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CarritoService } from '../../services/carrito.service';
-
+import { Carrito } from '../../interfaces/carrito.interface';
 
 @Component({
   selector: 'app-carrito',
@@ -8,7 +8,8 @@ import { CarritoService } from '../../services/carrito.service';
   styleUrls: ['./carrito.component.css']
 })
 export class CarritoComponent implements OnInit {
-  carritoItems: any[] = [];
+  carritoItems: Carrito[] = [];
+  usuarioId: number = 1; // Ejemplo, asegúrate de obtener este valor de forma correcta
 
   constructor(private carritoService: CarritoService) {}
 
@@ -17,9 +18,15 @@ export class CarritoComponent implements OnInit {
   }
 
   cargarItemsCarrito() {
-    const usuarioId = 1; // Debes obtener el ID del usuario de alguna forma
-    this.carritoService.obtenerItemsCarrito(usuarioId).subscribe(items => {
+    this.carritoService.obtenerItemsCarrito(this.usuarioId).subscribe(items => {
       this.carritoItems = items;
+
+      // Si deseas obtener detalles del producto para cada ítem del carrito
+      this.carritoItems.forEach(item => {
+        this.carritoService.obtenerProductoPorId(item.productoId).subscribe(producto => {
+          item.productoId = producto;
+        });
+      });
     });
   }
 

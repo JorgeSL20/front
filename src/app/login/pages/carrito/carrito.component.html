@@ -5,13 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Carrito</title>
 </head>
-<app-header></app-header>
 <body>
-  <div *ngFor="let item de carritoItems">
-    <div>{{ item.producto.nombre }} - {{ item.cantidad }}</div>
+  <app-header></app-header>
+
+  <div *ngIf="carritoItems.length === 0">
+    No hay productos en el carrito.
+  </div>
+
+  <div *ngFor="let item of carritoItems">
+    <div>{{ item.productoId }} - {{ item.cantidad }}</div>
     <button (click)="eliminarItem(item.id)">Eliminar</button>
   </div>
+
+  <app-footer></app-footer>
 </body>
 </html>
-
-  

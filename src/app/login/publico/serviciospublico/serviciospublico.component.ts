@@ -1,10 +1,11 @@
+// src/app/login/publico/serviciospublico/serviciospublico.component.ts
 import { Component, OnInit, ElementRef, HostListener, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Producto } from '../../interfaces/producto.interface';
 import { ProductoService } from '../../services/producto.service';
 import { CategoriaService } from '../../services/categoria.service'; 
 import { MarcaService } from '../../services/marca.service';
-import { CarritoService } from '../../services/carrito.service'; // Importa el CarritoService
+import { CarritoService } from '../../services/carrito.service';
 
 @Component({
   selector: 'app-serviciospublico',
@@ -24,7 +25,7 @@ export class ServiciospublicoComponent implements OnInit {
     @Inject(ProductoService) private productoService: ProductoService,
     @Inject(MarcaService) private marcaService: MarcaService,
     @Inject(CategoriaService) private categoriaService: CategoriaService,
-    private carritoService: CarritoService // Inyecta el CarritoService
+    private carritoService: CarritoService
   ) { }
 
   ngOnInit(): void {
@@ -73,9 +74,9 @@ export class ServiciospublicoComponent implements OnInit {
   }
 
   agregarAlCarrito(productoId: number): void {
-    const usuarioId = 1; // Asegúrate de reemplazar esto con el ID del usuario real
-    const cantidad = 1; // Puedes ajustar esto según sea necesario
-
+    const usuarioId = 1; // Asegúrate de obtener esto correctamente
+    const cantidad = 1; // Ajusta según tus necesidades
+  
     this.carritoService.agregarItem(usuarioId, productoId, cantidad).subscribe(
       response => {
         console.log('Producto agregado al carrito:', response);
@@ -87,11 +88,12 @@ export class ServiciospublicoComponent implements OnInit {
       }
     );
   }
+  
 
   @HostListener('window:scroll', ['$event'])
   onScroll(event: Event): void {
     const cards = this.el.nativeElement.querySelectorAll('.card');
-    cards.forEach((card: HTMLElement) => {  // Agrega el tipo HTMLElement
+    cards.forEach((card: HTMLElement) => { 
       const rect = card.getBoundingClientRect();
       if (rect.top < window.innerHeight && rect.bottom >= 0) {
         card.classList.add('visible');
