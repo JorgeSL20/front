@@ -2,7 +2,6 @@
 export interface Producto {
   id: number;
   url: string;
-  publicId: string;
   producto: string;
   categoria: string;
   marca: string;
