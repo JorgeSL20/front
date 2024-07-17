@@ -92,6 +92,7 @@ export class CrearProductoComponent implements OnInit {
   }
   
 
+  
   regresar() {
     this.router.navigate(['/user/listar-producto']);
   }
