@@ -22,25 +22,23 @@ export class CarritoComponent implements OnInit {
 
   ngOnInit(): void {
     this.obtenerUsuarioId();
-    this.obtenerItemsCarrito();
   }
 
   obtenerUsuarioId(): void {
-    const userIdFromLocalStorage = localStorage.getItem('userId');
-
-    if (userIdFromLocalStorage) {
-      this.usuarioId = parseInt(userIdFromLocalStorage, 10);
-    } else {
-      this.loginService.getUserById(1).subscribe( // Aquí debes poner el ID correcto del usuario
-        (user: User) => {
+    this.loginService.getCurrentUser().subscribe(
+      (user: User | null) => {
+        if (user) {
           this.usuarioId = user.id;
           localStorage.setItem('userId', user.id.toString());
-        },
-        error => {
-          console.error('Error al obtener el usuario:', error);
+          this.obtenerItemsCarrito();
+        } else {
+          console.error('No se pudo obtener el usuario actual.');
         }
-      );
-    }
+      },
+      error => {
+        console.error('Error al obtener el usuario:', error);
+      }
+    );
   }
 
   obtenerItemsCarrito(): void {

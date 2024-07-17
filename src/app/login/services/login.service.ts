@@ -17,7 +17,7 @@ import { tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class LoginService {
-
+  private currentUser: User | null = null;
   constructor(private http:HttpClient) { }
 
   //url:string = 'http://localhost:3000/'
@@ -118,5 +118,9 @@ logout(): void {
 
   getUserById(userId: number): Observable<User> {
     return this.http.get<User>(`${this.url}/users/${userId}`);
+  }
+  getCurrentUser(): Observable<User | null> {
+    // Simplemente devuelve el usuario actual o implementa la lógica para obtenerlo
+    return of(this.currentUser);
   }
 }

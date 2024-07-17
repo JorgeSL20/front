@@ -1,9 +1,8 @@
-// serviciospublico.component.ts
 import { Component, OnInit, ElementRef, HostListener, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Producto } from '../../interfaces/producto.interface';
 import { ProductoService } from '../../services/producto.service';
-import { CategoriaService } from '../../services/categoria.service'; 
+import { CategoriaService } from '../../services/categoria.service';
 import { MarcaService } from '../../services/marca.service';
 import { CarritoService } from '../../services/carrito.service'; // Importa el servicio de carrito
 
@@ -22,9 +21,9 @@ export class ServiciospublicoComponent implements OnInit {
   constructor(
     private el: ElementRef,
     private router: Router,
-    @Inject(ProductoService) private productoService: ProductoService,
-    @Inject(MarcaService) private marcaService: MarcaService,
-    @Inject(CategoriaService) private categoriaService: CategoriaService,
+    private productoService: ProductoService,
+    private marcaService: MarcaService,
+    private categoriaService: CategoriaService,
     private carritoService: CarritoService // Inyecta el servicio de carrito
   ) { }
 
@@ -65,7 +64,7 @@ export class ServiciospublicoComponent implements OnInit {
 
   buscar(): void {
     const termino = this.terminoBusqueda.toLowerCase();
-    this.productosFiltrados = this.productos.filter(producto => 
+    this.productosFiltrados = this.productos.filter(producto =>
       producto.producto.toLowerCase().includes(termino) ||
       producto.categoria.toLowerCase().includes(termino) ||
       producto.marca.toLowerCase().includes(termino) ||
@@ -92,7 +91,7 @@ export class ServiciospublicoComponent implements OnInit {
   @HostListener('window:scroll', ['$event'])
   onScroll(event: Event): void {
     const cards = this.el.nativeElement.querySelectorAll('.card');
-    cards.forEach((card: HTMLElement) => { 
+    cards.forEach((card: HTMLElement) => {
       const rect = card.getBoundingClientRect();
       if (rect.top < window.innerHeight && rect.bottom >= 0) {
         card.classList.add('visible');
