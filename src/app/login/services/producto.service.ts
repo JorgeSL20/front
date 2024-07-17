@@ -8,12 +8,12 @@ import { Producto } from '../interfaces/producto.interface';
   providedIn: 'root'
 })
 export class ProductoService {
-  private url: string = 'https://proyectogatewayback-production.up.railway.app/producto/';
+  private url: string = 'https://proyectogatewayback-production.up.railway.app/producto/upload';
 
   constructor(private http: HttpClient) { }
 
   obtenerProductos(): Observable<Producto[]> {
-    return this.http.get<Producto[]>(this.url);
+    return this.http.get<Producto[]>(this.url.replace('/upload', ''));
   }
 
   crearProducto(newProducto: FormData): Observable<Producto> {
@@ -21,6 +21,6 @@ export class ProductoService {
   }
 
   eliminarProducto(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.url}${id}`);
+    return this.http.delete<void>(`${this.url.replace('/upload', '')}/${id}`);
   }
 }
