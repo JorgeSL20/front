@@ -76,7 +76,9 @@ export class CrearProductoComponent implements OnInit {
       formData.append('descripcion', this.myForm.get('descripcion')?.value);
       formData.append('precio', this.myForm.get('precio')?.value);
       formData.append('existencias', this.myForm.get('existencias')?.value);
-
+  
+      console.log('FormData:', formData); // Log para verificar datos
+  
       this.productoService.crearProducto(formData).subscribe(
         response => {
           console.log(response);
@@ -88,6 +90,7 @@ export class CrearProductoComponent implements OnInit {
       );
     }
   }
+  
 
   regresar() {
     this.router.navigate(['/user/listar-producto']);
