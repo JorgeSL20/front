@@ -8,7 +8,7 @@ import { Producto } from '../interfaces/producto.interface';
   providedIn: 'root'
 })
 export class ProductoService {
-  private url: string = 'https://proyectogatewayback-production.up.railway.app/producto';
+  private url: string = 'https://proyectogatewayback-production.up.railway.app/producto/upload';
 
   constructor(private http: HttpClient) { }
 
