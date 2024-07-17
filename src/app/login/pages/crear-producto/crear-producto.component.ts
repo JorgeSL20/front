@@ -5,6 +5,7 @@ import { ProductoService } from '../../services/producto.service';
 import { CategoriaService } from '../../services/categoria.service'; 
 import { MarcaService } from '../../services/marca.service';
 import { Router } from '@angular/router';
+import { HttpUrlEncodingCodec } from '@angular/common/http';
 
 @Component({
   selector: 'app-crear-producto',
@@ -25,7 +26,7 @@ export class CrearProductoComponent implements OnInit {
     private router: Router
   ) {
     this.myForm = this.formBuilder.group({
-      imagenP: ['', Validators.required],
+      file: ['', Validators.required],
       producto: ['', Validators.required],
       categoria: ['', Validators.required],
       marca: ['', Validators.required],

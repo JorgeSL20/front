@@ -156,7 +156,7 @@
 </div>
  <!-- (mouseover)="enlargeCard($event)" (mouseout)="shrinkCard($event) -->
  <div class="card" *ngFor="let producto of productos" style="width: 18rem; margin: 0 10px 20px 10px;">
-  <img [src]="producto.imagenP" class="card-img-top" alt="Imagen del producto">
+  <img [src]="producto.url" class="card-img-top" alt="Imagen del producto">
   <div class="card-body">
     <h5 class="card-title">{{ producto.producto }}</h5>
     <p class="card-text">{{ producto.precio | currency }}</p>
