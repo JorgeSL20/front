@@ -1,11 +1,11 @@
-// src/app/login/publico/serviciospublico/serviciospublico.component.ts
+// serviciospublico.component.ts
 import { Component, OnInit, ElementRef, HostListener, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Producto } from '../../interfaces/producto.interface';
 import { ProductoService } from '../../services/producto.service';
 import { CategoriaService } from '../../services/categoria.service'; 
 import { MarcaService } from '../../services/marca.service';
-import { CarritoService } from '../../services/carrito.service';
+import { CarritoService } from '../../services/carrito.service'; // Importa el servicio de carrito
 
 @Component({
   selector: 'app-serviciospublico',
@@ -25,7 +25,7 @@ export class ServiciospublicoComponent implements OnInit {
     @Inject(ProductoService) private productoService: ProductoService,
     @Inject(MarcaService) private marcaService: MarcaService,
     @Inject(CategoriaService) private categoriaService: CategoriaService,
-    private carritoService: CarritoService
+    private carritoService: CarritoService // Inyecta el servicio de carrito
   ) { }
 
   ngOnInit(): void {
@@ -74,13 +74,13 @@ export class ServiciospublicoComponent implements OnInit {
   }
 
   agregarAlCarrito(productoId: number): void {
-    const usuarioId = 1; // Asegúrate de obtener esto correctamente
+    const usuarioId = 1; // Ajusta según cómo obtienes el usuario actualmente
     const cantidad = 1; // Ajusta según tus necesidades
-  
+
     this.carritoService.agregarItem(usuarioId, productoId, cantidad).subscribe(
       response => {
         console.log('Producto agregado al carrito:', response);
-        // Puedes mostrar una notificación o alerta aquí
+        // Puedes mostrar una notificación o realizar acciones adicionales aquí si es necesario
       },
       error => {
         console.error('Error al agregar producto al carrito:', error);
@@ -88,7 +88,6 @@ export class ServiciospublicoComponent implements OnInit {
       }
     );
   }
-  
 
   @HostListener('window:scroll', ['$event'])
   onScroll(event: Event): void {

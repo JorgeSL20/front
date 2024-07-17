@@ -55,6 +55,7 @@ export class LoginService {
     return this.http.get<DataUser>(this.url + 'auth/user/'+id)
   }
   
+  
   updateUser(id:string,data:UpdateUser){
     return this.http.patch<UpdateUser>(this.url + 'auth/perfil/'+parseInt(id),data)
   }
@@ -113,5 +114,9 @@ getPreguntas() {
 
 logout(): void {
     localStorage.removeItem('token');
+  }
+
+  getUserById(userId: number): Observable<User> {
+    return this.http.get<User>(`${this.url}/users/${userId}`);
   }
 }
