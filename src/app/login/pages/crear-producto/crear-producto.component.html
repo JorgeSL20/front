@@ -60,7 +60,7 @@
           <div class="card-body">
             <form [formGroup]="myForm" (ngSubmit)="guardarProducto()">
               <div class="mb-3">
-                <label for="file" class="form-label">Imagen Principal:</label>
+                <label for="file" class="form-label">Imagen:</label>
                 <input formControlName="file" type="file" class="form-control" id="file" (change)="onFileChange($event)">
               </div>
 
