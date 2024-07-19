@@ -2,9 +2,10 @@
 
 import { Component, OnInit } from '@angular/core';
 import { CarritoService } from '../../services/carrito.service';
-import { LoginService } from '../../services/login.service';
+import { AuthService } from '../../services/auth.service';
 import { Carrito } from '../../interfaces/carrito.interface';
-import { User } from '../../interfaces/user.interface';
+import { Producto } from '../../interfaces/producto.interface';
+import { ProductoService } from '../../services/producto.service';
 
 @Component({
   selector: 'app-carrito',
@@ -12,38 +13,29 @@ import { User } from '../../interfaces/user.interface';
   styleUrls: ['./carrito.component.css']
 })
 export class CarritoComponent implements OnInit {
-  carritoItems: Carrito[] = [];
-  usuarioId: number | undefined;
+  carritoItems: any[] = [];  // Actualizamos a 'any[]' para manejar detalles del producto
+  productos: Producto[] = [];
 
   constructor(
     private carritoService: CarritoService,
-    private loginService: LoginService
+    private authService: AuthService,
+    private productoService: ProductoService
   ) { }
 
   ngOnInit(): void {
-    this.obtenerUsuarioId();
-  }
-
-  obtenerUsuarioId(): void {
-    this.loginService.getCurrentUser().subscribe(
-      (user: User | null) => {
-        if (user) {
-          this.usuarioId = user.id;
-          localStorage.setItem('userId', user.id.toString());
-          this.obtenerItemsCarrito();
-        } else {
-          console.error('No se pudo obtener el usuario actual.');
-        }
-      },
-      error => {
-        console.error('Error al obtener el usuario:', error);
-      }
-    );
+    const usuarioId = this.authService.getCurrentUserId();
+    if (usuarioId !== null) {
+      this.obtenerItemsCarrito();  // Solo llama una vez
+      this.obtenerProductos();  // Cargar los productos
+    } else {
+      console.error('No se pudo obtener el ID del usuario.');
+    }
   }
 
   obtenerItemsCarrito(): void {
-    if (this.usuarioId) {
-      this.carritoService.obtenerItemsCarrito(this.usuarioId).subscribe(
+    const usuarioId = this.authService.getCurrentUserId();
+    if (usuarioId !== null) {
+      this.carritoService.obtenerItemsDelCarrito().subscribe(
         items => {
           this.carritoItems = items;
           console.log('Ítems del carrito:', items);
@@ -55,6 +47,17 @@ export class CarritoComponent implements OnInit {
     } else {
       console.error('No se pudo obtener el ID del usuario.');
     }
+  }
+
+  obtenerProductos(): void {
+    this.productoService.obtenerProductos().subscribe(
+      (productos: Producto[]) => {
+        this.productos = productos;
+      },
+      (error) => {
+        console.error('Error al obtener productos:', error);
+      }
+    );
   }
 
   eliminarItem(id: number): void {

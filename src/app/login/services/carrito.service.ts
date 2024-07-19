@@ -1,46 +1,79 @@
 // carrito.service.ts
 
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { catchError, switchMap } from 'rxjs/operators';
-import { User } from '../interfaces/user.interface';
+import { switchMap } from 'rxjs/operators';
 import { AuthService } from './auth.service';
+import { ProductoService } from './producto.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CarritoService {
-  private apiUrl = 'https://proyectogatewayback-production.up.railway.app/carrito'; // Reemplaza con la URL de tu backend
+  private apiUrl = 'https://proyectogatewayback-production.up.railway.app/carrito';
 
-  constructor(private http: HttpClient, private authService: AuthService) {}
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService,
+    private productoService: ProductoService
+  ) {}
 
-  agregarItem(usuarioId: number, productoId: number, cantidad: number): Observable<any> {
-    return this.authService.getCurrentUser().pipe(
-      switchMap(user => {
-        const userId = user ? user.id : null;
-        if (userId) {
-          return this.http.post(`${this.apiUrl}/agregar`, { usuarioId: userId, productoId, cantidad });
-        } else {
-          return of(null); // Maneja el caso donde no hay usuario válido
-        }
-      }),
-      catchError(error => {
-        console.error('Error al obtener el usuario actual:', error);
-        return of(null); // Maneja el error en la obtención del usuario
-      })
-    );
+  private getAuthHeaders(): HttpHeaders {
+    const token = this.authService.getToken(); // Utiliza AuthService para obtener el token
+    return new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
   }
 
-  obtenerItemsCarrito(usuarioId: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/${usuarioId}`);
+  agregarItem(productoId: number, cantidad: number): Observable<any> {
+    const userId = this.authService.getCurrentUserId(); // Obtiene el ID del usuario desde AuthService
+    if (userId !== null) {
+      return this.http.post(`${this.apiUrl}/agregar`, { productoId, cantidad, usuarioId: userId }, { headers: this.getAuthHeaders() });
+    } else {
+      return of(null); // O manejar el caso cuando el usuario no está autenticado
+    }
   }
 
-  eliminarItem(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/eliminar/${id}`);
+  obtenerItemsDelCarrito(): Observable<any[]> {
+    const userId = this.authService.getCurrentUserId(); // Obtiene el ID del usuario desde AuthService
+    if (userId !== null) {
+      return this.http.get<any[]>(`${this.apiUrl}/items/${userId}`, { headers: this.getAuthHeaders() }).pipe(
+        switchMap(items => {
+          // Verifica si items es un array válido
+          if (!Array.isArray(items)) {
+            console.error('Formato de datos incorrecto:', items);
+            return of([]);
+          }
+
+          return this.productoService.obtenerProductos().pipe(
+            switchMap(productos => {
+              // Verifica si productos es un array válido
+              if (!Array.isArray(productos)) {
+                console.error('Formato de datos incorrecto:', productos);
+                return of([]);
+              }
+
+              const itemsConDetalles = items.map(item => {
+                const producto = productos.find(p => p.id === item.productoId);
+                return {
+                  ...item,
+                  productoNombre: producto?.producto || 'Desconocido',
+                  precio: producto?.precio || 0,
+                  url: producto?.url || 'default-image-url'
+                };
+              });
+              return of(itemsConDetalles);
+            })
+          );
+        })
+      );
+    } else {
+      return of([]); // O manejar el caso cuando el usuario no está autenticado
+    }
   }
 
-  obtenerTodos(): Observable<any> {
-    return this.http.get(`${this.apiUrl}`);
+  eliminarItem(itemId: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/eliminar/${itemId}`, { headers: this.getAuthHeaders() });
   }
 }

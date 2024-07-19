@@ -1,23 +1,21 @@
 <!-- carrito.component.html -->
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Carrito</title>
-</head>
-<body>
-  <app-header></app-header>
+<app-header></app-header>
 
-  <div *ngIf="carritoItems.length === 0">
-    No hay productos en el carrito.
+<div *ngIf="carritoItems.length === 0">
+  No hay productos en el carrito.
+</div>
+
+
+<div class="carrito-container" *ngIf="carritoItems.length > 0">
+  <div class="carrito-item" *ngFor="let item of carritoItems">
+    <img [src]="item.url" alt="Imagen del producto">
+    <div class="item-details">
+      <h3>{{ item.productoNombre }}</h3>
+      <p>Cantidad: {{ item.cantidad }}</p>
+      <p>Precio: {{ item.precio | currency }}</p>
+      <button (click)="eliminarItem(item.id)" class="btn btn-danger">Eliminar</button>
+    </div>
   </div>
+</div>
 
-  <div *ngFor="let item of carritoItems">
-    <div>{{ item.productoId }} - {{ item.cantidad }}</div>
-    <button (click)="eliminarItem(item.id)">Eliminar</button>
-  </div>
-
-  <app-footer></app-footer>
-</body>
-</html>
+<app-footer></app-footer>

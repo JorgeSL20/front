@@ -1,17 +1,24 @@
+// auth.service.ts
+
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { User } from '../interfaces/user.interface'; // Asegúrate de ajustar la importación según tu estructura de archivos
+import jwt_decode from 'jwt-decode'; // Si necesitas decodificar más adelante
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private currentUser: User | null = null; // Inicializa o asigna el usuario actual según tu lógica
 
   constructor() {}
 
-  getCurrentUser(): Observable<User | null> {
-    // Simplemente devuelve el usuario actual o implementa la lógica para obtenerlo
-    return of(this.currentUser);
+  getToken(): string | null {
+    return localStorage.getItem('token');
+  }
+
+  getCurrentUserId(): number | null {
+    const token = this.getToken();
+    if (token) {
+      return parseInt(token, 10); // Dado que el token es el ID del usuario
+    }
+    return null;
   }
 }
