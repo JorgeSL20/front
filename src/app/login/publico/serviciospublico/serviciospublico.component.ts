@@ -1,3 +1,4 @@
+// src/app/components/serviciospublico/serviciospublico.component.ts
 import { Component, OnInit, ElementRef, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { Producto } from '../../interfaces/producto.interface';
@@ -78,9 +79,14 @@ export class ServiciospublicoComponent implements OnInit {
   agregarAlCarrito(productoId: number): void {
     const cantidad = 1;
 
-    this.carritoService.agregarItem(productoId, cantidad).subscribe(
+    const item = {
+      productoId: productoId,
+      cantidad: cantidad
+    };
+
+    this.carritoService.agregarOActualizarItem(item).subscribe(
       response => {
-        console.log('Producto agregado al carrito:', response);
+        console.log('Producto agregado o actualizado en el carrito:', response);
         this.showAlert('Producto agregado al carrito', 'alert-success');
       },
       error => {
@@ -89,7 +95,7 @@ export class ServiciospublicoComponent implements OnInit {
       }
     );
   }
-  
+
   showAlert(message: string, alertClass: string) {
     const alertDiv = document.createElement('div');
     alertDiv.className = `alert ${alertClass} fixed-top d-flex align-items-center justify-content-center`;
