@@ -31,10 +31,50 @@ export class CarritoComponent implements OnInit {
     this.carritoService.eliminarItem(itemId).subscribe(
       response => {
         this.cargarCarrito(); // Recargar el carrito después de eliminar un ítem
+        this.showAlert('Producto eliminado del carrito', 'alert-success');
       },
       error => {
         console.error('Error al eliminar ítem del carrito:', error);
       }
     );
+  }
+
+  incrementarCantidad(itemId: number, cantidadActual: number): void {
+    this.carritoService.actualizarCantidad(itemId, cantidadActual + 1).subscribe(
+      response => {
+        this.cargarCarrito(); // Recargar el carrito después de actualizar la cantidad
+        this.showAlert('Cantidad incrementada', 'alert-success');
+      },
+      error => {
+        console.error('Error al incrementar la cantidad:', error);
+      }
+    );
+  }
+
+  decrementarCantidad(itemId: number, cantidadActual: number): void {
+    if (cantidadActual > 1) {
+      this.carritoService.actualizarCantidad(itemId, cantidadActual - 1).subscribe(
+        response => {
+          this.cargarCarrito(); // Recargar el carrito después de actualizar la cantidad
+          this.showAlert('Cantidad decrementada', 'alert-success');
+        },
+        error => {
+          console.error('Error al decrementar la cantidad:', error);
+        }
+      );
+    }
+  }
+
+  showAlert(message: string, alertClass: string) {
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert ${alertClass} fixed-top d-flex align-items-center justify-content-center`;
+    alertDiv.textContent = message;
+    alertDiv.style.fontSize = '20px';
+
+    document.body.appendChild(alertDiv);
+
+    setTimeout(() => {
+      alertDiv.remove();
+    }, 2000);
   }
 }

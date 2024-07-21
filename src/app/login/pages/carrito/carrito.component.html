@@ -1,21 +1,37 @@
-<!-- carrito.component.html -->
+<!-- src/app/components/carrito/carrito.component.html -->
 <app-header></app-header>
 
-<!-- src/app/components/carrito/carrito.component.html -->
 <div *ngIf="items.length > 0">
-  <div *ngFor="let item of items" class="carrito-item">
-    <img [src]="item.productoImagen" alt="{{item.productoNombre}}" class="carrito-item-img">
-    <div class="carrito-item-info">
-      <h3>{{ item.productoNombre }}</h3>
-      <p>Precio: ${{ item.productoPrecio }}</p>
-      <p>Cantidad: {{ item.cantidad }}</p>
-      <button (click)="eliminarItem(item.id)">Eliminar</button>
-    </div>
-  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Imagen</th>
+        <th>Nombre</th>
+        <th>Precio</th>
+        <th>Cantidad</th>
+        <th>Total</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of items">
+        <td><img [src]="item.productoImagen" alt="{{ item.productoNombre }}" class="img-thumbnail" style="width: 100px;"></td>
+        <td>{{ item.productoNombre }}</td>
+        <td>${{ item.productoPrecio | number:'1.2-2' }}</td>
+        <td>
+          <button (click)="decrementarCantidad(item.id, item.cantidad)" class="btn btn-secondary">-</button>
+          {{ item.cantidad }}
+          <button (click)="incrementarCantidad(item.id, item.cantidad)" class="btn btn-secondary">+</button>
+        </td>
+        <td>${{ item.productoPrecio * item.cantidad | number:'1.2-2' }}</td>
+        <td><button (click)="eliminarItem(item.id)" class="btn btn-danger">Eliminar</button></td>
+      </tr>
+    </tbody>
+  </table>
 </div>
+
 <div *ngIf="items.length === 0">
   <p>Tu carrito está vacío.</p>
 </div>
-
 
 <app-footer></app-footer>

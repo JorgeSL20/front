@@ -33,10 +33,10 @@ export class CarritoService {
           return this.http.post(`${this.apiUrl}/agregar`, {
             productoId,
             cantidad,
-            usuarioId: userId,
+            userId,
             productoNombre: producto.producto,
-            productoImagen: producto.url,
-            productoPrecio: producto.precio
+            precio: producto.precio,
+            url: producto.url
           }, { headers: this.getAuthHeaders() });
         } else {
           return of(null); // O manejar el caso cuando el usuario no está autenticado
@@ -54,7 +54,26 @@ export class CarritoService {
             console.error('Formato de datos incorrecto:', items);
             return of([]);
           }
-          return of(items);
+
+          return this.productoService.obtenerProductos().pipe(
+            switchMap(productos => {
+              if (!Array.isArray(productos)) {
+                console.error('Formato de datos incorrecto:', productos);
+                return of([]);
+              }
+
+              const itemsConDetalles = items.map(item => {
+                const producto = productos.find(p => p.id === item.productoId);
+                return {
+                  ...item,
+                  productoNombre: producto?.producto || 'Desconocido',
+                  productoImagen: producto?.url || 'default-image-url',
+                  productoPrecio: producto?.precio || 0
+                };
+              });
+              return of(itemsConDetalles);
+            })
+          );
         })
       );
     } else {
@@ -64,5 +83,9 @@ export class CarritoService {
 
   eliminarItem(itemId: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/eliminar/${itemId}`, { headers: this.getAuthHeaders() });
+  }
+
+  actualizarCantidad(itemId: number, nuevaCantidad: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}/actualizar-cantidad/${itemId}`, { cantidad: nuevaCantidad }, { headers: this.getAuthHeaders() });
   }
 }

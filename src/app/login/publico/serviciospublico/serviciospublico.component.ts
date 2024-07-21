@@ -81,11 +81,26 @@ export class ServiciospublicoComponent implements OnInit {
     this.carritoService.agregarItem(productoId, cantidad).subscribe(
       response => {
         console.log('Producto agregado al carrito:', response);
+        this.showAlert('Producto agregado al carrito', 'alert-success');
       },
       error => {
         console.error('Error al agregar producto al carrito:', error);
+        this.showAlert('Error al agregar producto al carrito', 'alert-danger');
       }
     );
+  }
+  
+  showAlert(message: string, alertClass: string) {
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert ${alertClass} fixed-top d-flex align-items-center justify-content-center`;
+    alertDiv.textContent = message;
+    alertDiv.style.fontSize = '20px';
+
+    document.body.appendChild(alertDiv);
+
+    setTimeout(() => {
+      alertDiv.remove();
+    }, 2000);
   }
 
   @HostListener('window:scroll', ['$event'])
