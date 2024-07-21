@@ -9,6 +9,7 @@ import { CarritoService } from '../../services/carrito.service';
 })
 export class CarritoComponent implements OnInit {
   items: any[] = [];
+  total: number = 0;
 
   constructor(private carritoService: CarritoService) { }
 
@@ -20,11 +21,16 @@ export class CarritoComponent implements OnInit {
     this.carritoService.obtenerItemsDelCarrito().subscribe(
       (items: any[]) => {
         this.items = items;
+        this.calcularTotal();
       },
       (error) => {
         console.error('Error al obtener ítems del carrito:', error);
       }
     );
+  }
+
+  calcularTotal(): void {
+    this.total = this.items.reduce((sum, item) => sum + (item.productoPrecio * item.cantidad), 0);
   }
 
   eliminarItem(itemId: number): void {
@@ -76,5 +82,10 @@ export class CarritoComponent implements OnInit {
     setTimeout(() => {
       alertDiv.remove();
     }, 2000);
+  }
+
+  pagar(): void {
+    // Aquí puedes implementar la lógica de pago
+    alert('Implementar lógica de pago');
   }
 }
