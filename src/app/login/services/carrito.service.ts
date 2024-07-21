@@ -85,7 +85,9 @@ export class CarritoService {
     return this.http.delete(`${this.apiUrl}/eliminar/${itemId}`, { headers: this.getAuthHeaders() });
   }
 
-  actualizarCantidad(itemId: number, nuevaCantidad: number): Observable<any> {
-    return this.http.put(`${this.apiUrl}/actualizar-cantidad/${itemId}`, { cantidad: nuevaCantidad }, { headers: this.getAuthHeaders() });
-  }
+  // src/app/services/carrito.service.ts
+actualizarCantidad(itemId: number, nuevaCantidad: number): Observable<any> {
+  return this.http.put(`${this.apiUrl}/actualizar-cantidad/${itemId}`, { cantidad: nuevaCantidad }, { headers: this.getAuthHeaders() });
+}
+
 }
