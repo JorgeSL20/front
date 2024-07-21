@@ -1,21 +1,21 @@
 <!-- carrito.component.html -->
 <app-header></app-header>
 
-<div *ngIf="carritoItems.length === 0">
-  No hay productos en el carrito.
-</div>
-
-
-<div class="carrito-container" *ngIf="carritoItems.length > 0">
-  <div class="carrito-item" *ngFor="let item of carritoItems">
-    <img [src]="item.url" alt="Imagen del producto">
-    <div class="item-details">
+<!-- src/app/components/carrito/carrito.component.html -->
+<div *ngIf="items.length > 0">
+  <div *ngFor="let item of items" class="carrito-item">
+    <img [src]="item.productoImagen" alt="{{item.productoNombre}}" class="carrito-item-img">
+    <div class="carrito-item-info">
       <h3>{{ item.productoNombre }}</h3>
+      <p>Precio: ${{ item.productoPrecio }}</p>
       <p>Cantidad: {{ item.cantidad }}</p>
-      <p>Precio: {{ item.precio | currency }}</p>
-      <button (click)="eliminarItem(item.id)" class="btn btn-danger">Eliminar</button>
+      <button (click)="eliminarItem(item.id)">Eliminar</button>
     </div>
   </div>
 </div>
+<div *ngIf="items.length === 0">
+  <p>Tu carrito está vacío.</p>
+</div>
+
 
 <app-footer></app-footer>

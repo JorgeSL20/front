@@ -133,12 +133,14 @@
     <img [src]="producto.url" class="card-img-top" alt="Imagen del producto">
     <div class="card-body">
       <h5 class="card-title">{{ producto.producto }}</h5>
-      <p class="card-text">{{ producto.precio | currency:'USD' }}</p>
+      <p class="card-text">{{ producto.precio | currency }}</p>
       <a class="btn btn-primary" style="margin-right: 10px;">Detalles</a>
       <button class="btn btn-success" (click)="agregarAlCarrito(producto.id)">Añadir al carrito</button>
     </div>
   </div>
 </div>
+
+
 
 <app-footer></app-footer>
 </body>

@@ -4,8 +4,8 @@ import { Producto } from '../../interfaces/producto.interface';
 import { ProductoService } from '../../services/producto.service';
 import { CategoriaService } from '../../services/categoria.service';
 import { MarcaService } from '../../services/marca.service';
-import { CarritoService } from '../../services/carrito.service'; // Importa el servicio de carrito
-import { AuthService } from '../../services/auth.service'; // Importa el AuthService
+import { CarritoService } from '../../services/carrito.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-serviciospublico',
@@ -25,8 +25,8 @@ export class ServiciospublicoComponent implements OnInit {
     private productoService: ProductoService,
     private marcaService: MarcaService,
     private categoriaService: CategoriaService,
-    private carritoService: CarritoService, // Inyecta el servicio de carrito
-    private authService: AuthService // Inyecta el AuthService
+    private carritoService: CarritoService,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -76,24 +76,16 @@ export class ServiciospublicoComponent implements OnInit {
   }
 
   agregarAlCarrito(productoId: number): void {
-    const usuarioId = this.authService.getCurrentUserId(); // Obtén el ID del usuario del servicio de autenticación
-    const cantidad = 1; // Ajusta según tus necesidades
+    const cantidad = 1;
 
-    if (usuarioId !== null) {
-      this.carritoService.agregarItem(productoId, cantidad).subscribe(
-        response => {
-          console.log('Producto agregado al carrito:', response);
-          // Puedes mostrar una notificación o realizar acciones adicionales aquí si es necesario
-        },
-        error => {
-          console.error('Error al agregar producto al carrito:', error);
-          // Puedes manejar el error aquí
-        }
-      );
-    } else {
-      console.error('Usuario no autenticado');
-      // Maneja el caso cuando el usuario no está autenticado
-    }
+    this.carritoService.agregarItem(productoId, cantidad).subscribe(
+      response => {
+        console.log('Producto agregado al carrito:', response);
+      },
+      error => {
+        console.error('Error al agregar producto al carrito:', error);
+      }
+    );
   }
 
   @HostListener('window:scroll', ['$event'])
