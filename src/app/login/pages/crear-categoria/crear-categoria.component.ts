@@ -28,6 +28,7 @@ export class CrearCategoriaComponent {
         response => {
           console.log(response);
           this.router.navigate(['/user/listar-categoria']);
+          this.showAlert('Categoria Creada con exito', 'alert-success');
         },
         error => {
           console.error(error);
@@ -38,5 +39,18 @@ export class CrearCategoriaComponent {
 
   regresar() {
     this.router.navigate(['/user/listar-categoria']);
+  }
+
+  showAlert(message: string, alertClass: string) {
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert ${alertClass} fixed-top d-flex align-items-center justify-content-center`;
+    alertDiv.textContent = message;
+    alertDiv.style.fontSize = '20px';
+
+    document.body.appendChild(alertDiv);
+
+    setTimeout(() => {
+      alertDiv.remove();
+    }, 2000);
   }
 }

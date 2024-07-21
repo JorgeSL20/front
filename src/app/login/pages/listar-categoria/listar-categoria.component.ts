@@ -35,10 +35,12 @@ export class ListarCategoriaComponent implements OnInit {
         () => {
           console.log('Categoria eliminada correctamente');
           // Volver a cargar los productos después de eliminar
+          this.showAlert('Categoria eliminada correctamente', 'alert-success');
           this.obtenerCategoria();
         },
         (error) => {
           console.error('Error al eliminar categoria:', error);
+          this.showAlert('Error al eliminar categoria', 'alert-danger');
         }
       );
     }
@@ -48,5 +50,17 @@ export class ListarCategoriaComponent implements OnInit {
 
   irAFormulario(): void {
     this.router.navigate(['/user/crear-categoria']);
+  }
+  showAlert(message: string, alertClass: string) {
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert ${alertClass} fixed-top d-flex align-items-center justify-content-center`;
+    alertDiv.textContent = message;
+    alertDiv.style.fontSize = '20px';
+
+    document.body.appendChild(alertDiv);
+
+    setTimeout(() => {
+      alertDiv.remove();
+    }, 2000);
   }
 }

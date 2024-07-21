@@ -34,11 +34,13 @@ export class ListarMarcaComponent implements OnInit {
       this.marcaService.eliminarMarca(id).subscribe(
         () => {
           console.log('Marca eliminado correctamente');
+          this.showAlert('Marca eliminada correctamente', 'alert-success');
           // Volver a cargar los productos después de eliminar
           this.obtenerMarca();
         },
         (error) => {
           console.error('Error al eliminar marca:', error);
+          this.showAlert('Error al eliminar marca:', 'alert-danger');
         }
       );
     }
@@ -48,5 +50,17 @@ export class ListarMarcaComponent implements OnInit {
 
   irAFormulario(): void {
     this.router.navigate(['/user/crear-marca']);
+  }
+  showAlert(message: string, alertClass: string) {
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert ${alertClass} fixed-top d-flex align-items-center justify-content-center`;
+    alertDiv.textContent = message;
+    alertDiv.style.fontSize = '20px';
+
+    document.body.appendChild(alertDiv);
+
+    setTimeout(() => {
+      alertDiv.remove();
+    }, 2000);
   }
 }

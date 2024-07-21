@@ -28,6 +28,7 @@ export class CrearMarcaComponent {
         response => {
           console.log(response);
           this.router.navigate(['/user/listar-marca']);
+          this.showAlert('Marca Creada con exito', 'alert-success');
         },
         error => {
           console.error(error);
@@ -38,5 +39,17 @@ export class CrearMarcaComponent {
 
   regresar() {
     this.router.navigate(['/user/listar-marca']);
+  }
+  showAlert(message: string, alertClass: string) {
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert ${alertClass} fixed-top d-flex align-items-center justify-content-center`;
+    alertDiv.textContent = message;
+    alertDiv.style.fontSize = '20px';
+
+    document.body.appendChild(alertDiv);
+
+    setTimeout(() => {
+      alertDiv.remove();
+    }, 2000);
   }
 }
