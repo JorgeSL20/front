@@ -1,4 +1,3 @@
-// login.component.ts
 import { Component } from '@angular/core';
 import { LoginService } from '../../services/login.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -30,19 +29,20 @@ export class LoginComponent {
 
     try {
       let fecha = new Date().toLocaleDateString();
-    this.loginService.getIp().subscribe(data => {
-      this.loginService.validarUsuario({
-        email: this.myForm.controls['email'].value,
-        password: this.myForm.controls['password'].value,
-        fecha: fecha,
-        ip: data.ip
-      }).subscribe(res => {
-        console.log(res);
-        if (res.status === 200) {
-          localStorage.setItem("token", res.token.toString());  // Guarda el token
-          this.router.navigate(['/user/inicio']);
-          this.showAlert('Sesion iniciada con exito, Bienvenida@', 'alert-success');
-        } else if (res.status === 400) {
+      this.loginService.getIp().subscribe(data => {
+        this.loginService.validarUsuario({
+          email: this.myForm.controls['email'].value,
+          password: this.myForm.controls['password'].value,
+          fecha: fecha,
+          ip: data.ip
+        }).subscribe(res => {
+          console.log(res);
+          if (res.status === 200) {
+            localStorage.setItem("token", res.token.toString())
+            this.router.navigate(['/user/inicio']);
+            this.showAlert('Sesion iniciada con exito, Bienvenida@', 'alert-success');
+
+          } else if (res.status === 400) {
             this.showAlert('Contraseña incorrecta', 'alert-danger');
           } else if (res.status === 409) {
             this.showAlert('Sobrepasaste el numero de intentos, espere 5 minutos', 'alert-danger');
@@ -52,24 +52,32 @@ export class LoginComponent {
             this.showAlert('Error de lo que sea pero error', 'alert-danger');
           }
         });
-      });
-    } catch (error) {
-      this.showAlert('Email no encontrado', 'alert-danger');
-    }
+      })
+
+    } 
+    catch (error) {
+          this.showAlert('Email no encontrado', 'alert-danger');
+          console.log(error);
+        }
   }
 
   showAlert(message: string, alertClass: string) {
+    // Crea un div para el mensaje
     const alertDiv = document.createElement('div');
     alertDiv.className = `alert ${alertClass} fixed-top d-flex align-items-center justify-content-center`;
     alertDiv.textContent = message;
-    alertDiv.style.fontSize = '20px';
+    alertDiv.style.fontSize = '20px'; // Cambia el tamaño del texto
 
+    // Agrega el mensaje al cuerpo del documento
     document.body.appendChild(alertDiv);
 
+    // Elimina el mensaje después de unos segundos
     setTimeout(() => {
       alertDiv.remove();
     }, 2000);
   }
+
+
 
   togglePasswordVisibility() {
     this.passwordVisible = !this.passwordVisible;
@@ -78,7 +86,7 @@ export class LoginComponent {
   aplicarInterlineado() {
     const elemento = document.querySelector('.pass-link a') as HTMLAnchorElement | null;
     if (elemento) {
-      elemento.style.lineHeight = '2';
+      elemento.style.lineHeight = '2'; // Cambia este valor según tus preferencias de interlineado
     }
   }
 
@@ -119,3 +127,4 @@ export class LoginComponent {
     this.validRecatcha = false;
   }
 }
+
