@@ -21,6 +21,7 @@
     "@angular/platform-browser-dynamic": "^17.0.0",
     "@angular/router": "^17.0.0",
     "@fortawesome/fontawesome-free": "^6.5.2",
+    "@paypal/paypal-js": "^8.1.0",
     "aos": "^2.3.4",
     "bcryptjs": "^2.4.3",
     "jwt-decode": "^4.0.0",
@@ -43,6 +44,8 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "testcafe": "^3.5.0",
-    "typescript": "~5.2.2"
+    "typescript": "~5.2.2",
+    "@types/paypal__paypal-js": "^1.0.0"
+    
   }
 }

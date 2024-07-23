@@ -32,6 +32,7 @@ import { ServiciospublicoComponent } from './publico/serviciospublico/serviciosp
 import { PreguntaspublicoComponent } from './publico/preguntaspublico/preguntaspublico.component';
 import { AdmonpreguntasComponent } from './admon/admonpreguntas/admonpreguntas.component';
 import { CarritoComponent } from './pages/carrito/carrito.component';
+import { PagoComponent } from './pages/pago/pago.component';
 //administrador
 import { HeaderadmonComponent} from './admon/headeradmon/headeradmon.component';
 import { AdmonusuariosComponent } from './admon/admonusuarios/admonusuarios.component';
@@ -55,23 +56,33 @@ const routes: Routes = [
       },
       {
         path: 'crear-producto',
-        component: CrearProductoComponent
+        component: CrearProductoComponent,
+        canActivate: [canActivate],
+        canMatch: [canMatch]
       },
       {
         path: 'crear-marca',
-        component: CrearMarcaComponent
+        component: CrearMarcaComponent,
+        canActivate: [canActivate],
+        canMatch: [canMatch]
       },
       {
         path: 'crear-categoria',
-        component: CrearCategoriaComponent
+        component: CrearCategoriaComponent,
+        canActivate: [canActivate],
+        canMatch: [canMatch]
       },
       {
         path: 'crear-carrusel',
-        component: CrearCarruselComponent
+        component: CrearCarruselComponent,
+        canActivate: [canActivate],
+        canMatch: [canMatch]
       },
       {
         path: 'listar-producto',
-        component: ListarProductosComponent
+        component: ListarProductosComponent,
+        canActivate: [canActivate],
+        canMatch: [canMatch]
       },
       {
         path: 'mi-carrito',
@@ -80,16 +91,30 @@ const routes: Routes = [
         canMatch: [canMatch]
       },
       {
+        path: 'pago',
+        component: PagoComponent,
+        canActivate: [canActivate],
+        canMatch: [canMatch]
+      },
+      {
         path: 'listar-marca',
-        component: ListarMarcaComponent
+        component: ListarMarcaComponent,
+        canActivate: [canActivate],
+        canMatch: [canMatch]
       },
       {
         path: 'listar-categoria',
-        component: ListarCategoriaComponent
+        component: ListarCategoriaComponent,
+        canActivate: [canActivate],
+        canMatch: [canMatch]
       },
       {
         path: 'listar-carrusel',
-        component: ListarCarruselComponent
+        component: ListarCarruselComponent,
+        canActivate: [canActivate],
+        canMatch: [canMatch]
+        
+
       },
       {
         path: 'footer',

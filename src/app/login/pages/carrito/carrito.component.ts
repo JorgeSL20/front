@@ -83,9 +83,4 @@ export class CarritoComponent implements OnInit {
       alertDiv.remove();
     }, 2000);
   }
-
-  pagar(): void {
-    // Aquí puedes implementar la lógica de pago
-    alert('Implementar lógica de pago');
-  }
 }

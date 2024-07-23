@@ -4,6 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon'; // Importa MatIconModule
 
+import { RouterModule } from '@angular/router';
+
+
 import { LoginComponent } from './pages/login/login.component';
 import { CrearCuentaComponent } from './pages/crear-cuenta/crear-cuenta.component';
 import { RecuperarPasswordComponent } from './pages/recuperar-password/recuperar-password.component';
@@ -39,6 +42,7 @@ import { HeaderadmonComponent } from './admon/headeradmon/headeradmon.component'
 import { CrearCarruselComponent } from './pages/crear-carrusel/crear-carrusel.component';
 import { ListarCarruselComponent } from './pages/listar-carrusel/listar-carrusel.component';
 import { CarritoComponent } from './pages/carrito/carrito.component';
+import { PagoComponent } from './pages/pago/pago.component';
 
 //CAPTCHA//
 import { NgxCaptchaModule } from 'ngx-captcha';
@@ -76,6 +80,7 @@ import { LoginService } from './services/login.service';
     EditarPerfilComponent,
     ServiciospublicoComponent,
     CarritoComponent,
+    PagoComponent,
 
     //admon
     HeaderadmonComponent,
@@ -88,7 +93,8 @@ import { LoginService } from './services/login.service';
     ReactiveFormsModule,
     NgxCaptchaModule,
     FormsModule,
-    MatIconModule // Asegúrate de importar MatIconModule aquí también
+    MatIconModule, // Asegúrate de importar MatIconModule aquí también
+    RouterModule
   ],
   providers: [LoginService]
 })
