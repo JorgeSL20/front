@@ -1,5 +1,4 @@
-// src/app/login/pages/pago/pago.component.ts
-
+// src/app/pages/pago/pago.component.ts
 import { Component, OnInit } from '@angular/core';
 import { CarritoService } from '../../services/carrito.service';
 import { AuthService } from '../../services/auth.service';
@@ -25,30 +24,52 @@ export class PagoComponent implements OnInit {
     this.carritoService.obtenerItemsDelCarrito().subscribe(items => {
       this.items = items;
       this.total = this.items.reduce((acc, item) => acc + (item.productoPrecio * item.cantidad), 0);
+      console.log('Total calculado:', this.total);
+      this.initializePayPalButton();
     });
 
     this.authService.getCurrentUserEmail().subscribe(email => {
       this.userEmail = email;
       console.log('User Email:', this.userEmail);
     });
+  }
 
-    loadScript({ clientId: environment.paypalClientId } as any).then((paypal: PayPalNamespace | null) => {
+  createOrder = (data: any, actions: any) => {
+    console.log('Monto a pagar:', this.total.toFixed(2)); // Imprimir el total en la consola para depuración
+    return actions.order.create({
+      purchase_units: [{
+        amount: {
+          value: this.total.toFixed(2),
+          currency_code: 'MXN'
+        }
+      }]
+    });
+  }
+
+  onApprove = async (data: any, actions: any) => {
+    try {
+      const details = await actions.order.capture();
+      console.log('Transaction completed by ' + details.payer.name.given_name);
+      await this.carritoService.procesarPago(this.total, this.items).toPromise();
+      await this.carritoService.enviarConfirmacion(this.items).toPromise();
+      alert('Pago completado con éxito.');
+    } catch (error) {
+      console.error('Error al procesar el pago:', error);
+      alert(`Error al completar el pago: ${error}`);
+    }
+  }
+
+  initializePayPalButton() {
+    loadScript({ clientId: environment.paypalClientId, currency: 'MXN' }).then((paypal: PayPalNamespace | null) => {
       if (paypal && paypal.Buttons) {
         paypal.Buttons({
-          createOrder: (data: any, actions: any) => {
-            return actions.order.create({
-              purchase_units: [{
-                amount: {
-                  value: this.total.toFixed(2)
-                }
-              }]
-            });
-          },
-          onApprove: (data: any, actions: any) => {
-            return actions.order.capture().then((details: any) => {
-              console.log('Transaction completed by ' + details.payer.name.given_name);
-              // Aquí puedes implementar el envío del correo electrónico
-            });
+          createOrder: this.createOrder,
+          onApprove: this.onApprove,
+          style: {
+            layout: 'vertical',
+            color: 'blue',
+            shape: 'rect',
+            label: 'paypal'
           }
         }).render('#paypal-button-container');
       } else {

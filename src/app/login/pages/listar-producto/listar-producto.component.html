@@ -34,7 +34,7 @@
           <td>{{ producto.categoria }}</td>
           <td>{{ producto.marca }}</td>
           <td>{{ producto.descripcion }}</td>
-          <td>{{ producto.precio }}</td>
+          <td>${{ producto.precio }}</td>
           <td>{{ producto.existencias }}</td>
           <td>
             <button class="btn btn-danger" (click)="eliminarProducto(producto.id)">Eliminar</button>

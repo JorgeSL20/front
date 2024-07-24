@@ -43,6 +43,10 @@ import { CrearCarruselComponent } from './pages/crear-carrusel/crear-carrusel.co
 import { ListarCarruselComponent } from './pages/listar-carrusel/listar-carrusel.component';
 import { CarritoComponent } from './pages/carrito/carrito.component';
 import { PagoComponent } from './pages/pago/pago.component';
+import { PaypalButtonComponent } from './pages/paypal-button/paypal-button.component';
+import { PagoService } from './services/pago.service'; // Importar el nuevo servicio
+import { CarritoService } from './services/carrito.service';
+import { AuthService } from './services/auth.service';
 
 //CAPTCHA//
 import { NgxCaptchaModule } from 'ngx-captcha';
@@ -81,6 +85,8 @@ import { LoginService } from './services/login.service';
     ServiciospublicoComponent,
     CarritoComponent,
     PagoComponent,
+    PaypalButtonComponent,
+    
 
     //admon
     HeaderadmonComponent,
@@ -96,6 +102,6 @@ import { LoginService } from './services/login.service';
     MatIconModule, // Asegúrate de importar MatIconModule aquí también
     RouterModule
   ],
-  providers: [LoginService]
+  providers: [LoginService,PagoService,CarritoService,AuthService ]
 })
 export class LoginModule { }
