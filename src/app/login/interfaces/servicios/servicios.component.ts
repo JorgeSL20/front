@@ -5,8 +5,6 @@ import { ProductoService } from '../../services/producto.service';
 import { CategoriaService } from '../../services/categoria.service'; 
 import { MarcaService } from '../../services/marca.service';
 import { FormsModule } from '@angular/forms';  // Importa FormsModule
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { ProductoDetallesComponent } from '../../pages/producto-detalles/producto-detalles.component';
 
 @Component({
   selector: 'app-servicios',
@@ -26,7 +24,6 @@ export class ServiciosComponent implements OnInit {
     @Inject(ProductoService) private productoService: ProductoService,
     @Inject(MarcaService) private marcaService: MarcaService,
     @Inject(CategoriaService) private categoriaService: CategoriaService,
-    private modalService: NgbModal // Inyectar NgbModal
   ) { }
 
   ngOnInit(): void {
@@ -72,11 +69,6 @@ export class ServiciosComponent implements OnInit {
       producto.marca.toLowerCase().includes(termino) ||
       producto.descripcion.toLowerCase().includes(termino)
     );
-  }
-
-  abrirModal(producto: Producto): void {
-    const modalRef: NgbModalRef = this.modalService.open(ProductoDetallesComponent, { size: 'lg' });
-    modalRef.componentInstance.producto = producto;
   }
 
   @HostListener('window:scroll', ['$event'])

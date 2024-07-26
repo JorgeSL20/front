@@ -6,8 +6,6 @@ import { CategoriaService } from '../../services/categoria.service';
 import { MarcaService } from '../../services/marca.service';
 import { CarritoService } from '../../services/carrito.service';
 import { AuthService } from '../../services/auth.service';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { ProductoDetallesComponent } from '../../pages/producto-detalles/producto-detalles.component';
 
 @Component({
   selector: 'app-serviciospublico',
@@ -30,7 +28,6 @@ export class ServiciospublicoComponent implements OnInit {
     private categoriaService: CategoriaService,
     private carritoService: CarritoService,
     private authService: AuthService,
-    private modalService: NgbModal // Inyectar NgbModal
   ) { }
 
   ngOnInit(): void {
@@ -102,10 +99,6 @@ export class ServiciospublicoComponent implements OnInit {
     );
   }
 
-  abrirModal(producto: Producto): void {
-    const modalRef: NgbModalRef = this.modalService.open(ProductoDetallesComponent, { size: 'lg' });
-    modalRef.componentInstance.producto = producto;
-  }
 
   showAlert(message: string, alertClass: string) {
     const alertDiv = document.createElement('div');
