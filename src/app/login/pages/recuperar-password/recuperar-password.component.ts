@@ -114,6 +114,7 @@ export class RecuperarPasswordComponent {
       }
       else {
         console.log("no existe la pregunta")
+        this.showAlert('no existe la pregunta', 'alert-danger');
       }
     })
   }
