@@ -91,7 +91,6 @@
 </head>
 <app-header></app-header>
 <body>
-  <h1>Productos Públicos</h1>
 
   <nav class="navbar navbar-expand-lg navbar-light">
     <div class="container-fluid">
@@ -105,13 +104,12 @@
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" onmouseover="hoverLink(this)" onmouseout="unhoverLink(this)">
-              Categoria
+              Categoría
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
+              <li *ngFor="let categoria of categorias">
+                <a class="dropdown-item" [routerLink]="['/categoria', categoria.id]">{{ categoria.nombre }}</a>
+              </li>
             </ul>
           </li>
           <li class="nav-item">
@@ -136,7 +134,7 @@
       </div>
     </div>
   </nav>
-
+  
   <div class="card-container">
     <div class="card" *ngFor="let producto of productosFiltrados" style="width: 18rem; margin: 0 10px 20px 10px;">
       <img [src]="producto.url" class="card-img-top" alt="Imagen del producto">

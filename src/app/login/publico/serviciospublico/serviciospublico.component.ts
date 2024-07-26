@@ -37,6 +37,7 @@ export class ServiciospublicoComponent implements OnInit {
   cargarDatosIniciales(): void {
     this.categoriaService.obtenerCategoria().subscribe(
       (categorias: any[]) => {
+        console.log('Categorías recibidas:', categorias); // Verificar datos
         this.categorias = categorias;
         this.marcaService.obtenerMarca().subscribe(
           (marcas: any[]) => {
@@ -53,7 +54,7 @@ export class ServiciospublicoComponent implements OnInit {
       }
     );
   }
-
+  
   obtenerProductos(): void {
     this.productoService.obtenerProductos().subscribe(
       (productos: Producto[]) => {
