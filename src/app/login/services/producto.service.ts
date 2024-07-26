@@ -1,4 +1,3 @@
-// src/app/services/producto.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -24,7 +23,13 @@ export class ProductoService {
     return this.http.post<Producto>(this.url, newProducto);
   }
 
+  actualizarProducto(id: number, formData: FormData): Observable<Producto> {
+    return this.http.put<Producto>(`${this.url}/${id}`, formData);
+  }
+
   eliminarProducto(id: number): Observable<void> {
     return this.http.delete<void>(`${this.url}/${id}`);
   }
+
+  
 }

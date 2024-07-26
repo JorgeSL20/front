@@ -1,4 +1,3 @@
-// src/app/pages/pago/pago.component.ts
 import { Component, OnInit } from '@angular/core';
 import { CarritoService } from '../../services/carrito.service';
 import { AuthService } from '../../services/auth.service';
@@ -45,7 +44,7 @@ export class PagoComponent implements OnInit {
       }]
     });
   }
-
+  
   onApprove = async (data: any, actions: any) => {
     try {
       const details = await actions.order.capture();
@@ -58,9 +57,13 @@ export class PagoComponent implements OnInit {
       alert(`Error al completar el pago: ${error}`);
     }
   }
-
+  
   initializePayPalButton() {
-    loadScript({ clientId: environment.paypalClientId, currency: 'MXN' }).then((paypal: PayPalNamespace | null) => {
+    loadScript({
+      clientId: environment.paypalClientId,
+      currency: 'MXN',
+      locale: 'es_MX'
+    }).then((paypal: PayPalNamespace | null) => {
       if (paypal && paypal.Buttons) {
         paypal.Buttons({
           createOrder: this.createOrder,
@@ -78,5 +81,5 @@ export class PagoComponent implements OnInit {
     }).catch((error: any) => {
       console.error('Failed to load the PayPal JS SDK script', error);
     });
-  }
+  }  
 }
