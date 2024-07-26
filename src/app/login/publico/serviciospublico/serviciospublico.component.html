@@ -134,12 +134,17 @@
     <div class="card-body">
       <h5 class="card-title">{{ producto.producto }}</h5>
       <p class="card-text">{{ producto.precio | currency }}</p>
-      <a class="btn btn-primary" style="margin-right: 10px;">Detalles</a>
+      <button class="btn btn-primary" (click)="abrirModal(producto)" style="margin-right: 10px;">Detalles</button>
       <button class="btn btn-success" (click)="agregarAlCarrito(producto.id)">Añadir al carrito</button>
     </div>
   </div>
 </div>
 
+<app-producto-detalles 
+  *ngIf="productoSeleccionado" 
+  [producto]="productoSeleccionado" 
+  (close)="cerrarModal()">
+</app-producto-detalles>
 
 <app-footer></app-footer>
 </body>

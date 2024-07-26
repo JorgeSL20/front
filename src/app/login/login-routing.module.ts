@@ -33,6 +33,7 @@ import { PreguntaspublicoComponent } from './publico/preguntaspublico/preguntasp
 import { AdmonpreguntasComponent } from './admon/admonpreguntas/admonpreguntas.component';
 import { CarritoComponent } from './pages/carrito/carrito.component';
 import { PagoComponent } from './pages/pago/pago.component';
+import { ProductoDetallesComponent } from './pages/producto-detalles/producto-detalles.component';
 //administrador
 
 import { HeaderadmonComponent} from './admon/headeradmon/headeradmon.component';
@@ -114,8 +115,10 @@ const routes: Routes = [
         component: ListarCarruselComponent,
         canActivate: [canActivate],
         canMatch: [canMatch]
-        
-
+      },
+      {
+        path: 'detalles',
+        component: ProductoDetallesComponent,
       },
       {
         path: 'footer',

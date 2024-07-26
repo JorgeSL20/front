@@ -99,7 +99,6 @@ export class ServiciospublicoComponent implements OnInit {
     );
   }
 
-
   showAlert(message: string, alertClass: string) {
     const alertDiv = document.createElement('div');
     alertDiv.className = `alert ${alertClass} fixed-top d-flex align-items-center justify-content-center`;
@@ -113,7 +112,15 @@ export class ServiciospublicoComponent implements OnInit {
     }, 2000);
   }
 
-  
+  abrirModal(producto: Producto) {
+    this.productoSeleccionado = producto;
+    document.body.style.overflow = 'hidden'; // Evitar el scroll del fondo
+  }
+
+  cerrarModal() {
+    this.productoSeleccionado = null;
+    document.body.style.overflow = 'auto'; // Restaurar el scroll del fondo
+  }
 
   @HostListener('window:scroll', ['$event'])
   onScroll(event: Event): void {
