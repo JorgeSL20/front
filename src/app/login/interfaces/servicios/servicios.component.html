@@ -160,7 +160,7 @@
   <div class="card-body">
     <h5 class="card-title">{{ producto.producto }}</h5>
     <p class="card-text">{{ producto.precio | currency }}</p>
-    <a routerLink="/user/login" class="btn btn-primary" style="margin-right: 10px;">Detalles</a>
+    <a class="btn btn-primary" style="margin-right: 10px;" (click)="abrirModal(producto)">Detalles</a>
     <a routerLink="/user/login" class="btn btn-success">Añadir al carrito</a>
   </div>
 </div>

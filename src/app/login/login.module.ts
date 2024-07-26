@@ -44,10 +44,11 @@ import { ListarCarruselComponent } from './pages/listar-carrusel/listar-carrusel
 import { CarritoComponent } from './pages/carrito/carrito.component';
 import { PagoComponent } from './pages/pago/pago.component';
 import { PaypalButtonComponent } from './pages/paypal-button/paypal-button.component';
-import { PagoService } from './services/pago.service'; // Importar el nuevo servicio
+import { PagoService } from './services/pago.service'; 
 import { CarritoService } from './services/carrito.service';
 import { AuthService } from './services/auth.service';
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap'; 
+import { ProductoDetallesComponent } from './pages/producto-detalles/producto-detalles.component';
 //CAPTCHA//
 import { NgxCaptchaModule } from 'ngx-captcha';
 import { LoginService } from './services/login.service';
@@ -86,7 +87,7 @@ import { LoginService } from './services/login.service';
     CarritoComponent,
     PagoComponent,
     PaypalButtonComponent,
-    
+    ProductoDetallesComponent,
 
     //admon
     HeaderadmonComponent,
@@ -100,7 +101,8 @@ import { LoginService } from './services/login.service';
     NgxCaptchaModule,
     FormsModule,
     MatIconModule, // Asegúrate de importar MatIconModule aquí también
-    RouterModule
+    RouterModule,
+    NgbModule
   ],
   providers: [LoginService,PagoService,CarritoService,AuthService ]
 })

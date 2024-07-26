@@ -1,4 +1,3 @@
-// src/app/components/serviciospublico/serviciospublico.component.ts
 import { Component, OnInit, ElementRef, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { Producto } from '../../interfaces/producto.interface';
@@ -7,6 +6,8 @@ import { CategoriaService } from '../../services/categoria.service';
 import { MarcaService } from '../../services/marca.service';
 import { CarritoService } from '../../services/carrito.service';
 import { AuthService } from '../../services/auth.service';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { ProductoDetallesComponent } from '../../pages/producto-detalles/producto-detalles.component';
 
 @Component({
   selector: 'app-serviciospublico',
@@ -19,6 +20,7 @@ export class ServiciospublicoComponent implements OnInit {
   marcas: any[] = [];
   terminoBusqueda: string = '';
   productosFiltrados: Producto[] = [];
+  productoSeleccionado: Producto | null = null;
 
   constructor(
     private el: ElementRef,
@@ -27,7 +29,8 @@ export class ServiciospublicoComponent implements OnInit {
     private marcaService: MarcaService,
     private categoriaService: CategoriaService,
     private carritoService: CarritoService,
-    private authService: AuthService
+    private authService: AuthService,
+    private modalService: NgbModal // Inyectar NgbModal
   ) { }
 
   ngOnInit(): void {
@@ -76,9 +79,12 @@ export class ServiciospublicoComponent implements OnInit {
     );
   }
 
-  agregarAlCarrito(productoId: number): void {
+  agregarAlCarrito(productoId: number | undefined): void {
+    if (productoId === undefined) {
+      console.error('El id del producto es undefined');
+      return;
+    }
     const cantidad = 1;
-
     const item = {
       productoId: productoId,
       cantidad: cantidad
@@ -96,6 +102,11 @@ export class ServiciospublicoComponent implements OnInit {
     );
   }
 
+  abrirModal(producto: Producto): void {
+    const modalRef: NgbModalRef = this.modalService.open(ProductoDetallesComponent, { size: 'lg' });
+    modalRef.componentInstance.producto = producto;
+  }
+
   showAlert(message: string, alertClass: string) {
     const alertDiv = document.createElement('div');
     alertDiv.className = `alert ${alertClass} fixed-top d-flex align-items-center justify-content-center`;
@@ -108,6 +119,8 @@ export class ServiciospublicoComponent implements OnInit {
       alertDiv.remove();
     }, 2000);
   }
+
+  
 
   @HostListener('window:scroll', ['$event'])
   onScroll(event: Event): void {
