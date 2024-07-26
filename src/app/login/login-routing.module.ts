@@ -34,6 +34,7 @@ import { AdmonpreguntasComponent } from './admon/admonpreguntas/admonpreguntas.c
 import { CarritoComponent } from './pages/carrito/carrito.component';
 import { PagoComponent } from './pages/pago/pago.component';
 //administrador
+
 import { HeaderadmonComponent} from './admon/headeradmon/headeradmon.component';
 import { AdmonusuariosComponent } from './admon/admonusuarios/admonusuarios.component';
 
