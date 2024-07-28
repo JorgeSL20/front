@@ -55,7 +55,7 @@ export class CrearCarruselComponent {
       } else {
         console.error('No se ha seleccionado ningún archivo');
       }
-      
+
     }
   }
 
