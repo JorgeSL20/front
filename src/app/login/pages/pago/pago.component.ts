@@ -3,6 +3,8 @@ import { CarritoService } from '../../services/carrito.service';
 import { AuthService } from '../../services/auth.service';
 import { loadScript, PayPalNamespace } from '@paypal/paypal-js';
 import { environment } from '../../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-pago',
@@ -16,7 +18,8 @@ export class PagoComponent implements OnInit {
 
   constructor(
     private carritoService: CarritoService,
-    private authService: AuthService
+    private authService: AuthService,
+    private http: HttpClient
     
   ) { }
 
@@ -80,5 +83,15 @@ export class PagoComponent implements OnInit {
     });
   } 
 
+  procesarPago(pagoData: any) {
+    this.http.post('https://proyectogatewayback-production.up.railway.app/carrito/enviar-confirmacion', pagoData)
+      .toPromise()
+      .then(response => {
+        console.log('Pago procesado exitosamente:', response);
+      })
+      .catch(error => {
+        console.error('Error al procesar el pago:', error);
+      });
+  }
   
 }
