@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CarruselService } from '../../services/carrusel.service';
 import { Router } from '@angular/router';
 import { Carrusel } from '../../interfaces/carrusel.interface';
-
+//jjhh
 @Component({
   selector: 'app-crear-carrusel',
   templateUrl: './crear-carrusel.component.html',
@@ -60,5 +60,6 @@ export class CrearCarruselComponent {
 
   regresar() {
     this.router.navigate(['/user/listar-carrusel']);
+
   }
 }
