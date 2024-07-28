@@ -1,4 +1,3 @@
-// src/app/services/carrusel.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -13,7 +12,7 @@ export class CarruselService {
   constructor(private http: HttpClient) { }
 
   uploadImage(formData: FormData): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}`, formData);
+    return this.http.post<any>(`${this.baseUrl}/upload`, formData);  // Ajusta el endpoint
   }
 
   createCarrusel(newCarrusel: Carrusel): Observable<Carrusel> {
