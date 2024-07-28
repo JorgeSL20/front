@@ -130,14 +130,8 @@ video {
 <!-- Carousel -->
 <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel" style="max-width: 1200px; margin: auto;">
   <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img src="assets/gatewaylogo1.jpg" class="d-block w-100" alt="...">
-    </div>
-    <div class="carousel-item">
-      <img src="assets/gatewaylogo2.jpg" class="d-block w-100" alt="...">
-    </div>
-    <div class="carousel-item">
-      <img src="assets/login.png" class="d-block w-100" alt="...">
+    <div *ngFor="let item of carrusel; let i = index" [ngClass]="{'carousel-item': true, 'active': i === 0}">
+      <img [src]="item.url" class="d-block w-100" alt="Imagen de Carrusel">
     </div>
   </div>
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">

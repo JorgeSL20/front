@@ -1,19 +1,39 @@
-import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+// src/app/components/inicio/inicio.component.ts
+import { Component, ElementRef, ViewChild, AfterViewInit, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CarruselService } from '../../services/carrusel.service';
+import { Carrusel } from '../../interfaces/carrusel.interface';
 
 @Component({
   selector: 'app-inicio',
   templateUrl: './inicio.component.html',
   styleUrls: ['./inicio.component.css']
 })
-export class InicioComponent implements AfterViewInit {
+export class InicioComponent implements AfterViewInit, OnInit {
   @ViewChild('reproductorVideo') reproductorVideo!: ElementRef<HTMLVideoElement>;
+  carrusel: Carrusel[] = [];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private carruselService: CarruselService) {}
+
+  ngOnInit(): void {
+    this.obtenerCarrusel();
+  }
 
   ngAfterViewInit(): void {
     this.reproducirVideo();
     this.agregarEventoTermino();
+  }
+
+  obtenerCarrusel(): void {
+    this.carruselService.findAllCarruseles().subscribe(
+      (carrusel: Carrusel[]) => {
+        this.carrusel = carrusel;
+        console.log(this.carrusel);
+      },
+      (error) => {
+        console.error('Error al obtener carrusel:', error);
+      }
+    );
   }
 
   reproducirVideo(): void {
