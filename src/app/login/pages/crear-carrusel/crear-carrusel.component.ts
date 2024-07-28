@@ -1,9 +1,10 @@
+// src/app/components/crear-carrusel/crear-carrusel.component.ts
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CarruselService } from '../../services/carrusel.service';
 import { Router } from '@angular/router';
 import { Carrusel } from '../../interfaces/carrusel.interface';
-//jjhh
+
 @Component({
   selector: 'app-crear-carrusel',
   templateUrl: './crear-carrusel.component.html',
@@ -36,11 +37,12 @@ export class CrearCarruselComponent {
             const createCarruselDto: Carrusel = {
               id: 0,
               url: response.secure_url,
+
             };
             this.carruselService.createCarrusel(createCarruselDto).subscribe(
               (carrusel: Carrusel) => {
                 console.log('Carrusel creado:', carrusel);
-                this.router.navigate(['/user/listar-carrusel']);
+                this.router.navigate(['/user/listar-carruseles']);
               },
               error => {
                 console.error('Error al crear carrusel:', error);
@@ -60,6 +62,5 @@ export class CrearCarruselComponent {
 
   regresar() {
     this.router.navigate(['/user/listar-carrusel']);
-
   }
 }
