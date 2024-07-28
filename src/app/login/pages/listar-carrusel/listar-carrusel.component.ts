@@ -29,19 +29,22 @@ export class ListarCarruselComponent implements OnInit {
     );
   }
 
-  eliminarCarrusel(id: number): void {
-    if (confirm('¿Estás seguro de eliminar este carrusel?')) {
-      this.carruselService.removeCarrusel(id).subscribe(
-        () => {
-          console.log('Carrusel eliminado correctamente');
-          this.obtenerCarrusel(); // Volver a cargar los carruseles después de eliminar
-        },
-        (error) => {
-          console.error('Error al eliminar carrusel:', error);
-        }
-      );
-    }
+  // Cambia la función `eliminarCarrusel` por la siguiente
+eliminarCarrusel(id: number): void {
+  if (confirm('¿Estás seguro de eliminar este carrusel?')) {
+    this.carruselService.removeCarrusel(id).subscribe(
+      (response) => {
+        console.log('Carrusel eliminado correctamente');
+        alert(response.message || 'Carrusel eliminado correctamente');
+        this.obtenerCarrusel(); // Volver a cargar los carruseles después de eliminar
+      },
+      (error) => {
+        console.error('Error al eliminar carrusel:', error);
+      }
+    );
   }
+}
+
 
   irAFormulario(): void {
     this.router.navigate(['/user/crear-carrusel']);

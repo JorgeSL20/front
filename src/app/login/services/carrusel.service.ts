@@ -24,7 +24,9 @@ export class CarruselService {
     return this.http.get<Carrusel[]>(this.baseUrl);
   }
 
-  removeCarrusel(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${id}`);
-  }
+  // Cambia la firma de la función `removeCarrusel` por la siguiente
+removeCarrusel(id: number): Observable<{ message: string }> {
+  return this.http.delete<{ message: string }>(`${this.baseUrl}/${id}`);
+}
+
 }
