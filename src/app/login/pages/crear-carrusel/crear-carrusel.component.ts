@@ -37,7 +37,6 @@ export class CrearCarruselComponent {
             const createCarruselDto: Carrusel = {
               id: 0,
               url: response.secure_url,
-
             };
             this.carruselService.createCarrusel(createCarruselDto).subscribe(
               (carrusel: Carrusel) => {
@@ -56,7 +55,6 @@ export class CrearCarruselComponent {
       } else {
         console.error('No se ha seleccionado ningún archivo');
       }
-
     }
   }
 
