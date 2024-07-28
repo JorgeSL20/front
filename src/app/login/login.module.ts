@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon'; // Importa MatIconModule
+import { GoogleMapsModule } from '@angular/google-maps';
 
 import { RouterModule } from '@angular/router';
 
@@ -54,6 +55,7 @@ import { ProductoDetallesComponent } from './pages/producto-detalles/producto-de
 //CAPTCHA//
 import { NgxCaptchaModule } from 'ngx-captcha';
 import { LoginService } from './services/login.service';
+import { UbicacionpublicoComponent } from './publico/ubicacionpublico/ubicacionpublico.component';
 
 @NgModule({
   declarations: [
@@ -80,6 +82,7 @@ import { LoginService } from './services/login.service';
     ServiciosComponent,
     QuienessomosComponent,
     UbicacionComponent,
+    UbicacionpublicoComponent,
     AvisoPrivacidadComponent,
     PoliticaCookiesComponent,
     TerminosCondicionesComponent,
@@ -106,6 +109,7 @@ import { LoginService } from './services/login.service';
     FormsModule,
     MatIconModule, // Asegúrate de importar MatIconModule aquí también
     RouterModule,
+    GoogleMapsModule,
   ],
   providers: [LoginService,PagoService,CarritoService,AuthService ]
 })
