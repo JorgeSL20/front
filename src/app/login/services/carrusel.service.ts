@@ -13,7 +13,7 @@ export class CarruselService {
   constructor(private http: HttpClient) { }
 
   uploadImage(formData: FormData): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/upload`, formData);
+    return this.http.post<any>(`${this.baseUrl}`, formData);
   }
 
   createCarrusel(newCarrusel: Carrusel): Observable<Carrusel> {
