@@ -26,7 +26,7 @@ export class LoginComponent {
       this.myForm.markAllAsTouched();
       return;
     }
-
+  
     try {
       let fecha = new Date().toLocaleDateString();
       this.loginService.getIp().subscribe(data => {
@@ -38,28 +38,30 @@ export class LoginComponent {
         }).subscribe(res => {
           console.log(res);
           if (res.status === 200) {
-            localStorage.setItem("token", res.token.toString())
+            localStorage.setItem("token", res.token.toString());
             this.router.navigate(['/user/inicio']);
-            this.showAlert('Sesion iniciada con exito, Bienvenida@', 'alert-success');
-
+            this.showAlert('Sesión iniciada con éxito, Bienvenida@', 'alert-success');
           } else if (res.status === 400) {
             this.showAlert('Contraseña incorrecta', 'alert-danger');
           } else if (res.status === 409) {
-            this.showAlert('Sobrepasaste el numero de intentos, espere 5 minutos', 'alert-danger');
+            this.showAlert('Número máximo de intentos alcanzado, espere 5 minutos', 'alert-danger');
           } else if (res.status === 302) {
-            this.showAlert('Email incorrecto', 'alert-danger');
+            this.showAlert('Correo inválido', 'alert-danger');
           } else {
-            this.showAlert('Error de lo que sea pero error', 'alert-danger');
+            this.showAlert('Error desconocido', 'alert-danger');
           }
+        }, error => {
+          this.showAlert('Error en el servidor', 'alert-danger');
+          console.error(error);
         });
-      })
-
-    } 
-    catch (error) {
-          this.showAlert('Email no encontrado', 'alert-danger');
-          console.log(error);
-        }
+      });
+    } catch (error) {
+      this.showAlert('Error en el servidor', 'alert-danger');
+      console.log(error);
+    }
   }
+  
+  
 
   showAlert(message: string, alertClass: string) {
     // Crea un div para el mensaje
