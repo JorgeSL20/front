@@ -1,0 +1,28 @@
+/* Estilos para el contenedor principal */
+div {
+    font-size: 16px; /* Tamaño de letra predeterminado */
+    color: white; /* Color de letra blanco por defecto */
+  }
+  
+  /* Estilo para el enlace Home */
+  div a:first-child {
+    color: white; /* Color de letra blanco */
+    text-decoration: none; /* Eliminar subrayado del enlace */
+  }
+  
+  /* Estilos para las migas de pan (breadcrumbs) */
+  div span {
+    color: white; /* Color de letra blanco */
+  }
+  
+  div a:not(:first-child) {
+    color: white; /* Color de letra blanco */
+    text-decoration: none; /* Eliminar subrayado del enlace */
+  }
+  
+  /* Estilo para el enlace seleccionado */
+  div a.router-link-active {
+    color: #ffcc00; /* Cambiar a otro color cuando el enlace está activo (seleccionado) */
+    font-size: 18px; /* Tamaño de letra más grande cuando el enlace está activo */
+  }
+  

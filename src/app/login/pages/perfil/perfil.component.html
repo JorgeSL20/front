@@ -1,0 +1,29 @@
+<app-header></app-header>
+
+<div class="container mt-5">
+  <h1 class="text-center mb-4">INFORMACIÓN DEL PERFIL</h1>
+
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Perfil de Usuario</h5>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item"><strong>Nombre:</strong> {{ dataUser.name }}</li>
+            <li class="list-group-item"><strong>Apellido Paterno:</strong> {{ dataUser.lastNameP }}</li>
+            <li class="list-group-item"><strong>Apellido Materno:</strong> {{ dataUser.lastNameM }}</li>
+            <li class="list-group-item"><strong>Correo Electrónico:</strong> {{ dataUser.email }}</li>
+            <li class="list-group-item"><strong>Pregunta para recuperacion:</strong> {{ dataUser.pregunta }}</li>
+            <li class="list-group-item"><strong>Respuesta para recuperacion:</strong> {{ dataUser.respuesta }}</li>
+          </ul>
+        </div>
+        <div class="card-footer text-center"> <!-- Agregamos la clase text-center aquí -->
+          <button routerLink="/user/editarperfil" class="btn btn-primary">Editar Perfil</button> <!-- Quitamos la clase btn-block -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br><br><br><br>
+<app-footer></app-footer>
+

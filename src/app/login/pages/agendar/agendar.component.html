@@ -1,0 +1,109 @@
+<app-header></app-header>
+<h1>AGENDAR CITA</h1>
+<form [formGroup]="myForm" (submit)="addCita()">
+  <!-- FECHA -->
+
+  <div class="form-group col-md-6">
+    <label for="">Fecha</label>
+    <div class="input-group">
+      <input formControlName="fecha" type="date" class="form-control" id="campoFecha" required>
+      <div class="input-group-append">
+        <span class="input-group-text custom-icon-bg"
+          *ngIf="myForm.get('fecha')?.valid && myForm.get('fecha')?.touched">
+          <i class="fas fa-check-circle text-success"></i>
+        </span>
+        <span *ngIf="myForm.get('fecha')?.invalid && myForm.get('fecha')?.touched">
+        </span>
+      </div>
+    </div>
+    <!-- MENSAJES DE ERROR -->
+    <div class="error-message text-danger"
+      *ngIf="myForm.get('fecha')?.hasError('required') && myForm.get('fecha')?.touched">
+      <i class="fas fa-exclamation-circle"></i> El campo es obligatorio.
+    </div>
+    <div class="error-message text-danger"
+      *ngIf="myForm.get('fecha')?.hasError('futureDate') && myForm.get('fecha')?.touched">
+      <i class="fas fa-exclamation-circle"></i> La fecha no puede ser pasada.
+    </div>
+  </div>
+
+  <!-- HORA-->
+  <div class="form-group col-md-6">
+    <label for="">Seleccioen la Hora:</label>
+    <div class="input-group">
+      <select formControlName="hora" class="form-control" id="campoHora" (change)="mostrarSeleccion($event)">
+        <option value="" disabled selected>Selecciona</option>
+        <option value="Hora 1">9:00 AM</option>
+        <option value="Hora 2">9:30 AM</option>
+        <option value="Hora 3">10:00 AM</option>
+        <option value="Hora 4">10:30 AM</option>
+      </select>
+      <div class="input-group-append">
+        <span *ngIf="myForm.get('hora')?.invalid && myForm.get('hora')?.touched">
+        </span>
+      </div>
+    </div>
+    <!-- Mensajes de error -->
+    <div class="error-message text-danger"
+      *ngIf="myForm.get('hora')?.hasError('required') && myForm.get('hora')?.touched">
+      <i class="fas fa-exclamation-circle"></i> El campo es obligatorio.
+    </div>
+
+  </div>
+
+  <!-- MOTIVO -->
+  <div class="form-group col-md-6">
+    <label for="">Motivo:</label>
+    <div class="input-group">
+      <input formControlName="motivo" type="text" class="form-control" id="campoMotivo">
+      <div class="input-group-append">
+        <span class="input-group-text custom-icon-bg"
+          *ngIf="myForm.get('motivo')?.valid && myForm.get('motivo')?.touched">
+          <i class="fas fa-check-circle text-success"></i>
+        </span>
+        <span *ngIf="myForm.get('motivo')?.invalid && myForm.get('motivo')?.touched">
+        </span>
+      </div>
+    </div>
+    <!-- MENSAJES DE ERROR -->
+    <div class="error-message text-danger" *ngIf="myForm.get('motivo')?.invalid && myForm.get('motivo')?.touched">
+      <i class="fas fa-exclamation-circle"></i> El Motivo es un campo obligatorio.
+    </div>
+    <div class="error-message text-danger"
+      *ngIf="myForm.get('motivo')?.hasError('minlength') && myForm.get('motivo')?.touched">
+      <i class="fas fa-exclamation-circle"></i>Debe tener al menos 5 caracteres.
+    </div>
+    <div class="error-message text-danger"
+      *ngIf="myForm.get('motivo')?.hasError('pattern') && myForm.get('motivo')?.touched">
+      <i class="fas fa-exclamation-circle"></i>El Motivo no debe contener números.
+    </div>
+  </div>
+
+  <!-- DENTISTA -->
+
+  <div class="form-group col-md-6">
+    <label for="">Dentista:</label>
+    <div class="input-group">
+      <select formControlName="dentista" class="form-control" id="campoDentista" (change)="mostrarSeleccion($event)">
+        <option value="" disabled selected>Selecciona</option>
+        <option value="Juan Perez">Juan Perez</option>
+        <option value="Luis Hernandez">Luis Hernandez</option>
+        <option value="Steven Univers">Steven Univers</option>
+      </select>
+      <div class="input-group-append">
+        <span *ngIf="myForm.get('dentista')?.invalid && myForm.get('dentista')?.touched">
+        </span>
+      </div>
+    </div>
+    <!-- Mensajes de error -->
+    <div class="error-message text-danger"
+      *ngIf="myForm.get('dentista')?.hasError('required') && myForm.get('dentista')?.touched">
+      <i class="fas fa-exclamation-circle"></i> El campo es obligatorio.
+    </div>
+
+  </div>
+
+  <br>
+  <button type="submit">Agendar</button>
+</form>
+<app-footer></app-footer>

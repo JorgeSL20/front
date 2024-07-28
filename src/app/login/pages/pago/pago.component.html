@@ -1,0 +1,77 @@
+<!-- src/app/pages/pago/pago.component.html -->
+<style>
+
+.pago-container {
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.table {
+  width: 100%; /* Asegura que la tabla ocupe el ancho completo del contenedor */
+  margin-bottom: 20px;
+  border-collapse: collapse;
+}
+
+.table th, .table td {
+  padding: 10px;
+  text-align: left;
+}
+
+.product-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.total-container {
+  text-align: right;
+  margin-top: 20px;
+}
+
+#paypal-button-container {
+  margin-top: 20px;
+}
+
+.empty-cart-message {
+  text-align: center;
+  font-size: 1.5rem; /* Ajusta el tamaño de la fuente como desees */
+  margin-top: 20px; /* Espacio superior para separar del contenido */
+}
+   </style>
+<!-- src/app/pages/pago/pago.component.html -->
+<app-header></app-header>
+<div class="pago-container">
+  <h2>Resumen de la compra</h2>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Imagen</th>
+        <th>Nombre</th>
+        <th>Precio</th>
+        <th>Cantidad</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of items">
+        <td><img [src]="item.productoImagen" alt="{{ item.productoNombre }}" class="img-thumbnail product-image"></td>
+        <td>{{ item.productoNombre }}</td>
+        <td>${{ item.productoPrecio | number:'1.2-2' }}</td>
+        <td>{{ item.cantidad }}</td>
+        <td>${{ item.productoPrecio * item.cantidad | number:'1.2-2' }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <button routerLink="/user/mi-carrito" class="btn btn-primary">Regresar</button>
+  <div class="total-container">
+    <h3>Total: ${{ total | number:'1.2-2' }}</h3>
+    <app-paypal-button
+      [createOrder]="createOrder"
+      [onApprove]="onApprove"
+      [fundingSource]="'paypal'">
+    </app-paypal-button>
+  </div>
+</div>

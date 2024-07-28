@@ -1,0 +1,71 @@
+<style>
+/* src/app/components/carrito/carrito.component.css */
+
+.carrito-container {
+  margin: 20px;
+}
+
+.product-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.table {
+  width: 100%; /* Asegura que la tabla ocupe el ancho completo del contenedor */
+}
+
+.total-container {
+  text-align: right;
+  margin-right: 20px; /* Ajusta este valor según sea necesario para la separación del borde */
+}
+
+.empty-cart-message {
+  text-align: center;
+  font-size: 1.5rem; /* Ajusta el tamaño de la fuente como desees */
+  margin-top: 20px; /* Espacio superior para separar del contenido */
+}
+
+
+ </style>
+<!-- src/app/components/carrito/carrito.component.html -->
+<app-header></app-header>
+<br>
+<br>
+<div *ngIf="items.length > 0" class="carrito-container">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Imagen</th>
+        <th>Nombre</th>
+        <th>Precio</th>
+        <th>Cantidad</th>
+        <th>Total</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of items">
+        <td><img [src]="item.productoImagen" alt="{{ item.productoNombre }}" class="img-thumbnail product-image"></td>
+        <td>{{ item.productoNombre }}</td>
+        <td>${{ item.productoPrecio | number:'1.2-2' }}</td>
+        <td>
+          <button (click)="decrementarCantidad(item.id, item.cantidad)" class="btn btn-secondary">-</button>
+          {{ item.cantidad }}
+          <button (click)="incrementarCantidad(item.id, item.cantidad)" class="btn btn-secondary">+</button>
+        </td>
+        <td>${{ item.productoPrecio * item.cantidad | number:'1.2-2' }}</td>
+        <td><button (click)="eliminarItem(item.id)" class="btn btn-danger">Eliminar</button></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="total-container">
+    <h3>Total: ${{ total | number:'1.2-2' }}</h3>
+    <button routerLink="/user/pago" class="btn btn-primary">Pagar</button>
+  </div>
+</div>
+
+<div *ngIf="items.length === 0" class="empty-cart-message">
+  <p>Tu carrito está vacío.</p>
+</div>

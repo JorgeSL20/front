@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<body>
+  <app-headeradmon></app-headeradmon>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            Registro
+          </div>
+          <div class="card-body">
+            <form [formGroup]="myForm" (submit)="getData()">
+
+              <div class="row mb-3">
+                <!-- Nombre y Apellido Paterno -->
+                <div class="col-md-6">
+                  <label for="name" class="form-label">Nombre:</label>
+                  <input formControlName="name" type="text" class="form-control" id="campo1">
+                  <!-- Mensajes de error -->
+                  <div class="error-message text-danger" *ngIf="myForm.get('name')?.invalid && myForm.get('name')?.touched">
+                    <i class="fas fa-exclamation-circle"></i> Nombre es un campo obligatorio.
+                  </div>
+                  <div class="error-message text-danger"
+                    *ngIf="myForm.get('name')?.hasError('minlength') && myForm.get('name')?.touched">
+                    <i class="fas fa-exclamation-circle"></i>Debe tener al menos 3 caracteres.
+                  </div>
+                  <div class="error-message text-danger"
+                    *ngIf="myForm.get('name')?.hasError('pattern') && myForm.get('name')?.touched">
+                    <i class="fas fa-exclamation-circle"></i>El nombre no debe contener números.
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label for="lastNameP" class="form-label">Apellido paterno:</label>
+                  <input formControlName="lastNameP" type="text" class="form-control" id="campoApellidoPaterno">
+                  <!-- Mensajes de error -->
+                  <div class="error-message text-danger"
+                    *ngIf="myForm.get('lastNameP')?.hasError('required') && myForm.get('lastNameP')?.touched">
+                    <i class="fas fa-exclamation-circle"></i>El campo es obligatorio.
+                  </div>
+                  <div class="error-message text-danger"
+                    *ngIf="myForm.get('lastNameP')?.hasError('minlength') && myForm.get('lastNameP')?.touched">
+                    <i class="fas fa-exclamation-circle"></i>El apellido paterno debe tener al menos 3 caracteres.
+                  </div>
+                  <div class="error-message text-danger"
+                    *ngIf="myForm.get('lastNameP')?.hasError('pattern') && myForm.get('lastNameP')?.touched">
+                    <i class="fas fa-exclamation-circle"></i>El apellido no debe contener números.
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <!-- Apellido Materno y Correo Electrónico -->
+                <div class="col-md-6">
+                  <label for="lastNameM" class="form-label">Apellido materno:</label>
+                  <input formControlName="lastNameM" type="text" class="form-control" id="campoApellidoMaterno">
+                  <!-- Mensajes de error -->
+                  <div class="error-message text-danger"
+                    *ngIf="myForm.get('lastNameM')?.hasError('required') && myForm.get('lastNameM')?.touched">
+                    <i class="fas fa-exclamation-circle"></i>El campo es obligatorio.
+                  </div>
+                  <div class="error-message text-danger"
+                    *ngIf="myForm.get('lastNameM')?.hasError('minlength') && myForm.get('lastNameM')?.touched">
+                    <i class="fas fa-exclamation-circle"></i>El apellido materno debe tener al menos 3 caracteres.
+                  </div>
+                  <div class="error-message text-danger"
+                    *ngIf="myForm.get('lastNameM')?.hasError('pattern') && myForm.get('lastNameM')?.touched">
+                    <i class="fas fa-exclamation-circle"></i>El apellido no debe contener números.
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label for="email" class="form-label">Correo electrónico:</label>
+                  <input (focus)='onFocusEvent()' formControlName="email" type="email" class="form-control" id="campoEmail">
+                  <!-- Mensajes de error -->
+                  <div class="error-message text-danger"
+                    *ngIf="myForm.get('email')?.hasError('required') && myForm.get('email')?.touched">
+                    <i class="fas fa-exclamation-circle"></i>El campo es obligatorio.
+                  </div>
+                  <div class="error-message text-danger"
+                    *ngIf="myForm.get('email')?.hasError('pattern') && myForm.get('email')?.touched">
+                    <i class="fas fa-exclamation-circle"></i>Por favor, ingrese un correo electrónico válido.
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="password" class="form-label">Contraseña:</label>
+                  <div class="input-group">
+                    <input formControlName="password" [type]="passwordVisible1 ? 'text' : 'password'" class="form-control" id="password">
+                    <button class="btn btn-outline-secondary" type="button" (click)="togglePasswordVisibility(1)">
+                      <i class="fas" [ngClass]="{'fa-eye': !passwordVisible1, 'fa-eye-slash': passwordVisible1}"></i>
+                    </button>
+                  </div>
+                  <!-- Mensajes de error -->
+                  <div class="error-message text-danger"
+                    *ngIf="myForm.get('password')?.hasError('required') && myForm.get('password')?.touched">
+                    <i class="fas fa-exclamation-circle"></i>El campo es obligatorio.
+                  </div>
+                  <div class="error-message text-danger"
+                    *ngIf="myForm.get('password')?.hasError('pattern') && myForm.get('password')?.touched">
+                    <i class="fas fa-exclamation-circle"></i>La contraseña debe contener al menos 8 caracteres, incluyendo mayúsculas, minúsculas, números y 2 caracteres especiales.
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label for="password2" class="form-label">Repita contraseña:</label>
+                  <div class="input-group">
+                    <input formControlName="password2" [type]="passwordVisible2 ? 'text' : 'password'" class="form-control" id="contrasena2">
+                    <button class="btn btn-outline-secondary" type="button" (click)="togglePasswordVisibility(2)">
+                      <i class="fas" [ngClass]="{'fa-eye': !passwordVisible2, 'fa-eye-slash': passwordVisible2}"></i>
+                    </button>
+                  </div>
+                  <!-- Mensajes de error -->
+                  <div class="error-message text-danger"
+                    *ngIf="myForm.get('password2')?.hasError('required') && myForm.get('password2')?.touched">
+                    <i class="fas fa-exclamation-circle"></i>El campo es obligatorio.
+                  </div>
+                  <div class="error-message text-danger" *ngIf="myForm.hasError('notEqual') && myForm.get('password2')?.touched">
+                    <i class="fas fa-exclamation-circle"></i>Las contraseñas no coinciden.
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <!-- Pregunta y Respuesta -->
+                <div class="col-md-6">
+                  <label for="pregunta" class="form-label">Pregunta:</label>
+                  <select formControlName="pregunta" class="form-select" id="campoPregunta" (change)="mostrarSeleccion($event)">
+                    <option value="" disabled selected>Selecciona</option>
+                    <option value="¿Como se llama tu perro?">¿Como se llama tu perro?</option>
+                    <option value="¿Comida favorita?">¿Comida favorita?</option>
+                    <option value="¿Lugar Favorito?">¿Lugar Favorito?</option>
+                    <option value="¿Cuál es tu deporte favorito?">¿Cuál es tu deporte favorito?</option>
+                    <option value="¿Cuál es tu libro favorito?">¿Cuál es tu libro favorito?</option>
+                    <option value="¿Cuál es tu color favorito?">¿Cuál es tu color favorito?</option>
+                    <option value="¿Como se llama tu gato?">¿Como se llama tu gato?</option>
+                  </select>
+                  <!-- Mensajes de error -->
+                  <div class="error-message text-danger"
+                    *ngIf="myForm.get('pregunta')?.hasError('required') && myForm.get('pregunta')?.touched">
+                    <i class="fas fa-exclamation-circle"></i> El campo es obligatorio.
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label for="respuesta" class="form-label">Respuesta:</label>
+                  <input formControlName="respuesta" type="text" class="form-control" id="campoRyyespuesta">
+                  <!-- Mensajes de error -->
+                  <div class="error-message text-danger"
+                    *ngIf="myForm.get('respuesta')?.hasError('required') && myForm.get('respuesta')?.touched">
+                    <i class="fas fa-exclamation-circle"></i>El campo es obligatorio.
+                  </div>
+                  <div class="error-message text-danger"
+                    *ngIf="myForm.get('respuesta')?.hasError('pattern') && myForm.get('respuesta')?.touched">
+                    <i class="fas fa-exclamation-circle"></i>La respuesta no debe contener números.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Checkbox de términos y condiciones -->
+              <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" id="checkboxTerminos" required>
+                <label class="form-check-label" for="checkboxTerminos">
+                  Acepto los términos y condiciones
+                </label>
+                <div class="invalid-feedback">
+                  Debes aceptar los términos y condiciones.
+                </div>
+              </div>
+            
+
+              <!-- CAPTCHA -->
+              <ngx-recaptcha2 (success)="activarBtnCapcha($event)" class="captcha" #captchaElem [siteKey]="siteKey"></ngx-recaptcha2>
+
+              <!-- Mensaje de "¿Ya tienes una cuenta?" -->
+              <p class="text-center mb-3">¿Ya tienes una cuenta? <a  routerLink="/user/login">Iniciar sesión</a></p>
+
+              <!-- Botón de enviar -->
+              <button [disabled]="activarBtnCrear()" type="submit" class="btn btn-primary">Crear cuenta</button>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap Bundle JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Font Awesome -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+</body>
+</html>
+<br>
+<br>
+<app-footer></app-footer>

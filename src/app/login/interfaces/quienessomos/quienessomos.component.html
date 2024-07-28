@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <app-header></app-header>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us - Gayeway Soluciones En T.I.</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.box {
+  width: 50%;
+  height: 100px;
+  border: 1px solid black;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: border-color 0.3s ease; /* Transición para el color del borde */
+}
+
+.box:hover {
+  border-color: #3498db; /* Cambia el color del borde al pasar el ratón */
+}
+
+.box1 {
+  background-color: #e0e0e0;
+}
+
+.box2 {
+  background-color: #f0f0f0;
+}
+
+label {
+  font-size: 18px;
+  text-align: center;
+}
+
+/* Nuevo estilo para la información adicional */
+.additional-info {
+  background-color: #fff;
+  padding: 10px;
+  border: 1px solid #ccc;
+  display: none;
+  position: absolute;
+  width: 350px;
+  text-align: center;
+  z-index: 1;
+  margin-left: -175px;
+  left: 50%;
+  bottom: 100%;
+  opacity: 0;
+  transition: opacity 0.3s ease; /* Transición para la opacidad */
+}
+
+.box:hover .additional-info {
+  display: block;
+  opacity: 1;
+}
+  </style>
+</head>
+<body>
+  <div class="container-fluid mt-5">
+    <h2 class="text-center">Sobre Gayeway Soluciones En T.I.</h2>
+
+    <div class="row justify-content-between mt-4">
+
+      <div class="col-md-6">
+        <img src="../assets/logo3.jpg" alt="logo" class="img-fluid">
+      </div>
+
+      <div class="col-md-6">
+        <strong>Acerca de Nosotros: Gateway Soluciones En T.I.</strong>
+        <p>
+          Bienvenido a Gateway Soluciones En T.I., tu socio confiable en el emocionante mundo de la tecnología. Nos enorgullece ser una empresa líder dedicada a proporcionar soluciones en Tecnologías de la Información (T.I.). Nuestra misión es facilitar el acceso a productos electrónicos de alta calidad y servicios tecnológicos innovadores para satisfacer las necesidades de nuestros clientes.
+        </p>
+        <p>
+          En Gateway Soluciones En T.I., no solo vendemos productos; construimos comunidades. Únete a nuestra comunidad tecnológica, donde compartimos noticias, consejos, y experiencias. Estamos emocionados de ser tu socio en el emocionante viaje tecnológico.
+          Gracias por elegir Gateway Soluciones En T.I. ¡Esperamos ser parte de tu experiencia tecnológica!
+        </p>
+          <div class="container">
+            <!-- Cajas como antes -->
+            <div class="box box1">
+                <label for="label1">Nuestro Compromiso</label>
+                <!-- Información adicional -->
+                <div class="additional-info">
+                  >Calidad y Variedad: Nos esforzamos por ofrecer productos electrónicos de la más alta calidad. Desde dispositivos móviles y computadoras hasta accesorios y componentes, nuestro catálogo está cuidadosamente seleccionado para brindarte la mejor experiencia tecnológica.
+                  <br>
+                  >Atención Personalizada: En Gateway Soluciones En T.I., valoramos a cada cliente. Nuestro equipo dedicado está aquí para proporcionar asesoramiento personalizado, responder a tus preguntas y asegurarse de que encuentres exactamente lo que necesitas.
+                </div>
+            </div>
+          </div>
+            <div class="container">
+            <div class="box box2">
+                <label for="label2">¿Por Qué Elegirnos?</label>
+                <!-- Información adicional -->
+                <div class="additional-info">
+                  >Experiencia Confiable: Con años de experiencia en el sector, somos un nombre confiable en el mercado de productos electrónicos.
+                  <br>>Transparencia y Honestidad: Valoramos la transparencia en todas nuestras transacciones.
+                  <br>>Entrega Rápida: Entendemos la importancia de recibir tus productos a tiempo. Garantizamos procesos de envío eficientes para que disfrutes de tus compras rápidamente.
+                  Únete a Nuestra Comunidad Tecnológica
+                </div>
+            </div>
+          </div>
+          
+      
+      </div>
+
+    </div>
+  </div>
+  
+</body>
+<br>
+<br>
+<app-footer></app-footer>
+</html>
