@@ -1,9 +1,8 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon'; // Importa MatIconModule
-import { GoogleMapsModule } from '@angular/google-maps';
 
 import { RouterModule } from '@angular/router';
 
@@ -55,7 +54,6 @@ import { ProductoDetallesComponent } from './pages/producto-detalles/producto-de
 //CAPTCHA//
 import { NgxCaptchaModule } from 'ngx-captcha';
 import { LoginService } from './services/login.service';
-import { UbicacionpublicoComponent } from './publico/ubicacionpublico/ubicacionpublico.component';
 
 @NgModule({
   declarations: [
@@ -82,7 +80,6 @@ import { UbicacionpublicoComponent } from './publico/ubicacionpublico/ubicacionp
     ServiciosComponent,
     QuienessomosComponent,
     UbicacionComponent,
-    UbicacionpublicoComponent,
     AvisoPrivacidadComponent,
     PoliticaCookiesComponent,
     TerminosCondicionesComponent,
@@ -108,10 +105,8 @@ import { UbicacionpublicoComponent } from './publico/ubicacionpublico/ubicacionp
     NgxCaptchaModule,
     FormsModule,
     MatIconModule, // Asegúrate de importar MatIconModule aquí también
-    GoogleMapsModule,
     RouterModule,
   ],
-  providers: [LoginService,PagoService,CarritoService,AuthService ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  providers: [LoginService,PagoService,CarritoService,AuthService ]
 })
 export class LoginModule { }

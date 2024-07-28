@@ -5,7 +5,6 @@ import { loadScript, PayPalNamespace } from '@paypal/paypal-js';
 import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 
-
 @Component({
   selector: 'app-pago',
   templateUrl: './pago.component.html',
@@ -20,7 +19,6 @@ export class PagoComponent implements OnInit {
     private carritoService: CarritoService,
     private authService: AuthService,
     private http: HttpClient
-    
   ) { }
 
   ngOnInit(): void {
@@ -81,7 +79,7 @@ export class PagoComponent implements OnInit {
     }).catch((error: any) => {
       console.error('No se pudo cargar el script de PayPal JS SDK', error);
     });
-  } 
+  }
 
   procesarPago(pagoData: any) {
     this.http.post('https://proyectogatewayback-production.up.railway.app/carrito/enviar-confirmacion', pagoData)
@@ -93,5 +91,4 @@ export class PagoComponent implements OnInit {
         console.error('Error al procesar el pago:', error);
       });
   }
-  
 }
