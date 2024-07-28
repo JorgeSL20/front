@@ -31,7 +31,7 @@ export class CrearUbicacionComponent {
       this.ubicacionService.crearUbicacion(ubicacionData).subscribe(
         response => {
           console.log(response);
-          this.router.navigate(['/listar-ubicacion']);
+          this.router.navigate(['/user/listar-ubicacion']);
           this.showAlert('Ubicación creada con éxito', 'alert-success');
         },
         error => {
