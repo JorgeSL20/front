@@ -11,6 +11,8 @@ import { LoginComponent } from './pages/login/login.component';
 import { CrearCuentaComponent } from './pages/crear-cuenta/crear-cuenta.component';
 import { RecuperarPasswordComponent } from './pages/recuperar-password/recuperar-password.component';
 import { CrearMarcaComponent } from './pages/crear-marca/crear-marca.component';
+import { CrearUbicacionComponent } from './pages/crear-ubicacion/crear-ubicacion.component';
+import { ListarUbicacionComponent } from './pages/listar-ubicacion/listar-ubicacion.component';
 import { ListarMarcaComponent } from './pages/listar-marca/listar-marca.component';
 import { CrearCategoriaComponent } from './pages/crear-categoria/crear-categoria.component';
 import { ListarCategoriaComponent } from './pages/listar-categoria/listar-categoria.component';
@@ -58,10 +60,12 @@ import { LoginService } from './services/login.service';
     LoginComponent,
     CrearCuentaComponent,
     ListarMarcaComponent,
+    ListarUbicacionComponent,
     ListarProductosComponent,
     ListarCategoriaComponent,
     ListarCarruselComponent,
     CrearProductoComponent,
+    CrearUbicacionComponent,
     CrearMarcaComponent,
     CrearCategoriaComponent,
     CrearCarruselComponent,

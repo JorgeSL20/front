@@ -1,0 +1,54 @@
+<!-- src/app/components/listar-ubicacion/listar-ubicacion.component.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Listado de Ubicaciones</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<app-headeradmon></app-headeradmon>
+<body>
+  <div class="container mt-5">
+    <h1>Listado de Ubicaciones</h1>
+    <table class="table table-striped">
+      <!-- Encabezados de la tabla -->
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Latitud</th>
+          <th>Longitud</th>
+          <th>Zoom</th>
+          <th>Acción</th> <!-- Nueva columna para el botón de eliminar -->
+        </tr>
+      </thead>
+      <!-- Cuerpo de la tabla -->
+      <tbody>
+        <tr *ngFor="let ubicacion of ubicaciones">
+          <td>{{ ubicacion.id }}</td>
+          <td>{{ ubicacion.name }}</td>
+          <td>{{ ubicacion.latitude }}</td>
+          <td>{{ ubicacion.longitude }}</td>
+          <td>{{ ubicacion.zoom }}</td>
+          <td>
+            <!-- Botón de eliminar con estilo Bootstrap -->
+            <button class="btn btn-danger" (click)="eliminarUbicacion(ubicacion.id)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- Botón para agregar ubicación -->
+    <button class="btn btn-primary" (click)="irAFormulario()">Agregar Ubicación</button>
+  </div>
+  <br>
+  <br>
+  <br>
+
+  <!-- Scripts de Bootstrap -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <br>
+  <br>
+  <app-footer></app-footer>
+</body>
+</html>

@@ -5,7 +5,9 @@ import { RecuperarPasswordComponent } from './pages/recuperar-password/recuperar
 import { CrearCarruselComponent } from './pages/crear-carrusel/crear-carrusel.component';
 import { ListarCarruselComponent } from './pages/listar-carrusel/listar-carrusel.component';
 import { CrearMarcaComponent } from './pages/crear-marca/crear-marca.component';
+import { CrearUbicacionComponent } from './pages/crear-ubicacion/crear-ubicacion.component';
 import { ListarMarcaComponent } from './pages/listar-marca/listar-marca.component';
+import { ListarUbicacionComponent} from './pages/listar-ubicacion/listar-ubicacion.component';
 import { CrearCategoriaComponent } from './pages/crear-categoria/crear-categoria.component';
 import { ListarCategoriaComponent } from './pages/listar-categoria/listar-categoria.component';
 import { ListarProductosComponent } from './pages/listar-producto/listar-producto.component';
@@ -63,6 +65,12 @@ const routes: Routes = [
         canMatch: [canMatch]
       },
       {
+        path: 'crear-ubicacion',
+        component: CrearUbicacionComponent,
+        canActivate: [canActivate],
+        canMatch: [canMatch]
+      },
+      {
         path: 'crear-marca',
         component: CrearMarcaComponent,
         canActivate: [canActivate],
@@ -101,6 +109,12 @@ const routes: Routes = [
       {
         path: 'listar-marca',
         component: ListarMarcaComponent,
+        canActivate: [canActivate],
+        canMatch: [canMatch]
+      },
+      {
+        path: 'listar-ubicacion',
+        component: ListarUbicacionComponent,
         canActivate: [canActivate],
         canMatch: [canMatch]
       },
