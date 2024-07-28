@@ -1,4 +1,3 @@
-// src/app/components/crear-carrusel/crear-carrusel.component.ts
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CarruselService } from '../../services/carrusel.service';
