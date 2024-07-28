@@ -42,7 +42,7 @@ export class CrearCarruselComponent {
             this.carruselService.createCarrusel(createCarruselDto).subscribe(
               (carrusel: Carrusel) => {
                 console.log('Carrusel creado:', carrusel);
-                this.router.navigate(['/user/listar-carruseles']);
+                this.router.navigate(['/user/listar-carrusel']);
               },
               error => {
                 console.error('Error al crear carrusel:', error);
