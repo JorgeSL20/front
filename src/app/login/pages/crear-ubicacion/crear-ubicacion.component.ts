@@ -40,11 +40,11 @@ export class CrearUbicacionComponent {
         }
       );
     }
-    
+
   }
 
   regresar() {
-    this.router.navigate(['/listar-ubicacion']);
+    this.router.navigate(['/user/listar-ubicacion']);
   }
 
   showAlert(message: string, alertClass: string) {
