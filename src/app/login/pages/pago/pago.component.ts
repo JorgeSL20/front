@@ -17,24 +17,22 @@ export class PagoComponent implements OnInit {
   constructor(
     private carritoService: CarritoService,
     private authService: AuthService
+    
   ) { }
 
   ngOnInit(): void {
     this.carritoService.obtenerItemsDelCarrito().subscribe(items => {
       this.items = items;
       this.total = this.items.reduce((acc, item) => acc + (item.productoPrecio * item.cantidad), 0);
-      console.log('Total calculado:', this.total);
       this.initializePayPalButton();
     });
 
     this.authService.getCurrentUserEmail().subscribe(email => {
       this.userEmail = email;
-      console.log('User Email:', this.userEmail);
     });
   }
 
   createOrder = (data: any, actions: any) => {
-    console.log('Monto a pagar:', this.total.toFixed(2)); // Imprimir el total en la consola para depuración
     return actions.order.create({
       purchase_units: [{
         amount: {
@@ -44,11 +42,10 @@ export class PagoComponent implements OnInit {
       }]
     });
   }
-  
+
   onApprove = async (data: any, actions: any) => {
     try {
       const details = await actions.order.capture();
-      console.log('Transaction completed by ' + details.payer.name.given_name);
       await this.carritoService.procesarPago(this.total, this.items).toPromise();
       await this.carritoService.enviarConfirmacion(this.items).toPromise();
       alert('Pago completado con éxito.');
@@ -57,7 +54,7 @@ export class PagoComponent implements OnInit {
       alert(`Error al completar el pago: ${error}`);
     }
   }
-  
+
   initializePayPalButton() {
     loadScript({
       clientId: environment.paypalClientId,
@@ -79,7 +76,9 @@ export class PagoComponent implements OnInit {
         console.error('PayPal SDK no se pudo cargar.');
       }
     }).catch((error: any) => {
-      console.error('Failed to load the PayPal JS SDK script', error);
+      console.error('No se pudo cargar el script de PayPal JS SDK', error);
     });
-  }  
+  } 
+
+  
 }
