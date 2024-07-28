@@ -21,6 +21,7 @@ import { FooterComponent } from './interfaces/footer/footer.component';
 import { ContactoComponent } from './interfaces/contacto/contacto.component';
 import { ServiciosComponent } from './interfaces/servicios/servicios.component';
 import { UbicacionComponent } from './interfaces/ubicacion/ubicacion.component';
+import { UbicacionpublicoComponent } from './publico/ubicacionpublico/ubicacionpublico.component';
 import { QuienessomosComponent } from './interfaces/quienessomos/quienessomos.component';
 import { AvisoPrivacidadComponent } from './interfaces/avisoPrivacidad/avisoPrivacidad.component';
 import { TerminosCondicionesComponent } from './interfaces/terminosCondiciones/terminosCondiciones.component';
@@ -157,6 +158,10 @@ const routes: Routes = [
       {
         path: 'ubicacion',
         component: UbicacionComponent
+      },
+      {
+        path: 'ubicacionpublico',
+        component: UbicacionpublicoComponent
       },
 
       {
