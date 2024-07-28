@@ -35,7 +35,7 @@ eliminarCarrusel(id: number): void {
     this.carruselService.removeCarrusel(id).subscribe(
       (response) => {
         console.log('Carrusel eliminado correctamente');
-        alert(response.message || 'Carrusel eliminado correctamente');
+        
         this.obtenerCarrusel(); // Volver a cargar los carruseles después de eliminar
       },
       (error) => {
