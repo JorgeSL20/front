@@ -23,7 +23,7 @@ export class MarcaService {
     return this.http.delete<void>(`${this.url}${id}`);
   }
 
-  actualizarMarca(id: number, updatedMarca: Marca): Observable<Marca> {
-    return this.http.patch<Marca>(`${this.url}${id}`, updatedMarca);
+  actualizarMarca(id: number, marca: Marca): Observable<Marca> {
+    return this.http.patch<Marca>(`${this.url}${id}`, marca);
   }
 }

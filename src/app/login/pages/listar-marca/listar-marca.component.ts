@@ -1,8 +1,9 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Marca } from '../../interfaces/marca.interface';
 import { MarcaService } from '../../services/marca.service';
+
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-listar-marca',
@@ -10,14 +11,12 @@ import { MarcaService } from '../../services/marca.service';
   styleUrls: ['./listar-marca.component.css']
 })
 export class ListarMarcaComponent implements OnInit {
-  marca: Marca[] = [];
-  editarForm: FormGroup;
+  marcas: Marca[] = [];
   marcaSeleccionada: Marca | null = null;
-  modalAbierto: boolean = false;
+  editarForm: FormGroup;
 
   constructor(
-    private router: Router,
-    @Inject(MarcaService) private marcaService: MarcaService,
+    private marcaService: MarcaService,
     private formBuilder: FormBuilder
   ) {
     this.editarForm = this.formBuilder.group({
@@ -26,83 +25,73 @@ export class ListarMarcaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.obtenerMarca();
+    this.obtenerMarcas();
   }
 
-  obtenerMarca(): void {
+  obtenerMarcas(): void {
     this.marcaService.obtenerMarca().subscribe(
-      (marca: Marca[]) => {
-        this.marca = marca;
-        console.log(this.marca);
+      (marcas: Marca[]) => {
+        this.marcas = marcas;
       },
       (error) => {
-        console.error('Error al obtener marca:', error);
+        console.error('Error al obtener marcas:', error);
       }
     );
   }
 
-  eliminarMarca(id: number): void {
-    if (confirm('¿Estás seguro de eliminar esta marca?')) {
-      this.marcaService.eliminarMarca(id).subscribe(
-        () => {
-          console.log('Marca eliminada correctamente');
-          this.showAlert('Marca eliminada correctamente', 'alert-success');
-          this.obtenerMarca();
-        },
-        (error) => {
-          console.error('Error al eliminar marca:', error);
-          this.showAlert('Error al eliminar marca', 'alert-danger');
-        }
-      );
+  toggleEditForm(marca: Marca | null): void {
+    if (marca) {
+      this.editarForm.patchValue({
+        marca: marca.marca  // Cambiado a 'marca'
+      });
+      this.marcaSeleccionada = marca;
+
+      // Muestra el modal
+      const modalElement = document.getElementById('editarMarcaModal');
+      if (modalElement) {
+        const modal = new bootstrap.Modal(modalElement);
+        modal.show();
+      }
     }
   }
 
-  abrirModal(marca: Marca): void {
-    this.marcaSeleccionada = marca;
-    this.editarForm.patchValue(marca);
-    this.modalAbierto = true;
-  }
+  guardarMarca(): void {
+    if (this.editarForm.invalid) {
+      return;
+    }
 
-  cerrarModal(): void {
-    this.modalAbierto = false;
-  }
-
-  guardarCambios(): void {
-    if (this.editarForm.valid && this.marcaSeleccionada) {
-      const marcaActualizada: Marca = {
+    if (this.marcaSeleccionada) {
+      const updatedMarca: Marca = {
         ...this.marcaSeleccionada,
-        ...this.editarForm.value
+        marca: this.editarForm.get('marca')?.value  // Cambiado a 'marca'
       };
-  
-      this.marcaService.actualizarMarca(marcaActualizada.id, marcaActualizada).subscribe(
+
+      this.marcaService.actualizarMarca(updatedMarca.id, updatedMarca).subscribe(
         () => {
           console.log('Marca actualizada correctamente');
-          this.showAlert('Marca actualizada correctamente', 'alert-success');
-          this.obtenerMarca();
-          this.cerrarModal();
+          this.obtenerMarcas();
+          const modalElement = document.getElementById('editarMarcaModal');
+          if (modalElement) {
+            const modal = new bootstrap.Modal(modalElement);
+            modal.hide();
+          }
         },
         (error) => {
           console.error('Error al actualizar marca:', error);
-          this.showAlert('Error al actualizar marca', 'alert-danger');
         }
       );
     }
   }
 
-  irAFormulario(): void {
-    this.router.navigate(['/user/crear-marca']);
-  }
-
-  showAlert(message: string, alertClass: string) {
-    const alertDiv = document.createElement('div');
-    alertDiv.className = `alert ${alertClass} fixed-top d-flex align-items-center justify-content-center`;
-    alertDiv.textContent = message;
-    alertDiv.style.fontSize = '20px';
-
-    document.body.appendChild(alertDiv);
-
-    setTimeout(() => {
-      alertDiv.remove();
-    }, 2000);
+  eliminarMarca(id: number): void {
+    this.marcaService.eliminarMarca(id).subscribe(
+      () => {
+        console.log('Marca eliminada');
+        this.obtenerMarcas();
+      },
+      (error) => {
+        console.error('Error al eliminar marca:', error);
+      }
+    );
   }
 }
