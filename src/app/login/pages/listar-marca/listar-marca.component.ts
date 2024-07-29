@@ -69,6 +69,7 @@ export class ListarMarcaComponent implements OnInit {
       this.marcaService.actualizarMarca(updatedMarca.id, updatedMarca).subscribe(
         () => {
           console.log('Marca actualizada correctamente');
+          this.showAlert('Marca actualizada correctamente', 'alert-success');
           this.obtenerMarcas();
           const modalElement = document.getElementById('editarMarcaModal');
           if (modalElement) {
@@ -78,6 +79,7 @@ export class ListarMarcaComponent implements OnInit {
         },
         (error) => {
           console.error('Error al actualizar marca:', error);
+          this.showAlert('Error al actualizar marca', 'alert-danger');
         }
       );
     }
@@ -87,11 +89,26 @@ export class ListarMarcaComponent implements OnInit {
     this.marcaService.eliminarMarca(id).subscribe(
       () => {
         console.log('Marca eliminada');
+        this.showAlert('Marca eliminada con exito', 'alert-success');
         this.obtenerMarcas();
       },
       (error) => {
         console.error('Error al eliminar marca:', error);
+        this.showAlert('Error al eliminar marca', 'alert-danger');
       }
     );
+  }
+
+  showAlert(message: string, alertClass: string) {
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert ${alertClass} fixed-top d-flex align-items-center justify-content-center`;
+    alertDiv.textContent = message;
+    alertDiv.style.fontSize = '20px';
+
+    document.body.appendChild(alertDiv);
+
+    setTimeout(() => {
+      alertDiv.remove();
+    }, 2000);
   }
 }

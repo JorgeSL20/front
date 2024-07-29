@@ -84,6 +84,7 @@ export class CrearProductoComponent implements OnInit {
         response => {
           console.log(response);
           this.router.navigate(['/user/listar-producto']);
+          this.showAlert('Producto creado con exito', 'alert-success');
         },
         error => {
           console.error(error);
@@ -91,12 +92,19 @@ export class CrearProductoComponent implements OnInit {
       );
     }
   }
-  
-  
-  
-
-
   regresar() {
     this.router.navigate(['/user/listar-producto']);
+  }
+  showAlert(message: string, alertClass: string) {
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert ${alertClass} fixed-top d-flex align-items-center justify-content-center`;
+    alertDiv.textContent = message;
+    alertDiv.style.fontSize = '20px';
+
+    document.body.appendChild(alertDiv);
+
+    setTimeout(() => {
+      alertDiv.remove();
+    }, 2000);
   }
 }
