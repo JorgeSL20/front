@@ -37,6 +37,7 @@ import { AdmonpreguntasComponent } from './admon/admonpreguntas/admonpreguntas.c
 import { CarritoComponent } from './pages/carrito/carrito.component';
 import { PagoComponent } from './pages/pago/pago.component';
 import { ProductoDetallesComponent } from './pages/producto-detalles/producto-detalles.component';
+import { PaymentSuccessComponent } from './pages/payment-success/payment-success.component';
 //administrador
 
 import { HeaderadmonComponent} from './admon/headeradmon/headeradmon.component';
@@ -128,6 +129,12 @@ const routes: Routes = [
       {
         path: 'listar-carrusel',
         component: ListarCarruselComponent,
+        canActivate: [canActivate],
+        canMatch: [canMatch]
+      },
+      {
+        path: 'paymentsuccess',
+        component: PaymentSuccessComponent,
         canActivate: [canActivate],
         canMatch: [canMatch]
       },

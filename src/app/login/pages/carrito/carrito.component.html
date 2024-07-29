@@ -1,6 +1,4 @@
 <style>
-/* src/app/components/carrito/carrito.component.css */
-
 .carrito-container {
   margin: 20px;
 }
@@ -26,9 +24,7 @@
   margin-top: 20px; /* Espacio superior para separar del contenido */
 }
 
-
  </style>
-<!-- src/app/components/carrito/carrito.component.html -->
 <app-header></app-header>
 <br>
 <br>
@@ -62,7 +58,7 @@
 
   <div class="total-container">
     <h3>Total: ${{ total | number:'1.2-2' }}</h3>
-    <button routerLink="/user/pago" class="btn btn-primary">Pagar</button>
+    <button (click)="procesarPago()" class="btn btn-primary">Pagar con PayPal</button>
   </div>
 </div>
 

@@ -51,6 +51,7 @@ import { PagoService } from './services/pago.service';
 import { CarritoService } from './services/carrito.service';
 import { AuthService } from './services/auth.service';
 import { ProductoDetallesComponent } from './pages/producto-detalles/producto-detalles.component';
+import { PaymentSuccessComponent } from './pages/payment-success/payment-success.component';
 
 //CAPTCHA//
 import { NgxCaptchaModule } from 'ngx-captcha';
@@ -95,6 +96,7 @@ import { UbicacionpublicoComponent } from './publico/ubicacionpublico/ubicacionp
     PagoComponent,
     PaypalButtonComponent,
     ProductoDetallesComponent,
+    PaymentSuccessComponent,
 
     //admon
     HeaderadmonComponent,

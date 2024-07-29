@@ -1,3 +1,4 @@
+// src/app/services/pago.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -6,28 +7,15 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class PagoService {
-  private apiUrl = 'https://proyectogatewayback-production.up.railway.app';
+  private apiUrl = 'http://localhost:3000/pago';
 
-  constructor(private http: HttpClient) {}
-procesarPago() {
-  this.http.post('/api/carrito/procesar-pago', {}).subscribe((response: any) => {
-    const orderId = response.orderId;
+  constructor(private http: HttpClient) { }
 
-    // Redirige al usuario a PayPal para completar el pago en modo live
-    window.location.href = `https://www.paypal.com/checkoutnow?token=${orderId}`;
-  });
-}
-
-capturarPago(orderId: string) {
-  this.http.post('/api/carrito/capturar-pago', { orderId }).subscribe((response: any) => {
-    console.log('Pago capturado exitosamente', response);
-    // Aquí puedes mostrar un mensaje de éxito o redirigir al usuario
-  });
-}
-
-
-  enviarConfirmacion(items: any[]): Observable<any> {
-    return this.http.post(`${this.apiUrl}/carrito/enviar-confirmacion`, { items });
+  procesarPago(pagoData: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/procesar-pago`, pagoData);
   }
-  
+
+  capturarPago(orderId: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/capturar-pago`, { orderId });
+  }
 }
