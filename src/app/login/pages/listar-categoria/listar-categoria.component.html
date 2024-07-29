@@ -1,49 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Listado de categorias</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
 <app-headeradmon></app-headeradmon>
-<body>
-  <div class="container mt-5">
-    <h1>Listado de categorias</h1>
-    <table class="table table-striped">
-      <!-- Encabezados de la tabla -->
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Categoria</th>
-          <th>Acción</th> <!-- Nueva columna para el botón de eliminar -->
-        </tr>
-      </thead>
-      <!-- Cuerpo de la tabla -->
-      <tbody>
-        <tr *ngFor="let categoria of categoria">
-          <td>{{ categoria.id }}</td>
-          <td>{{ categoria.categoria }}</td>
-          <td>
-            <!-- Botón de eliminar con estilo Bootstrap -->
-            <button class="btn btn-danger" (click)="eliminarCategoria(categoria.id)">Eliminar</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <!-- Botón para agregar producto -->
-    <button class="btn btn-primary" (click)="irAFormulario()">Agregar Categoria</button>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-12">
+      <div class="card custom-card">
+        <div class="card-header">
+          Listado de Categorías
+        </div>
+        <div class="card-body">
+          <button class="btn btn-primary" (click)="irAFormulario()">Agregar Categoría</button>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Categoría</th>
+                  <th>Editar</th>
+                  <th>Borrar</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let categoria of categoria">
+                  <td>{{ categoria.categoria }}</td>
+                  <td>
+                    <button class="btn btn-warning" (click)="toggleEditForm(categoria)">Editar</button>
+                  </td>
+                  <td>
+                    <button class="btn btn-danger" (click)="eliminarCategoria(categoria.id)">Eliminar</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <br>
-  <br>
-  <br>
+</div>
 
-  <!-- Scripts de Bootstrap y Angular -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/2.0.0-beta.17/angular2.min.js"></script>
-  <br>
-  <br>
-  <app-footer></app-footer>
-  
-</body>
-</html>
+<!-- Modal para editar categoría -->
+<div class="modal fade" id="editarCategoriaModal" tabindex="-1" aria-labelledby="editarCategoriaModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editarCategoriaModalLabel">Editar Categoría</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="editarForm" (ngSubmit)="guardarCategoria()">
+          <div class="mb-3">
+            <label for="categoria" class="form-label">Categoría</label>
+            <input type="text" id="categoria" formControlName="categoria" class="form-control">
+          </div>
+          <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Guardar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Scripts de Bootstrap y Angular -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/2.0.0-beta.17/angular2.min.js"></script>
+
+<app-footer></app-footer>

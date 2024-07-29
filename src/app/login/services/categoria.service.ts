@@ -6,11 +6,8 @@ import { Categoria } from '../interfaces/categoria.interface';
 @Injectable({
   providedIn: 'root'
 })
-
 export class CategoriaService {
-  //private url: string = 'http://localhost:3000/categoria/';
   private url: string = 'https://proyectogatewayback-production.up.railway.app/categoria/';
-  
 
   constructor(private http: HttpClient) { }
 
@@ -26,5 +23,7 @@ export class CategoriaService {
     return this.http.delete<void>(`${this.url}${id}`);
   }
 
-  // Otros métodos del servicio, como actualizarProducto(), eliminarProducto(), etc.
+  actualizarCategoria(id: number, updatedCategoria: Categoria): Observable<Categoria> {
+    return this.http.put<Categoria>(`${this.url}${id}`, updatedCategoria);
+  }
 }
