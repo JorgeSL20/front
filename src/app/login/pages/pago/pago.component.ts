@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CarritoService } from '../../services/carrito.service';
 import { AuthService } from '../../services/auth.service';
+import { PagoService } from '../../services/pago.service';
 import { loadScript, PayPalNamespace } from '@paypal/paypal-js';
 import { environment } from '../../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-pago',
@@ -18,7 +18,7 @@ export class PagoComponent implements OnInit {
   constructor(
     private carritoService: CarritoService,
     private authService: AuthService,
-    private http: HttpClient
+    private pagoService: PagoService
   ) { }
 
   ngOnInit(): void {
@@ -41,54 +41,56 @@ export class PagoComponent implements OnInit {
           currency_code: 'MXN'
         }
       }]
+    }).then((response: any) => {
+      if (response && response.id) {
+        return response.id;
+      } else {
+        console.error('Invalid response format:', response);
+        throw new Error('Failed to create PayPal order');
+      }
     });
-  }
+  };
 
-  onApprove = async (data: any, actions: any) => {
-    try {
-      const details = await actions.order.capture();
-      await this.carritoService.procesarPago(this.total, this.items).toPromise();
-      await this.carritoService.enviarConfirmacion(this.items).toPromise();
-      alert('Pago completado con éxito.');
-    } catch (error) {
-      console.error('Error al procesar el pago:', error);
-      alert(`Error al completar el pago: ${error}`);
-    }
-  }
+  onApprove = (data: any, actions: any) => {
+    return actions.order.capture().then((details: any) => {
+      const orderId = data.orderID;
 
-  initializePayPalButton() {
-    loadScript({
-      clientId: environment.paypalClientId,
-      currency: 'MXN',
-      locale: 'es_MX'
-    }).then((paypal: PayPalNamespace | null) => {
+      if (orderId) {
+        this.pagoService.capturarPago(orderId).subscribe(
+          response => {
+            console.log('Payment captured successfully:', response);
+            this.pagoService.enviarConfirmacion(this.items).subscribe(
+              response => {
+                console.log('Confirmation email sent:', response);
+                alert('Pago procesado y confirmación enviada');
+              },
+              error => {
+                console.error('Error sending confirmation email:', error);
+              }
+            );
+          },
+          error => {
+            console.error('Error capturing payment:', error);
+          }
+        );
+      } else {
+        console.error('Invalid order ID:', orderId);
+      }
+    });
+  };
+
+  initializePayPalButton(): void {
+    loadScript({ clientId: environment.paypalClientId }).then((paypal: PayPalNamespace | null) => {
       if (paypal && paypal.Buttons) {
         paypal.Buttons({
           createOrder: this.createOrder,
-          onApprove: this.onApprove,
-          style: {
-            layout: 'vertical',
-            color: 'blue',
-            shape: 'rect',
-            label: 'paypal'
-          }
+          onApprove: this.onApprove
         }).render('#paypal-button-container');
       } else {
-        console.error('PayPal SDK no se pudo cargar.');
+        console.error('Failed to load PayPal script');
       }
-    }).catch((error: any) => {
-      console.error('No se pudo cargar el script de PayPal JS SDK', error);
+    }).catch(err => {
+      console.error('Error loading PayPal script:', err);
     });
-  }
-
-  procesarPago(pagoData: any) {
-    this.http.post('https://proyectogatewayback-production.up.railway.app/carrito/enviar-confirmacion', pagoData)
-      .toPromise()
-      .then(response => {
-        console.log('Pago procesado exitosamente:', response);
-      })
-      .catch(error => {
-        console.error('Error al procesar el pago:', error);
-      });
   }
 }

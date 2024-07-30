@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CarritoService } from '../../services/carrito.service';
 import { Router } from '@angular/router';
-import { Link } from '../../interfaces/link.interface'; // Importa la interfaz Link
 
 @Component({
   selector: 'app-carrito',
@@ -83,22 +82,5 @@ export class CarritoComponent implements OnInit {
     setTimeout(() => {
       alertDiv.remove();
     }, 2000);
-  }
-
-  procesarPago(): void {
-    this.carritoService.procesarPago(this.total, this.items).subscribe(
-      (response) => {
-        // Redirigir al usuario a PayPal para completar el pago
-        window.location.href = response.links.find((link: Link) => link.rel === 'approve')!.href;
-      },
-      (error) => {
-        console.error('Error al procesar el pago:', error);
-      }
-    );
-  }
-
-  handlePaymentApproval(): void {
-    // Lógica para redirigir a la página de éxito de pago
-    this.router.navigate(['/payment-success']);
   }
 }

@@ -91,18 +91,4 @@ export class CarritoService {
   agregarOActualizarItem(item: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/agregar-o-actualizar`, item, { headers: this.getAuthHeaders() });
   }
-
-  procesarPago(total: number, items: any[]): Observable<any> {
-    const pagoData = { total, items };
-    return this.http.post(`${this.apiUrl}/procesar-pago`, pagoData, { headers: this.getAuthHeaders() });
-  }
-
-  enviarConfirmacion(items: any[]): Observable<any> {
-    const userId = this.authService.getCurrentUserId();
-    if (userId !== null) {
-      return this.http.post(`${this.apiUrl}/enviar-confirmacion`, { userId, items }, { headers: this.getAuthHeaders() });
-    } else {
-      return of(null);
-    }
-  }
 }
