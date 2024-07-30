@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CarritoService } from '../../services/carrito.service';
 import { AuthService } from '../../services/auth.service';
 import { PagoService } from '../../services/pago.service';
-import { loadScript, PayPalNamespace } from '@paypal/paypal-js';
 import { environment } from '../../../../environments/environment';
+import { loadScript } from '@paypal/paypal-js';
 
 @Component({
   selector: 'app-pago',
@@ -80,7 +80,10 @@ export class PagoComponent implements OnInit {
   };
 
   initializePayPalButton(): void {
-    loadScript({ clientId: environment.paypalClientId }).then((paypal: PayPalNamespace | null) => {
+    loadScript({
+      clientId: environment.paypalClientId,
+      currency: 'MXN'
+    }).then((paypal) => {
       if (paypal && paypal.Buttons) {
         paypal.Buttons({
           createOrder: this.createOrder,
