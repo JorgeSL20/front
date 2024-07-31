@@ -37,17 +37,23 @@ export class PagoComponent implements OnInit {
     return actions.order.create({
       purchase_units: [{
         amount: {
-          value: this.total.toFixed(2),
-          currency_code: 'MXN'
+          currency_code: 'MXN',
+          value: this.total.toFixed(2)
         }
-      }]
-    }).then((response: any) => {
-      if (response && response.id) {
-        return response.id;
+      }],
+      application_context: {
+        shipping_preference: 'NO_SHIPPING'
+      }
+    }).then((orderId: string) => {
+      if (orderId) {
+        return orderId;
       } else {
-        console.error('Invalid response format:', response);
+        console.error('Invalid response format:', orderId);
         throw new Error('Failed to create PayPal order');
       }
+    }).catch((error: any) => {
+      console.error('Error creating PayPal order:', error);
+      throw new Error('Failed to create PayPal order');
     });
   };
 
@@ -87,7 +93,10 @@ export class PagoComponent implements OnInit {
       if (paypal && paypal.Buttons) {
         paypal.Buttons({
           createOrder: this.createOrder,
-          onApprove: this.onApprove
+          onApprove: this.onApprove,
+          onError: (err: any) => {
+            console.error('PayPal Button Error:', err);
+          }
         }).render('#paypal-button-container');
       } else {
         console.error('Failed to load PayPal script');
