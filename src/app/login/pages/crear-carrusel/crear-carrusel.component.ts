@@ -42,23 +42,39 @@ export class CrearCarruselComponent {
               (carrusel: Carrusel) => {
                 console.log('Carrusel creado:', carrusel);
                 this.router.navigate(['/user/listar-carrusel']);
+                this.showAlert('Imagen agregada a carrusel correctamente', 'alert-success');
               },
               error => {
                 console.error('Error al crear carrusel:', error);
+                this.showAlert('Error al crear carrusel', 'alert-danger');
               }
             );
           },
           error => {
             console.error('Error al subir imagen:', error);
+            this.showAlert('Error al subir imagen', 'alert-danger');
           }
         );
       } else {
         console.error('No se ha seleccionado ningún archivo');
+        this.showAlert('No se ha seleccionado ningún archivo', 'alert-danger');
       }
     }
   }
 
   regresar() {
     this.router.navigate(['/user/listar-carrusel']);
+  }
+  showAlert(message: string, alertClass: string) {
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert ${alertClass} fixed-top d-flex align-items-center justify-content-center`;
+    alertDiv.textContent = message;
+    alertDiv.style.fontSize = '20px';
+
+    document.body.appendChild(alertDiv);
+
+    setTimeout(() => {
+      alertDiv.remove();
+    }, 2000);
   }
 }
