@@ -62,7 +62,7 @@ export class ListarProductosComponent implements OnInit {
     );
   }
 
-  obtenerProductos(): void {
+   obtenerProductos(): void {
     this.productoService.obtenerProductos().subscribe(
       (productos: Producto[]) => {
         this.productos = productos;
@@ -71,7 +71,12 @@ export class ListarProductosComponent implements OnInit {
         console.error('Error al obtener productos:', error);
       }
     );
-  }
+  } 
+
+    
+    
+    
+    
 
   actualizarExistencias(producto: Producto): void {
     const formData = new FormData();
