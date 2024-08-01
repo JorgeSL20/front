@@ -20,6 +20,7 @@
               </thead>
               <tbody>
                 <tr *ngFor="let subcategoria of subcategoria">
+                  <td>{{ subcategoria.categoria }}</td>
                   <td>{{ subcategoria.subcategoria }}</td>
                   <td>
                     <button class="btn btn-warning" (click)="toggleEditForm(subcategoria)">Editar</button>
