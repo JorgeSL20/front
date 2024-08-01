@@ -119,7 +119,7 @@
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" (click)="closeModal()">Cerrar</button>
-    <button type="button" class="btn btn-primary" (click)="agregarAlCarrito(producto.id)">Añadir al carrito</button>
+    <button *ngIf="isLoggedIn" type="button" class="btn btn-primary" (click)="agregarAlCarrito(producto.id)">Añadir al carrito</button>
   </div>
 </div>
 
