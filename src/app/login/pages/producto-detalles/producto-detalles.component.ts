@@ -1,17 +1,28 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { Producto } from '../../interfaces/producto.interface';
 import { CarritoService } from '../../services/carrito.service';
+import { LoginService } from '../../services/login.service'; // Importa el LoginService
 
 @Component({
   selector: 'app-producto-detalles',
   templateUrl: './producto-detalles.component.html',
   styleUrls: ['./producto-detalles.component.css']
 })
-export class ProductoDetallesComponent {
+export class ProductoDetallesComponent implements OnInit {
   @Input() producto!: Producto;
   @Output() close = new EventEmitter<void>();
+  isLoggedIn: boolean = false; // Variable para almacenar el estado de autenticación
 
-  constructor(private carritoService: CarritoService) {}
+  constructor(
+    private carritoService: CarritoService,
+    private loginService: LoginService // Inyecta el LoginService
+  ) {}
+
+  ngOnInit() {
+    this.loginService.isLoggedIn().subscribe((loggedIn: boolean) => {
+      this.isLoggedIn = loggedIn; 
+    });
+  }
 
   closeModal() {
     this.close.emit();
@@ -35,9 +46,11 @@ export class ProductoDetallesComponent {
       },
       error => {
         console.error('Error al agregar producto al carrito:', error);
+        this.showAlert('Error al agregar producto al carrito', 'alert-danger');
       }
     );
   }
+
   showAlert(message: string, alertClass: string) {
     const alertDiv = document.createElement('div');
     alertDiv.className = `alert ${alertClass} fixed-top d-flex align-items-center justify-content-center`;
