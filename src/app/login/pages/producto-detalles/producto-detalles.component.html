@@ -1,5 +1,4 @@
 <style>
-/* src/app/producto-detalles/producto-detalles.component.css */
 .modal-backdrop {
   position: fixed;
   top: 0;
@@ -102,8 +101,9 @@
   }
 }
 
+
+
 </style>
-<!-- src/app/producto-detalles/producto-detalles.component.html -->
 <div class="modal-backdrop" (click)="closeModal()"></div>
 <div class="modal-content">
   <div class="modal-header">
@@ -112,8 +112,14 @@
   </div>
   <div class="modal-body">
     <img [src]="producto.url" alt="Imagen del producto" class="modal-img">
-    <p>{{ producto.descripcion }}</p>
-    <p>{{ producto.precio | currency }}</p>
+    <p><strong>Descripción:</strong> {{ producto.descripcion }}</p>
+    <p><strong>Precio:</strong> {{ producto.precio | currency }}</p>
+    <p><strong>Marca:</strong> {{ producto.marca }}</p>
+    <p><strong>Categoría:</strong> {{ producto.categoria }}</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="closeModal()">Cerrar</button>
+    <button type="button" class="btn btn-primary" (click)="agregarAlCarrito(producto.id)">Añadir al carrito</button>
   </div>
 </div>
 
