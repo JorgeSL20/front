@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { SubcategoriaService } from '../../services/subcategoria.service';
 import { Subcategoria } from '../../interfaces/subcategoria.interface';
+import { CategoriaService } from '../../services/categoria.service'; 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 declare var bootstrap: any;
@@ -13,21 +14,25 @@ declare var bootstrap: any;
 })
 export class ListarSubcategoriaComponent implements OnInit {
   subcategoria: Subcategoria[] = [];
+  categorias: any[] = [];
   subcategoriaSeleccionada: Subcategoria | null = null;
   editarForm: FormGroup;
 
   constructor(
     private router: Router,
+    @Inject(CategoriaService) private categoriaService: CategoriaService,
     @Inject(SubcategoriaService) private subcategoriaService: SubcategoriaService,
     private formBuilder: FormBuilder
   ) {
     this.editarForm = this.formBuilder.group({
+      categoria: ['', Validators.required],
       subcategoria: ['', Validators.required]
     });
   }
 
   ngOnInit(): void {
     this.obtenerSubcategoria();
+    this.obtenerCategorias();
   }
 
   obtenerSubcategoria(): void {
@@ -38,6 +43,17 @@ export class ListarSubcategoriaComponent implements OnInit {
       },
       (error) => {
         console.error('Error al obtener subcategoría:', error);
+      }
+    );
+  }
+
+  obtenerCategorias(): void {
+    this.categoriaService.obtenerCategoria().subscribe(
+      (categorias: any[]) => {
+        this.categorias = categorias;
+      },
+      (error) => {
+        console.error('Error al obtener categorías:', error);
       }
     );
   }

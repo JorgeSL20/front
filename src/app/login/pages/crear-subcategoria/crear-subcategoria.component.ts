@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SubcategoriaService } from '../../services/subcategoria.service';
+import { CategoriaService } from '../../services/categoria.service'; 
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,15 +11,22 @@ import { Router } from '@angular/router';
 })
 export class CrearSubcategoriaComponent {
   myForm: FormGroup;
+  categorias: any[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
     private SubcategoriaService: SubcategoriaService,
+    private categoriaService: CategoriaService,
     private router: Router
   ) {
     this.myForm = this.formBuilder.group({
+      categoria: ['', Validators.required],
       subcategoria: ['', Validators.required],
     });
+  }
+
+  ngOnInit(): void {
+    this.obtenerCategorias();
   }
 
   guardarSubcategoria() {
@@ -35,6 +43,17 @@ export class CrearSubcategoriaComponent {
         }
       );
     }
+  }
+
+  obtenerCategorias(): void {
+    this.categoriaService.obtenerCategoria().subscribe(
+      (categorias: any[]) => {
+        this.categorias = categorias;
+      },
+      (error) => {
+        console.error('Error al obtener categorías:', error);
+      }
+    );
   }
 
   regresar() {
