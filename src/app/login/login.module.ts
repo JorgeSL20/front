@@ -7,7 +7,8 @@ import { GoogleMapsModule } from '@angular/google-maps';
 
 import { RouterModule } from '@angular/router';
 
-
+import { CrearSubcategoriaComponent } from './pages/crear-subcategoria/crear-subcategoria.component';
+import { ListarSubcategoriaComponent } from './pages/listar-subcategoria/listar-subcategoria.component';
 import { LoginComponent } from './pages/login/login.component';
 import { CrearCuentaComponent } from './pages/crear-cuenta/crear-cuenta.component';
 import { RecuperarPasswordComponent } from './pages/recuperar-password/recuperar-password.component';
@@ -66,11 +67,13 @@ import { UbicacionpublicoComponent } from './publico/ubicacionpublico/ubicacionp
     ListarUbicacionComponent,
     ListarProductosComponent,
     ListarCategoriaComponent,
+    ListarSubcategoriaComponent,
     ListarCarruselComponent,
     CrearProductoComponent,
     CrearUbicacionComponent,
     CrearMarcaComponent,
     CrearCategoriaComponent,
+    CrearSubcategoriaComponent,
     CrearCarruselComponent,
     RecuperarPasswordComponent,
     LayoutComponent,
