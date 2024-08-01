@@ -23,7 +23,6 @@ import { CrearProductoComponent } from './pages/crear-producto/crear-producto.co
 import { LayoutComponent } from './pages/layout/layout.component';
 import { LoginRoutingModule } from './login-routing.module';
 import { InicioComponent } from './pages/inicio/inicio.component';
-import { AgendarComponent } from './pages/agendar/agendar.component';
 import { HeaderComponent } from './interfaces/header/header.component';
 import { BreadcrumbsComponent } from './interfaces/breadcrumbs/breadcrumbs.component';
 import { FooterComponent } from './interfaces/footer/footer.component';
@@ -63,22 +62,9 @@ import { UbicacionpublicoComponent } from './publico/ubicacionpublico/ubicacionp
   declarations: [
     LoginComponent,
     CrearCuentaComponent,
-    ListarMarcaComponent,
-    ListarUbicacionComponent,
-    ListarProductosComponent,
-    ListarCategoriaComponent,
-    ListarSubcategoriaComponent,
-    ListarCarruselComponent,
-    CrearProductoComponent,
-    CrearUbicacionComponent,
-    CrearMarcaComponent,
-    CrearCategoriaComponent,
-    CrearSubcategoriaComponent,
-    CrearCarruselComponent,
     RecuperarPasswordComponent,
     LayoutComponent,
     InicioComponent,
-    AgendarComponent,
     HeaderComponent,
     BreadcrumbsComponent,
     FooterComponent,
@@ -105,6 +91,18 @@ import { UbicacionpublicoComponent } from './publico/ubicacionpublico/ubicacionp
     HeaderadmonComponent,
     AdmonusuariosComponent,
     AdmonpreguntasComponent,
+    ListarMarcaComponent,
+    ListarUbicacionComponent,
+    ListarProductosComponent,
+    ListarCategoriaComponent,
+    ListarSubcategoriaComponent,
+    ListarCarruselComponent,
+    CrearProductoComponent,
+    CrearUbicacionComponent,
+    CrearMarcaComponent,
+    CrearCategoriaComponent,
+    CrearSubcategoriaComponent,
+    CrearCarruselComponent,
   ],
   imports: [
     CommonModule,
