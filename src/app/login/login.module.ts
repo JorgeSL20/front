@@ -38,7 +38,6 @@ import { NotFoundComponent } from './interfaces/not-found/not-found.component';
 import { PerfilComponent } from './pages/perfil/perfil.component';
 import { EditarPerfilComponent } from './pages/editar-perfil/editar-perfil.component';
 import { ServiciospublicoComponent } from './publico/serviciospublico/serviciospublico.component';
-import { PreguntaspublicoComponent } from './publico/preguntaspublico/preguntaspublico.component';
 import { AdmonpreguntasComponent } from './admon/admonpreguntas/admonpreguntas.component';
 import { AdmonusuariosComponent } from './admon/admonusuarios/admonusuarios.component';
 import { HeaderadmonComponent } from './admon/headeradmon/headeradmon.component';

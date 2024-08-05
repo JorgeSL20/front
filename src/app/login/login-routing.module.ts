@@ -33,7 +33,6 @@ import { PerfilComponent } from './pages/perfil/perfil.component';
 import { EditarPerfilComponent } from './pages/editar-perfil/editar-perfil.component';
 import { canActivate, canMatch } from './guards/guards.guard';
 import { ServiciospublicoComponent } from './publico/serviciospublico/serviciospublico.component';
-import { PreguntaspublicoComponent } from './publico/preguntaspublico/preguntaspublico.component';
 import { AdmonpreguntasComponent } from './admon/admonpreguntas/admonpreguntas.component';
 import { CarritoComponent } from './pages/carrito/carrito.component';
 import { PagoComponent } from './pages/pago/pago.component';
@@ -228,8 +227,8 @@ const routes: Routes = [
 
       },
       {
-        path: 'preguntaspublico',
-        component: PreguntaspublicoComponent
+        path: 'preguntas',
+        component: PreguntasComponent
       },
       {
         path: 'adminusuarios',
