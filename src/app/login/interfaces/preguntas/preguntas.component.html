@@ -1,25 +1,81 @@
+<style>
+    /* Estilos generales para el cuerpo de la página */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+/* Estilos para el contenedor principal */
+.container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+}
+
+/* Estilos para los encabezados */
+h3 {
+    background: #333;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 0;
+}
+
+/* Estilos para los párrafos */
+p {
+    background: #fff;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+/* Estilos para los enlaces (si los hubiera) */
+a {
+    color: #333;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #007bff;
+    text-decoration: underline;
+}
+
+/* Estilos para el encabezado y pie de página (opcional) */
+app-header, app-footer {
+    background: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+}
+
+/* Ajustes de diseño responsivo */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+    }
+}
+
+</style>
 <!DOCTYPE html>
 <html lang="es">
-    <app-header></app-header>
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Preguntas Frecuentes - Clínica Dental</title>
-    <link rel="stylesheet" href="preguntas.component.css">
-</head>
     
-
 <body>
-
-    <div *ngFor="let pregunta of preguntas">
-        <h3>{{ pregunta.preguntas }}</h3>
-        <p>{{ pregunta.respuestas }}</p>
-      </div>
-      
-      
-
-   
-</body>
+    <app-header></app-header>
+    <br>
+    
+    <div class="container">
+        <br>
+        <div *ngFor="let pregunta of preguntas">
+            <h3>{{ pregunta.preguntas }}</h3>
+            <p>{{ pregunta.respuestas }}</p>
+        </div>
+    </div>
+    <br>
 <app-footer></app-footer>
+</body>
+
 </html>
