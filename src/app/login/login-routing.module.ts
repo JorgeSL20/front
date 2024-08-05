@@ -237,7 +237,7 @@ const routes: Routes = [
         canMatch: [canMatch]
       },
       {
-        path: 'adminpreguntas',
+        path: 'listar-preguntas',
         component: AdmonpreguntasComponent ,
         canActivate: [canActivate],
         canMatch: [canMatch]
