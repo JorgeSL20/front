@@ -1,43 +1,50 @@
+// src/app/login/services/pago.service.ts
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PagoService {
-  private apiUrl = 'https://proyectogatewayback-production.up.railway.app/pago';
-  private scriptLoaded = false;
+  private apiUrl = environment.apiUrl;
+  
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
-  constructor(private http: HttpClient) {}
-
-  procesarPago(pagoData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/procesar-pago`, pagoData);
-  }
-
-  enviarConfirmacion(items: any[]): Observable<any> {
-    return this.http.post(`${this.apiUrl}/enviar-confirmacion`, { items });
+  crearOrden(pagoData: any): Observable<any> {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.post(`${this.apiUrl}/pago/crear-orden`, pagoData, { headers });
   }
 
   capturarPago(orderId: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/capturar-pago`, { orderId });
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.post(`${this.apiUrl}/pago/capturar-pago`, { orderId }, { headers });
   }
 
-  loadPayPalScript(clientId: string, currency: string): Promise<void> {
-    if (this.scriptLoaded) {
-      return Promise.resolve();
-    }
-
-    return new Promise<void>((resolve, reject) => {
-      const script = document.createElement('script');
-      script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}&currency=${currency}`;
-      script.onload = () => {
-        this.scriptLoaded = true;
-        resolve();
-      };
-      script.onerror = () => reject(new Error('Failed to load PayPal script'));
-      document.body.appendChild(script);
+  enviarConfirmacion(items: any[]): Observable<any> {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return new Observable(observer => {
+      this.authService.getCurrentUserEmail().subscribe(email => {
+        if (email) {
+          this.http.post(`${this.apiUrl}/soporte/send-email`, { items, email }, { headers })
+            .subscribe(
+              response => {
+                observer.next(response);
+                observer.complete();
+              },
+              error => {
+                observer.error(error);
+              }
+            );
+        } else {
+          observer.error('No email found');
+        }
+      });
     });
   }
 }

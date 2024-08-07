@@ -243,6 +243,12 @@ const routes: Routes = [
         canMatch: [canMatch]
       },
       {
+        path: 'gracias',
+        component:PaymentSuccessComponent,
+        canActivate: [canActivate],
+        canMatch: [canMatch]
+      },
+      {
         path: '',
         component: NotFoundComponent
       },
