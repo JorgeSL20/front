@@ -32,6 +32,8 @@ export class ServiciospublicoComponent implements OnInit {
 
   ngOnInit(): void {
     this.cargarDatosIniciales();
+    // Agregar visibilidad al cargar la página
+    this.checkVisibility();
   }
 
   cargarDatosIniciales(): void {
@@ -54,12 +56,14 @@ export class ServiciospublicoComponent implements OnInit {
       }
     );
   }
-  
+
   obtenerProductos(): void {
     this.productoService.obtenerProductos().subscribe(
       (productos: Producto[]) => {
         this.productos = productos;
         this.productosFiltrados = productos; // Inicializa los productos filtrados
+        // Asegurarse de que los productos sean visibles después de la carga
+        setTimeout(() => this.checkVisibility(), 100); // Esperar para aplicar la visibilidad
       },
       (error) => {
         console.error('Error al obtener productos:', error);
@@ -100,35 +104,42 @@ export class ServiciospublicoComponent implements OnInit {
     );
   }
 
-  showAlert(message: string, alertType: string): void {
-    const alertContainer = document.createElement('div');
-    alertContainer.className = `alert ${alertType} alert-dismissible fade show`;
-    alertContainer.role = 'alert';
-    alertContainer.innerHTML = `
-      ${message}
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    `;
-    document.body.appendChild(alertContainer);
+  showAlert(message: string, alertClass: string) {
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert ${alertClass} fixed-top d-flex align-items-center justify-content-center`;
+    alertDiv.textContent = message;
+    alertDiv.style.fontSize = '20px';
+
+    document.body.appendChild(alertDiv);
+
     setTimeout(() => {
-      alertContainer.remove();
-    }, 3000);
+      alertDiv.remove();
+    }, 2000);
   }
 
-  abrirModal(producto: Producto): void {
+  abrirModal(producto: Producto) {
     this.productoSeleccionado = producto;
+    document.body.style.overflow = 'hidden'; // Evitar el scroll del fondo
   }
 
-  cerrarModal(): void {
+  cerrarModal() {
     this.productoSeleccionado = null;
+    document.body.style.overflow = 'auto'; // Restaurar el scroll del fondo
   }
 
-  @HostListener('window:scroll')
-  onWindowScroll(): void {
+  @HostListener('window:scroll', ['$event'])
+  onScroll(event: Event): void {
+    this.checkVisibility();
+  }
+
+  private checkVisibility(): void {
     const cards = this.el.nativeElement.querySelectorAll('.card');
-    cards.forEach((card: any) => {
+    cards.forEach((card: HTMLElement) => {
       const rect = card.getBoundingClientRect();
       if (rect.top < window.innerHeight && rect.bottom >= 0) {
         card.classList.add('visible');
+      } else {
+        card.classList.remove('visible');
       }
     });
   }

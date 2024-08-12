@@ -100,6 +100,21 @@ export class ServiciosComponent implements OnInit {
     document.body.style.overflow = 'auto'; // Restaurar el scroll del fondo
   }
 
+  agregarAlCarrito(producto: Producto) {
+    if (producto.existencias > 0) {
+      this.carritoService.agregarOActualizarItem({ productoId: producto.id, cantidad: 1 }).subscribe(
+        response => {
+          this.showAlert('Producto agregado al carrito', 'alert-success');
+        },
+        error => {
+          this.showAlert('Error al agregar el producto al carrito', 'alert-danger');
+        }
+      );
+    } else {
+      this.showAlert('El producto está agotado', 'alert-danger');
+    }
+  }
+
   @HostListener('window:scroll', ['$event'])
   onScroll(event: Event): void {
     const cards = this.el.nativeElement.querySelectorAll('.card');

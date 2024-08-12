@@ -29,18 +29,17 @@ export class CarritoService {
       switchMap(producto => {
         const userId = this.authService.getCurrentUserId();
         if (userId !== null) {
-          return this.http.post(`${this.apiUrl}/agregar-o-actualizar`, {
+          return this.http.post(`${this.apiUrl}/agregar`, {
             productoId,
             cantidad,
-            userId
+            userId,
+            productoNombre: producto.producto,
+            precio: producto.precio,
+            url: producto.url
           }, { headers: this.getAuthHeaders() });
         } else {
-          return of(null); // Manejar el caso cuando el usuario no está autenticado
+          return of(null); // O manejar el caso cuando el usuario no está autenticado
         }
-      }),
-      catchError(error => {
-        console.error('Error al agregar item:', error);
-        return of(null);
       })
     );
   }
@@ -49,28 +48,45 @@ export class CarritoService {
     const userId = this.authService.getCurrentUserId();
     if (userId !== null) {
       return this.http.get<any[]>(`${this.apiUrl}/items/${userId}`, { headers: this.getAuthHeaders() }).pipe(
-        catchError(error => {
-          console.error('Error al obtener items del carrito:', error);
-          return of([]);
+        switchMap(items => {
+          if (!Array.isArray(items)) {
+            console.error('Formato de datos incorrecto:', items);
+            return of([]);
+          }
+
+          return this.productoService.obtenerProductos().pipe(
+            switchMap(productos => {
+              if (!Array.isArray(productos)) {
+                console.error('Formato de datos incorrecto:', productos);
+                return of([]);
+              }
+
+              const itemsConDetalles = items.map(item => {
+                const producto = productos.find(p => p.id === item.productoId);
+                return {
+                  ...item,
+                  productoNombre: producto?.producto || 'Desconocido',
+                  productoImagen: producto?.url || 'default-image-url',
+                  productoPrecio: producto?.precio || 0
+                };
+              });
+              return of(itemsConDetalles);
+            })
+          );
         })
       );
     } else {
-      return of([]); // Manejar el caso cuando el usuario no está autenticado
+      return of([]); // O manejar el caso cuando el usuario no está autenticado
     }
   }
 
   eliminarItem(itemId: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/eliminar/${itemId}`, { headers: this.getAuthHeaders() }).pipe(
-      catchError(error => {
-        console.error('Error al eliminar item del carrito:', error);
-        return of(null);
-      })
-    );
+    return this.http.delete(`${this.apiUrl}/eliminar/${itemId}`, { headers: this.getAuthHeaders() });
   }
 
-  actualizarCantidad(id: number, cantidad: number): Observable<any> {
-  return this.http.put(`${this.apiUrl}/carrito/actualizar-cantidad/${id}`, { cantidad });
-}
+  actualizarCantidad(itemId: number, nuevaCantidad: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}/actualizar-cantidad/${itemId}`, { cantidad: nuevaCantidad }, { headers: this.getAuthHeaders() });
+  }
 
   vaciarCarrito(): Observable<any> {
     const userId = this.authService.getCurrentUserId();
@@ -103,6 +119,5 @@ export class CarritoService {
   agregarOActualizarItem(item: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/agregar-o-actualizar`, item, { headers: this.getAuthHeaders() });
   }
-
   
 }

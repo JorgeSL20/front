@@ -79,6 +79,22 @@
       border-color: #218838;
     }
 
+    .btn-disabled {
+      background-color: #6c757d;
+      border-color: #6c757d;
+      cursor: not-allowed;
+    }
+
+    .btn-disabled:hover {
+      background-color: #6c757d;
+      border-color: #6c757d;
+    }
+
+    .out-of-stock {
+      color: red;
+      font-weight: bold;
+    }
+
     .carousel-item img {
       max-height: 300px;
       width: auto;
@@ -126,9 +142,23 @@
         <p class="card-text">{{ producto.precio | currency }}</p>
         <p class="card-text">Marca: {{ producto.marca }}</p>
         <p class="card-text">Categoría: {{ producto.categoria }}</p>
+        <p class="card-text" *ngIf="producto.existencias === 0" class="out-of-stock">Agotado</p>
         <div class="btn-container">
           <button class="btn btn-primary" (click)="abrirModal(producto)" style="margin-right: 10px;">Detalles</button>
-          <a routerLink="/user/login" class="btn btn-success">Añadir al carrito</a>
+          <button 
+            class="btn btn-success" 
+            routerLink="/user/login" 
+            *ngIf="producto.existencias > 0"
+          >
+            Añadir al carrito
+          </button>
+          <button 
+            class="btn btn-disabled" 
+            *ngIf="producto.existencias === 0"
+            disabled
+          >
+            Añadir al carrito
+          </button>
         </div>
       </div>
     </div>
