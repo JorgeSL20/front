@@ -19,6 +19,7 @@ import { FooderadmonComponent } from './admon/fooderadmon/fooderadmon.component'
 import { CrearProductoComponent } from './pages/crear-producto/crear-producto.component';
 import { ListarProductosComponent } from './pages/listar-producto/listar-producto.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SafePipe } from '../pipes/safe.pipe';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
@@ -39,7 +40,8 @@ import { FormsModule } from '@angular/forms';
     InicioadminComponent,
     FooderadmonComponent,
     CrearProductoComponent,
-    ListarProductosComponent
+    ListarProductosComponent,
+    SafePipe
   ],
   imports: [
     CommonModule,

@@ -13,7 +13,7 @@ import { RoleGuard } from './login/guards/role.guard';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,

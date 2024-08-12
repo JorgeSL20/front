@@ -54,7 +54,4 @@ export class InicioComponent implements AfterViewInit, OnInit {
     });
   }
 
-  navegar(): void {
-    this.router.navigate(['/']);
-  }
 }

@@ -8,7 +8,6 @@ import { HeaderComponent } from './interfaces/header/header.component';
 import { FooterComponent } from './interfaces/footer/footer.component';
 import { ContactoComponent } from './interfaces/contacto/contacto.component';
 import { UbicacionComponent } from './interfaces/ubicacion/ubicacion.component';
-import { UbicacionpublicoComponent } from './publico/ubicacionpublico/ubicacionpublico.component';
 import { QuienessomosComponent } from './interfaces/quienessomos/quienessomos.component';
 import { AvisoPrivacidadComponent } from './interfaces/avisoPrivacidad/avisoPrivacidad.component';
 import { TerminosCondicionesComponent } from './interfaces/terminosCondiciones/terminosCondiciones.component';
@@ -40,7 +39,6 @@ const routes: Routes = [
       { path: 'contacto', component: ContactoComponent },
       { path: 'productospublicos', component: ServiciospublicoComponent },
       { path: 'ubicacion', component: UbicacionComponent },
-      { path: 'ubicacionpublico', component: UbicacionpublicoComponent },
       { path: 'registro', component: CrearCuentaComponent },
       { path: 'recuperar-password', component: RecuperarPasswordComponent },
       { path: 'quienessomos', component: QuienessomosComponent },

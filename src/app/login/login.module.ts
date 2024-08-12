@@ -39,7 +39,6 @@ import { PaymentSuccessComponent } from './pages/payment-success/payment-success
 //CAPTCHA//
 import { NgxCaptchaModule } from 'ngx-captcha';
 import { LoginService } from './services/login.service';
-import { UbicacionpublicoComponent } from './publico/ubicacionpublico/ubicacionpublico.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +54,6 @@ import { UbicacionpublicoComponent } from './publico/ubicacionpublico/ubicacionp
     ServiciosComponent,
     QuienessomosComponent,
     UbicacionComponent,
-    UbicacionpublicoComponent,
     AvisoPrivacidadComponent,
     PoliticaCookiesComponent,
     TerminosCondicionesComponent,

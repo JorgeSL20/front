@@ -17,10 +17,7 @@
         <tr>
           <th>ID</th>
           <th>Nombre</th>
-          <th>Latitud</th>
-          <th>Longitud</th>
-          <th>Zoom</th>
-          <th>Acción</th> <!-- Nueva columna para el botón de eliminar -->
+          <th>Link</th>
         </tr>
       </thead>
       <!-- Cuerpo de la tabla -->
@@ -28,9 +25,7 @@
         <tr *ngFor="let ubicacion of ubicaciones">
           <td>{{ ubicacion.id }}</td>
           <td>{{ ubicacion.name }}</td>
-          <td>{{ ubicacion.latitude }}</td>
-          <td>{{ ubicacion.longitude }}</td>
-          <td>{{ ubicacion.zoom }}</td>
+          <td>{{ ubicacion.url }}</td>
           <td>
             <!-- Botón de eliminar con estilo Bootstrap -->
             <button class="btn btn-danger" (click)="eliminarUbicacion(ubicacion.id)">Eliminar</button>
