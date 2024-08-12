@@ -77,13 +77,25 @@ export class ListarCategoriaComponent implements OnInit {
     if (this.editarForm.invalid) {
       return;
     }
-
+  
+    const nuevaCategoria = this.editarForm.get('categoria')?.value;
+  
+    // Verificar si la nueva categoría ya existe
+    const categoriaExistente = this.categoria.some(
+      (cat) => cat.categoria.toLowerCase() === nuevaCategoria.toLowerCase()
+    );
+  
+    if (categoriaExistente) {
+      this.showAlert('La categoría ya existe', 'alert-danger');
+      return;
+    }
+  
     if (this.categoriaSeleccionada) {
       const updatedCategoria: Categoria = {
         ...this.categoriaSeleccionada,
-        categoria: this.editarForm.get('categoria')?.value
+        categoria: nuevaCategoria
       };
-
+  
       this.categoriaService.actualizarCategoria(updatedCategoria.id, updatedCategoria).subscribe(
         () => {
           console.log('Categoría actualizada correctamente');
@@ -101,6 +113,7 @@ export class ListarCategoriaComponent implements OnInit {
       );
     }
   }
+  
 
   irAFormulario(): void {
     this.router.navigate(['/admin/crear-categoria']);
