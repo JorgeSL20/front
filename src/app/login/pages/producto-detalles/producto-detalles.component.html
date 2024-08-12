@@ -99,6 +99,10 @@
   .modal-img {
     max-height: 150px;
   }
+  .out-of-stock {
+  color: red;
+  font-weight: bold;
+}
 }
 </style>
 <div class="modal-backdrop" (click)="closeModal()"></div>
@@ -113,10 +117,25 @@
     <p><strong>Precio:</strong> {{ producto.precio | currency }}</p>
     <p><strong>Marca:</strong> {{ producto.marca }}</p>
     <p><strong>Categoría:</strong> {{ producto.categoria }}</p>
+    <p *ngIf="producto.existencias === 0" class="out-of-stock">Agotado</p>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" (click)="closeModal()">Cerrar</button>
-    <button *ngIf="isLoggedIn" type="button" class="btn btn-primary" (click)="agregarAlCarrito(producto.id)">Añadir al carrito</button>
+    <button 
+      *ngIf="isLoggedIn && producto.existencias > 0" 
+      type="button" 
+      class="btn btn-primary" 
+      (click)="agregarAlCarrito(producto.id)"
+    >
+      Añadir al carrito
+    </button>
+    <button 
+      *ngIf="isLoggedIn && producto.existencias === 0" 
+      type="button" 
+      class="btn btn-secondary" 
+      disabled
+    >
+      Añadir al carrito
+    </button>
   </div>
 </div>
-

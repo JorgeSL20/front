@@ -100,38 +100,35 @@ export class ServiciospublicoComponent implements OnInit {
     );
   }
 
-  showAlert(message: string, alertClass: string) {
-    const alertDiv = document.createElement('div');
-    alertDiv.className = `alert ${alertClass} fixed-top d-flex align-items-center justify-content-center`;
-    alertDiv.textContent = message;
-    alertDiv.style.fontSize = '20px';
-
-    document.body.appendChild(alertDiv);
-
+  showAlert(message: string, alertType: string): void {
+    const alertContainer = document.createElement('div');
+    alertContainer.className = `alert ${alertType} alert-dismissible fade show`;
+    alertContainer.role = 'alert';
+    alertContainer.innerHTML = `
+      ${message}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    `;
+    document.body.appendChild(alertContainer);
     setTimeout(() => {
-      alertDiv.remove();
-    }, 2000);
+      alertContainer.remove();
+    }, 3000);
   }
 
-  abrirModal(producto: Producto) {
+  abrirModal(producto: Producto): void {
     this.productoSeleccionado = producto;
-    document.body.style.overflow = 'hidden'; // Evitar el scroll del fondo
   }
 
-  cerrarModal() {
+  cerrarModal(): void {
     this.productoSeleccionado = null;
-    document.body.style.overflow = 'auto'; // Restaurar el scroll del fondo
   }
 
-  @HostListener('window:scroll', ['$event'])
-  onScroll(event: Event): void {
+  @HostListener('window:scroll')
+  onWindowScroll(): void {
     const cards = this.el.nativeElement.querySelectorAll('.card');
-    cards.forEach((card: HTMLElement) => {
+    cards.forEach((card: any) => {
       const rect = card.getBoundingClientRect();
       if (rect.top < window.innerHeight && rect.bottom >= 0) {
         card.classList.add('visible');
-      } else {
-        card.classList.remove('visible');
       }
     });
   }
