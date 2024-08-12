@@ -59,13 +59,26 @@ export class ListarMarcaComponent implements OnInit {
     if (this.editarForm.invalid) {
       return;
     }
-
+  
+    const nuevaMarca = this.editarForm.get('marca')?.value.trim().toLowerCase();
+  
+    // Verifica si la marca ya existe en la lista
+    const marcaDuplicada = this.marcas.some(marca => 
+      marca.marca.trim().toLowerCase() === nuevaMarca &&
+      marca.id !== this.marcaSeleccionada?.id  // Ignora la marca actual
+    );
+  
+    if (marcaDuplicada) {
+      this.showAlert('La marca ya existe', 'alert-danger');
+      return;
+    }
+  
     if (this.marcaSeleccionada) {
       const updatedMarca: Marca = {
         ...this.marcaSeleccionada,
-        marca: this.editarForm.get('marca')?.value  // Cambiado a 'marca'
+        marca: nuevaMarca  // Cambiado a 'nuevaMarca'
       };
-
+  
       this.marcaService.actualizarMarca(updatedMarca.id, updatedMarca).subscribe(
         () => {
           console.log('Marca actualizada correctamente');
@@ -84,6 +97,7 @@ export class ListarMarcaComponent implements OnInit {
       );
     }
   }
+  
 
   eliminarMarca(id: number): void {
     this.marcaService.eliminarMarca(id).subscribe(
