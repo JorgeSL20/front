@@ -33,10 +33,10 @@ export class AdmonusuariosComponent implements OnInit {
   updateUserRole(email: string, newRole: string) {
     this.loginService.updateRoleByEmail(email, newRole).subscribe(
       response => {
-        console.log('Rol actualizado:', response);
+        this.showAlert('Rol actualizado', 'alert-success');
       },
       error => {
-        console.error('Error al actualizar el rol:', error);
+        this.showAlert('Error al actualizar el rol', 'alert-danger');
       }
     );
   }
@@ -59,5 +59,17 @@ export class AdmonusuariosComponent implements OnInit {
     } else {
       this.filteredUsers = this.dataUsers;
     }
+  }
+  showAlert(message: string, alertClass: string) {
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert ${alertClass} fixed-top d-flex align-items-center justify-content-center`;
+    alertDiv.textContent = message;
+    alertDiv.style.fontSize = '20px';
+
+    document.body.appendChild(alertDiv);
+
+    setTimeout(() => {
+      alertDiv.remove();
+    }, 2000);
   }
 }
