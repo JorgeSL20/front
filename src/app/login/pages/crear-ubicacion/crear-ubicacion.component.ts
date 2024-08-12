@@ -44,7 +44,7 @@ export class CrearUbicacionComponent {
   }
 
   regresar() {
-    this.router.navigate(['/user/listar-ubicacion']);
+    this.router.navigate(['/admin/listar-ubicacion']);
   }
 
   showAlert(message: string, alertClass: string) {

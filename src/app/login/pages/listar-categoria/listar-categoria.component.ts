@@ -103,7 +103,7 @@ export class ListarCategoriaComponent implements OnInit {
   }
 
   irAFormulario(): void {
-    this.router.navigate(['/user/crear-categoria']);
+    this.router.navigate(['/admin/crear-categoria']);
   }
 
   showAlert(message: string, alertClass: string) {

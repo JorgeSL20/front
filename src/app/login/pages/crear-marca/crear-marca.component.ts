@@ -27,7 +27,7 @@ export class CrearMarcaComponent {
       this.marcaService.crearMarca(marcaData).subscribe(
         response => {
           console.log(response);
-          this.router.navigate(['/user/listar-marca']);
+          this.router.navigate(['/admin/listar-marca']);
           this.showAlert('Marca Creada con exito', 'alert-success');
         },
         error => {

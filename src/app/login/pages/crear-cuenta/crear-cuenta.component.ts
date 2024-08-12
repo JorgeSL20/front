@@ -77,7 +77,7 @@ export class CrearCuentaComponent implements OnInit {
         this.showAlert('Cuenta creada correctamente', 'alert-success');
 
         setTimeout(() => {
-          this.router.navigate(['/user/login']);
+          this.router.navigate(['/admin/login']);
         }, 1000);
       },
       error => {

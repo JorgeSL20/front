@@ -41,7 +41,7 @@ export class CrearCarruselComponent {
             this.carruselService.createCarrusel(createCarruselDto).subscribe(
               (carrusel: Carrusel) => {
                 console.log('Carrusel creado:', carrusel);
-                this.router.navigate(['/user/listar-carrusel']);
+                this.router.navigate(['/admin/listar-carrusel']);
                 this.showAlert('Imagen agregada a carrusel correctamente', 'alert-success');
               },
               error => {

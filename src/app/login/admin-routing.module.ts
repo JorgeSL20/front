@@ -17,6 +17,7 @@ import { AdmonpreguntasComponent } from './admon/admonpreguntas/admonpreguntas.c
 import { AdmonusuariosComponent } from './admon/admonusuarios/admonusuarios.component';
 import { InicioadminComponent } from './admon/inicioadmin/inicioadmin.component';
 import { ListarProductosComponent } from './pages/listar-producto/listar-producto.component';
+import { CrearProductoComponent } from './pages/crear-producto/crear-producto.component';
 import { canActivate } from './guards/guards.guard';
 
 const routes: Routes = [
@@ -39,6 +40,7 @@ const routes: Routes = [
       { path: 'adminusuarios', component: AdmonusuariosComponent },
       { path: 'adminpreguntas', component: AdmonpreguntasComponent },
       { path: 'listar-producto', component: ListarProductosComponent },
+      { path: 'crear-producto', component: CrearProductoComponent },
       { path: '', redirectTo: 'adminusuarios', pathMatch: 'full' }
     ]
   }

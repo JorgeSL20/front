@@ -47,6 +47,6 @@ eliminarCarrusel(id: number): void {
 
 
   irAFormulario(): void {
-    this.router.navigate(['/user/crear-carrusel']);
+    this.router.navigate(['/admin/crear-carrusel']);
   }
 }

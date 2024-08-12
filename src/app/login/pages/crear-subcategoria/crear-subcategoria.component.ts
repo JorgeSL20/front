@@ -35,7 +35,7 @@ export class CrearSubcategoriaComponent {
       this.SubcategoriaService.crearSubcategoria(subcategoriaData).subscribe(
         response => {
           console.log(response);
-          this.router.navigate(['/user/listar-subcategoria']);
+          this.router.navigate(['/admin/listar-subcategoria']);
           this.showAlert('Subcategoria Creada con exito', 'alert-success');
         },
         error => {

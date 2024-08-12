@@ -119,7 +119,7 @@ export class ListarSubcategoriaComponent implements OnInit {
   }
 
   irAFormulario(): void {
-    this.router.navigate(['/user/crear-subcategoria']);
+    this.router.navigate(['/admin/crear-subcategoria']);
   }
 
   showAlert(message: string, alertClass: string) {

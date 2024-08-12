@@ -47,7 +47,7 @@ export class ListarUbicacionComponent implements OnInit {
   }
 
   irAFormulario(): void {
-    this.router.navigate(['/user/crear-ubicacion']);
+    this.router.navigate(['/admin/crear-ubicacion']);
   }
 
   showAlert(message: string, alertClass: string) {

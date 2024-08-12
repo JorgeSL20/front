@@ -83,7 +83,7 @@ export class CrearProductoComponent implements OnInit {
       this.productoService.crearProducto(formData).subscribe(
         response => {
           console.log(response);
-          this.router.navigate(['/user/listar-producto']);
+          this.router.navigate(['/admin/listar-producto']);
           this.showAlert('Producto creado con exito', 'alert-success');
         },
         error => {

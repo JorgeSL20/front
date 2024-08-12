@@ -27,7 +27,7 @@ export class CrearCategoriaComponent {
       this.categoriaService.crearCategoria(categoriaData).subscribe(
         response => {
           console.log(response);
-          this.router.navigate(['/user/listar-categoria']);
+          this.router.navigate(['/admin/listar-categoria']);
           this.showAlert('Categoria Creada con exito', 'alert-success');
         },
         error => {
