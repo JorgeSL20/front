@@ -20,7 +20,7 @@ export class ListarMarcaComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {
     this.editarForm = this.formBuilder.group({
-      marca: ['', Validators.required]
+      marca: ['', [Validators.required, Validators.pattern('^[a-zA-Z\\s]+$')]]
     });
   }
 

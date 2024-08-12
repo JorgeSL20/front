@@ -17,7 +17,7 @@ export class CrearMarcaComponent {
     private router: Router
   ) {
     this.myForm = this.formBuilder.group({
-      marca: ['', Validators.required],
+      marca: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
     });
   }
 
@@ -40,6 +40,7 @@ export class CrearMarcaComponent {
   regresar() {
     this.router.navigate(['/admin/listar-marca']);
   }
+  
   showAlert(message: string, alertClass: string) {
     const alertDiv = document.createElement('div');
     alertDiv.className = `alert ${alertClass} fixed-top d-flex align-items-center justify-content-center`;

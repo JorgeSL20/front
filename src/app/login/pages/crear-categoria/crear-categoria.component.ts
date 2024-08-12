@@ -17,7 +17,7 @@ export class CrearCategoriaComponent {
     private router: Router
   ) {
     this.myForm = this.formBuilder.group({
-      categoria: ['', Validators.required],
+      categoria: ['', [Validators.required, Validators.pattern('^[a-zA-Z\\s]+$')]]
     });
   }
 

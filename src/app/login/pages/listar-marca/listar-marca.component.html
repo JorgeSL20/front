@@ -51,7 +51,6 @@
     </div>
   </div>
 </div>
-
 <!-- Modal -->
 <div class="modal fade" id="editarMarcaModal" tabindex="-1" aria-labelledby="editarMarcaModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -65,6 +64,11 @@
           <div class="mb-3">
             <label for="marca" class="form-label">Marca</label>
             <input type="text" id="marca" formControlName="marca" class="form-control">
+            <!-- Manejo de errores con encadenamiento opcional -->
+            <div *ngIf="editarForm.get('marca')?.invalid && (editarForm.get('marca')?.dirty || editarForm.get('marca')?.touched)">
+              <small class="text-danger" *ngIf="editarForm.get('marca')?.errors?.['required']">El campo marca es obligatorio.</small>
+              <small class="text-danger" *ngIf="editarForm.get('marca')?.errors?.['pattern']">El campo marca no puede contener números.</small>
+            </div>
           </div>
           <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Guardar</button>
         </form>
@@ -72,3 +76,4 @@
     </div>
   </div>
 </div>
+

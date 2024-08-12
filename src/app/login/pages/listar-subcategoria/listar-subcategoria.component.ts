@@ -25,8 +25,8 @@ export class ListarSubcategoriaComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {
     this.editarForm = this.formBuilder.group({
-      categoria: ['', Validators.required],
-      subcategoria: ['', Validators.required]
+      categoria: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
+      subcategoria: ['', Validators.required, Validators.pattern('^[a-zA-Z ]*$')]
     });
   }
 
@@ -77,11 +77,11 @@ export class ListarSubcategoriaComponent implements OnInit {
   toggleEditForm(subcategoria: Subcategoria | null): void {
     if (subcategoria) {
       this.editarForm.patchValue({
-        subcategoria: subcategoria.categoria
+        categoria: subcategoria.categoria
       });
       this.subcategoriaSeleccionada = subcategoria;
 
-      const modalElement = document.getElementById('editarSubcategoriaModal');
+      const modalElement = document.getElementById('editarCategoriaModal');
       if (modalElement) {
         const modal = new bootstrap.Modal(modalElement);
         modal.show();

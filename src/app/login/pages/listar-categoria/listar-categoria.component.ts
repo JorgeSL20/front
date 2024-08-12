@@ -22,7 +22,7 @@ export class ListarCategoriaComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {
     this.editarForm = this.formBuilder.group({
-      categoria: ['', Validators.required]
+      categoria: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]]
     });
   }
 

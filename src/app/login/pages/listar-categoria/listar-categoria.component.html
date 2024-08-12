@@ -48,7 +48,10 @@
         <form [formGroup]="editarForm" (ngSubmit)="guardarCategoria()">
           <div class="mb-3">
             <label for="categoria" class="form-label">Categoría</label>
-            <input type="text" id="categoria" formControlName="categoria" class="form-control">
+            <input type="text" id="categoria" formControlName="categoria" class="form-control" pattern="^[a-zA-Z ]*$" />
+            <div *ngIf="editarForm.get('categoria')?.invalid && editarForm.get('categoria')?.touched" class="text-danger">
+              La categoría solo debe contener letras.
+            </div>
           </div>
           <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Guardar</button>
         </form>

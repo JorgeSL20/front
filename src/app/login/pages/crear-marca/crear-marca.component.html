@@ -32,14 +32,19 @@
                   <div class="mb-3">
                     <label for="marca" class="form-label">Marca:</label>
                     <input formControlName="marca" type="text" class="form-control" id="marca">
+                    <div *ngIf="myForm.get('marca')?.invalid && (myForm.get('marca')?.dirty || myForm.get('marca')?.touched)">
+                      <small class="text-danger" *ngIf="myForm.get('marca')?.errors?.['pattern']">La marca no puede contener números.</small>
+                      <small class="text-danger" *ngIf="myForm.get('marca')?.errors?.['required']">El campo marca es obligatorio.</small>
+                    </div>
                   </div>
-                
+              
                   <div class="d-flex justify-content-between">
                     <button type="button" class="btn btn-secondary" (click)="regresar()">Regresar</button>
                     <button type="submit" class="btn btn-primary">Guardar Marca</button>
                   </div>
                 </form>
               </div>
+              
             </div>
           </div>
         </div>

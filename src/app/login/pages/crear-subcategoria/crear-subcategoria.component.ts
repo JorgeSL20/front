@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SubcategoriaService } from '../../services/subcategoria.service';
-import { CategoriaService } from '../../services/categoria.service'; 
+import { CategoriaService } from '../../services/categoria.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -20,8 +20,8 @@ export class CrearSubcategoriaComponent {
     private router: Router
   ) {
     this.myForm = this.formBuilder.group({
-      categoria: ['', Validators.required],
-      subcategoria: ['', Validators.required],
+      categoria: ['', Validators.required,Validators.pattern('^[A-Za-z\\s]+$')],
+      subcategoria: ['', [Validators.required, Validators.pattern('^[A-Za-z\\s]+$')]],
     });
   }
 
