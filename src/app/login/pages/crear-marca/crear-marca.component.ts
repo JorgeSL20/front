@@ -45,7 +45,7 @@ export class CrearMarcaComponent implements OnInit {
         }
       );
     } else {
-      this.showAlert('La marca ya existe o el formulario no es válido', 'alert-warning');
+      this.showAlert('La marca ya existe', 'alert-danger');
     }
   }
 
