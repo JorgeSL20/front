@@ -21,65 +21,72 @@ export class LoginComponent {
     password: ['', [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]).{8,}$/)]],
   });
 
-  auth() {
-    if (this.myForm.invalid) {
-      this.myForm.markAllAsTouched();
-      return;
-    }
-  
-    try {
-      let fecha = new Date().toLocaleDateString();
-      this.loginService.getIp().subscribe(data => {
-        this.loginService.validarUsuario({
-          email: this.myForm.controls['email'].value,
-          password: this.myForm.controls['password'].value,
-          fecha: fecha,
-          ip: data.ip
-        }).subscribe(res => {
-          console.log(res);
-          if (res.status === 200) {
-            localStorage.setItem("token", res.token.toString());
-            this.router.navigate(['/user/inicio']);
-            this.showAlert('Sesión iniciada con éxito, Bienvenida@', 'alert-success');
-          } else if (res.status === 400) {
-            this.showAlert('Contraseña incorrecta', 'alert-danger');
-          } else if (res.status === 409) {
-            this.showAlert('Número máximo de intentos alcanzado, espere 5 minutos', 'alert-danger');
-          } else if (res.status === 302) {
-            this.showAlert('Correo inválido', 'alert-danger');
+  // src/app/login/login.component.ts
+
+auth() {
+  if (this.myForm.invalid) {
+    this.myForm.markAllAsTouched();
+    return;
+  }
+
+  try {
+    let fecha = new Date().toLocaleDateString();
+    this.loginService.getIp().subscribe(data => {
+      this.loginService.validarUsuario({
+        email: this.myForm.controls['email'].value,
+        password: this.myForm.controls['password'].value,
+        fecha: fecha,
+        ip: data.ip
+      }).subscribe(res => {
+        if (res.status === 200) {
+          localStorage.setItem("token", res.token.toString());
+          localStorage.setItem("userRole", res.role); // Guarda el rol del usuario en localStorage
+          
+          if (res.role === 'admin') {
+            this.router.navigate(['/admin/inicioadmin']);
           } else {
-            this.showAlert('Error desconocido', 'alert-danger');
+            this.router.navigate(['/user/inicio']);
           }
-        }, error => {
-          this.showAlert('Error en el servidor', 'alert-danger');
-          console.error(error);
-        });
+          this.showAlert('Sesión iniciada con éxito, Bienvenida@', 'alert-success');
+        } else {
+          this.handleLoginError(res.status);
+        }
+      }, error => {
+        this.showAlert('Error en el servidor', 'alert-danger');
+        console.error(error);
       });
-    } catch (error) {
-      this.showAlert('Error en el servidor', 'alert-danger');
-      console.log(error);
+    });
+  } catch (error) {
+    this.showAlert('Error en el servidor', 'alert-danger');
+    console.log(error);
+  }
+}
+
+  
+  handleLoginError(status: number) {
+    if (status === 400) {
+      this.showAlert('Contraseña incorrecta', 'alert-danger');
+    } else if (status === 409) {
+      this.showAlert('Número máximo de intentos alcanzado, espere 5 minutos', 'alert-danger');
+    } else if (status === 302) {
+      this.showAlert('Correo inválido', 'alert-danger');
+    } else {
+      this.showAlert('Error desconocido', 'alert-danger');
     }
   }
   
-  
-
   showAlert(message: string, alertClass: string) {
-    // Crea un div para el mensaje
     const alertDiv = document.createElement('div');
     alertDiv.className = `alert ${alertClass} fixed-top d-flex align-items-center justify-content-center`;
     alertDiv.textContent = message;
-    alertDiv.style.fontSize = '20px'; // Cambia el tamaño del texto
+    alertDiv.style.fontSize = '20px';
 
-    // Agrega el mensaje al cuerpo del documento
     document.body.appendChild(alertDiv);
 
-    // Elimina el mensaje después de unos segundos
     setTimeout(() => {
       alertDiv.remove();
     }, 2000);
   }
-
-
 
   togglePasswordVisibility() {
     this.passwordVisible = !this.passwordVisible;
@@ -88,7 +95,7 @@ export class LoginComponent {
   aplicarInterlineado() {
     const elemento = document.querySelector('.pass-link a') as HTMLAnchorElement | null;
     if (elemento) {
-      elemento.style.lineHeight = '2'; // Cambia este valor según tus preferencias de interlineado
+      elemento.style.lineHeight = '2';
     }
   }
 
@@ -129,4 +136,3 @@ export class LoginComponent {
     this.validRecatcha = false;
   }
 }
-

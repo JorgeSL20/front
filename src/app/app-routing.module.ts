@@ -1,32 +1,48 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { NotFoundComponent } from './login/interfaces/not-found/not-found.component';
-import { canActivate, canMatch } from './login/guards/guards.guard';
-import { LoginComponent } from './login/pages/login/login.component';
 import { ServiciosComponent } from './login/interfaces/servicios/servicios.component';
+import { LoginComponent } from './login/pages/login/login.component';
+import { NotFoundComponent } from './login/interfaces/not-found/not-found.component';
+import { CrearCuentaComponent } from './login/pages/crear-cuenta/crear-cuenta.component';
+import { RoleGuard } from './login/guards/role.guard';
+
 const routes: Routes = [
-  //RUTAS DE NAVEGACIÓN
   {
-    path: '',
+    path: 'productos',
     component: ServiciosComponent
   },
   {
-    path: '',
-    loadChildren: () => import('./login/login.module').then(m=>m.LoginModule),
+    path: 'login',
+    component: LoginComponent
+  },
+  {
+    path: 'registro',
+    component: CrearCuentaComponent
+  },
+  {
+    path: 'user',
+    loadChildren: () => import('./login/login.module').then(m => m.LoginModule),
+  },
+  {
+    path: 'admin',
+    loadChildren: () => import('./login/admin.module').then(m => m.AdminModule),
+    canActivate: [RoleGuard],  // Protege la ruta de admin con el RoleGuard
+    canMatch: [RoleGuard],  // Protege también para el matching
+  },
+  {
+    path: '**',
+    component: NotFoundComponent
   },
   {
     path: '',
     redirectTo: '',
     pathMatch: 'full'
   },
-  {
-    path: '**',
-    component: NotFoundComponent
-  }
 ];
 
+
 @NgModule({
-  imports: [RouterModule.forRoot(routes,{useHash:true})],
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

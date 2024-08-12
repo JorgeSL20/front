@@ -170,15 +170,15 @@ app-header, app-footer {
                             <li class="nav-item dropdown">
                                 <a class="nav-link">Listados</a>
                                 <div class="dropdown-content">
-                                    <a class="nav-link" routerLink="/user/listar-producto" routerLinkActive="active-link">Lista de Productos</a>
-                                    <a class="nav-link" routerLink="/user/listar-categoria" routerLinkActive="active-link">Lista de Categorías</a>
-                                    <a class="nav-link" routerLink="/user/listar-subcategoria" routerLinkActive="active-link">Lista de Subcategoria</a>
-                                    <a class="nav-link" routerLink="/user/listar-marca" routerLinkActive="active-link">Lista de Marcas</a>
+                                    <a class="nav-link" routerLink="/admin/listar-producto" routerLinkActive="active-link">Lista de Productos</a>
+                                    <a class="nav-link" routerLink="/admin/listar-categoria" routerLinkActive="active-link">Lista de Categorías</a>
+                                    <a class="nav-link" routerLink="/admin/listar-subcategoria" routerLinkActive="active-link">Lista de Subcategoria</a>
+                                    <a class="nav-link" routerLink="/admin/listar-marca" routerLinkActive="active-link">Lista de Marcas</a>
                                     
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" routerLink="/user/adminusuarios" routerLinkActive="active-link">Usuarios</a>
+                                <a class="nav-link" routerLink="/admin/adminusuarios" routerLinkActive="active-link">Usuarios</a>
                             </li>
                             <br>
                             <li class="nav-item">
@@ -189,13 +189,13 @@ app-header, app-footer {
                         </ng-container>
                         <ng-container *ngIf="!isLoggedIn">
                             <li class="nav-item">
-                                <a class="nav-link" routerLink="/user/productos" routerLinkActive="active-link">Productos</a>
+                                <a class="nav-link" routerLink="/productos" routerLinkActive="active-link">Productos</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" routerLink="/user/login" routerLinkActive="active-link">Login</a>
+                                <a class="nav-link" routerLink="/login" routerLinkActive="active-link">Login</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" routerLink="/user/registro" routerLinkActive="active-link">Registrarse</a>
+                                <a class="nav-link" routerLink="/registro" routerLinkActive="active-link">Registrarse</a>
                             </li>
                         </ng-container>
                     </ul>

@@ -65,14 +65,14 @@ export class HeaderComponent implements OnInit {
   }
 
   navegar() {
-    this.router.navigate(['/user/login']);
+    this.router.navigate(['/login']);
   }
 
   cerrarSesion() {
     this.loginService.logout(); 
     this.checkLoggedIn();
     localStorage.clear();
-    this.router.navigate(['/user/login']);
+    this.router.navigate(['login']);
     this.showAlert('Sesión cerrada con éxito', 'alert-success');
   }
 

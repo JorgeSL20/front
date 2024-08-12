@@ -168,6 +168,7 @@
               <th>Apellido Paterno</th>
               <th>Apellido Materno</th>
               <th>Correo</th>
+              <th>Rol</th>
           </tr>
       </thead>
       <tbody>
@@ -176,6 +177,15 @@
               <td>{{ user.lastNameP }}</td>
               <td>{{ user.lastNameM }}</td>
               <td>{{ user.email }}</td>
+              <td>
+                <select [(ngModel)]="user.role" (change)="onRoleChange(user, $event)">
+                  <option value="user">User</option>
+                  <option value="admin">Admin</option>
+                </select>
+              </td>
+              
+              
+              
               
           </tr>
       </tbody>

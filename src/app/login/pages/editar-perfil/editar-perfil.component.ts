@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from '../../services/login.service';
 import { DataUser } from '../../interfaces/dataUser.interface';
 
@@ -16,8 +16,9 @@ export class EditarPerfilComponent implements OnInit {
     lastNameP: "",
     lastNameM: "",
     email: "",
-    pregunta:"",
-    respuesta:"",
+    pregunta: "",
+    respuesta: "",
+    role: ""
   };
 
   myForm: FormGroup = this.fb.group({
@@ -31,48 +32,41 @@ export class EditarPerfilComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private loginService: LoginService) { }
 
-  onFocusEvent(): void {
-    console.log('Enfoque activado para este método');
-  }
-  ngOnInit() {
+  ngOnInit(): void {
     this.idUser = localStorage.getItem('token');
-    if (this.idUser !== null) {
+    if (this.idUser) {
       this.loginService.getDataUser(this.idUser).subscribe(data => {
-        this.myForm.setValue(
-          {
-          name:data.name,
-          lastNameP:data.lastNameP,
-          lastNameM:data.lastNameM,
-          email:data.email,
-          pregunta:data.pregunta,
-          respuesta:data.respuesta
+        this.myForm.setValue({
+          name: data.name,
+          lastNameP: data.lastNameP,
+          lastNameM: data.lastNameM,
+          email: data.email,
+          pregunta: data.pregunta,
+          respuesta: data.respuesta
         });
-        console.log(this.myForm.value)
-      })
+      });
     }
-
   }
-  showAlert(message: string, alertClass: string) {
-    // Crea un div para el mensaje
+
+  updateData(): void {
+    if (this.idUser) {
+      this.loginService.updateUser(this.idUser, this.myForm.value).subscribe(
+        () => this.showAlert('Datos actualizados', 'alert-success'),
+        (error) => this.showAlert(`Error: ${error.message}`, 'alert-danger')
+      );
+    }
+  }
+
+  showAlert(message: string, alertClass: string): void {
     const alertDiv = document.createElement('div');
     alertDiv.className = `alert ${alertClass} fixed-top d-flex align-items-center justify-content-center`;
     alertDiv.textContent = message;
-    alertDiv.style.fontSize = '20px'; // Cambia el tamaño del texto
+    alertDiv.style.fontSize = '20px';
 
-    // Agrega el mensaje al cuerpo del documento
     document.body.appendChild(alertDiv);
 
-    // Elimina el mensaje después de unos segundos
     setTimeout(() => {
       alertDiv.remove();
     }, 2000);
-  }
-
-  updateData() {
-    if (this.idUser !== null)
-      this.loginService.updateUser(this.idUser, this.myForm.value).subscribe(data => {
-        console.log(data)
-        this.showAlert('Datos actualizados', 'alert-success');
-      })
   }
 }

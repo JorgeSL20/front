@@ -12,6 +12,7 @@ import { UpdateInformacion } from '../interfaces/updateInformacion.interface';
 import { UpdatePreguntas } from '../interfaces/updatePreguntas.interface';
 import { CreatePreguntas } from '../interfaces/createPreguntas.interface';
 import { Observable,of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { tap } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
@@ -44,20 +45,20 @@ export class LoginService {
   sendCode(email:Email){
     return this.http.post<Response>(this.url + 'email',email)
   }
-  validarUsuario(datos:DatosEnviados){
-    return this.http.post<RespuestaLogin>(this.url + 'login',datos)
+  validarUsuario(datos: DatosEnviados): Observable<RespuestaLogin> {
+    return this.http.post<RespuestaLogin>(`${this.url}login`, datos);
   }
   addCita(data:CreateCita,id:string){
     return this.http.post<{message:string,status:number}>(this.url + 'auth/citas/'+id,data)
   }
 
-  getDataUser(id:string){
-    return this.http.get<DataUser>(this.url + 'auth/user/'+id)
+
+  updateUser(id: string, data: DataUser): Observable<any> {
+    return this.http.patch(`${this.url}auth/perfil/${parseInt(id)}`, data);
   }
-  
-  
-  updateUser(id:string,data:UpdateUser){
-    return this.http.patch<UpdateUser>(this.url + 'auth/perfil/'+parseInt(id),data)
+
+  getDataUser(id: string): Observable<DataUser> {
+    return this.http.get<DataUser>(`${this.url}auth/${id}`);
   }
 ///////
 //get informacion
@@ -123,4 +124,24 @@ logout(): void {
     // Simplemente devuelve el usuario actual o implementa la lógica para obtenerlo
     return of(this.currentUser);
   }
+
+  getUserRole(): string | null {
+    // Implementa la lógica para obtener el rol del usuario desde el almacenamiento local
+    const token = localStorage.getItem('token');
+    if (token) {
+      // Decodifica el token si es un JWT o usa otro método para obtener el rol
+      // Aquí solo devolvemos un valor de ejemplo, cambia esto según tu implementación
+      return 'user'; // O 'admin' dependiendo del rol real del usuario
+    }
+    return null;
+  }
+  updateRoleByEmail(email: string, newRole: string): Observable<any> {
+    return this.http.patch(`${this.url}auth/role/${email}`, { role: newRole }).pipe(
+      catchError(error => {
+        console.error('Error al actualizar el rol:', error);
+        throw error;
+      })
+    );
+  }
+  
 }

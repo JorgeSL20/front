@@ -1,5 +1,3 @@
-// auth.service.ts
-
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
@@ -34,8 +32,23 @@ export class AuthService {
     return of(null);
   }
 
+  getCurrentUser(): Observable<DataUser | null> {
+    const user = localStorage.getItem('user');
+    if (user) {
+      const parsedUser: DataUser = JSON.parse(user);
+      return of(parsedUser);
+    }
+    return of(null);
+  }
+
   // Almacena la información del usuario en el localStorage
   setUser(user: DataUser): void {
     localStorage.setItem('user', JSON.stringify(user));
   }
+
+  getCurrentUserRole(): string | null {
+    return localStorage.getItem('userRole');  // Obtiene el rol del usuario desde localStorage
+  }
+  
+  
 }

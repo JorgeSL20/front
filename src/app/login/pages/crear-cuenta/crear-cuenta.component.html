@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <body>
-  <app-headeradmon></app-headeradmon>
+  <app-header></app-header>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -180,7 +180,7 @@
               <ngx-recaptcha2 (success)="activarBtnCapcha($event)" class="captcha" #captchaElem [siteKey]="siteKey"></ngx-recaptcha2>
 
               <!-- Mensaje de "¿Ya tienes una cuenta?" -->
-              <p class="text-center mb-3">¿Ya tienes una cuenta? <a  routerLink="/user/login">Iniciar sesión</a></p>
+              <p class="text-center mb-3">¿Ya tienes una cuenta? <a  routerLink="/login">Iniciar sesión</a></p>
 
               <!-- Botón de enviar -->
               <button [disabled]="activarBtnCrear()" type="submit" class="btn btn-primary">Crear cuenta</button>

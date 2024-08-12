@@ -3,10 +3,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginModule } from './login/login.module';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon'; // Importa MatIconModule
 import { GoogleMapsModule } from '@angular/google-maps';
+import { LoginModule } from './login/login.module';
+import { AdminModule } from './login/admin.module';
+import { RoleGuard } from './login/guards/role.guard';
+
 
 @NgModule({
   declarations: [
@@ -15,13 +18,14 @@ import { GoogleMapsModule } from '@angular/google-maps';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    LoginModule,
     HttpClientModule,
     FormsModule,
     MatIconModule, // Agrega MatIconModule a los imports
-    GoogleMapsModule
+    GoogleMapsModule,
+    LoginModule,
+    AdminModule
   ],
-  providers: [],
+  providers: [RoleGuard],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
