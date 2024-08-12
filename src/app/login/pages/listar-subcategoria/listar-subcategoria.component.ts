@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SubcategoriaService } from '../../services/subcategoria.service';
-import { CategoriaService } from '../../services/categoria.service'; 
+import { CategoriaService } from '../../services/categoria.service';
 import { Subcategoria } from '../../interfaces/subcategoria.interface';
 import { Categoria } from '../../interfaces/categoria.interface';
 
@@ -19,8 +19,8 @@ export class ListarSubcategoriaComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private categoriaService: CategoriaService,
-    private subcategoriaService: SubcategoriaService,
+    @Inject(SubcategoriaService) private subcategoriaService: SubcategoriaService,
+    @Inject(CategoriaService) private categoriaService: CategoriaService,
     private formBuilder: FormBuilder
   ) {
     this.editarForm = this.formBuilder.group({
@@ -76,6 +76,13 @@ export class ListarSubcategoriaComponent implements OnInit {
         subcategoria: subcategoria.subcategoria
       });
       this.subcategoriaSeleccionada = subcategoria;
+
+      // Muestra el modal
+      const modalElement = document.getElementById('editarSubcategoriaModal');
+      if (modalElement) {
+        const modal = new (window as any).bootstrap.Modal(modalElement);
+        modal.show();
+      }
     }
   }
 
@@ -100,10 +107,11 @@ export class ListarSubcategoriaComponent implements OnInit {
       this.subcategoriaService.actualizarSubcategoria(updatedSubcategoria.id, updatedSubcategoria).subscribe(
         () => {
           this.obtenerSubcategorias();
-          // No se usa bootstrap.Modal para cerrar el modal
+          // Cerrar el modal manualmente si es necesario
           const modalElement = document.getElementById('editarSubcategoriaModal');
           if (modalElement) {
-            (modalElement as any).style.display = 'none'; // Ocultar el modal manualmente
+            const modal = new (window as any).bootstrap.Modal(modalElement);
+            modal.hide();
           }
         },
         (error) => {
