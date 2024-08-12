@@ -9,6 +9,8 @@ import { DataUser } from '../../interfaces/dataUser.interface';
 })
 export class AdmonusuariosComponent implements OnInit {
   dataUsers: DataUser[] = [];
+  filteredUsers: DataUser[] = [];
+  searchTerm: string = '';
 
   constructor(private loginService: LoginService) { }
 
@@ -20,6 +22,7 @@ export class AdmonusuariosComponent implements OnInit {
     this.loginService.getAuth().subscribe(
       (data: DataUser[]) => {
         this.dataUsers = data;
+        this.filteredUsers = data; // Inicialmente, todos los usuarios están filtrados
       },
       error => {
         console.error('Error al obtener los datos de los usuarios:', error);
@@ -43,5 +46,18 @@ export class AdmonusuariosComponent implements OnInit {
     const newRole = selectElement.value;
     this.updateUserRole(user.email, newRole);
   }
-}
 
+  filterUsers() {
+    if (this.searchTerm) {
+      this.filteredUsers = this.dataUsers.filter(user =>
+        user.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        user.lastNameP.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        user.lastNameM.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        user.email.toLowerCase().includes(this.searchTerm.toLowerCase())||
+        user.role.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+    } else {
+      this.filteredUsers = this.dataUsers;
+    }
+  }
+}

@@ -1,197 +1,103 @@
 <app-headeradmon></app-headeradmon>
+
 <style>
-  header {
-      padding: 10px;
-      background-color: #031d40;
+  /* Estilos existentes... */
+
+  .search-container {
+    position: fixed;
+    top: 100px; /* Ajustar este valor para colocar la barra más abajo */
+    right: 20px; /* Alinear a la derecha con un margen de 20px */
+    width: 250px; /* Ajustar el ancho según sea necesario */
+    z-index: 1000; /* Asegurarse de que esté sobre otros elementos */
   }
-  
-  .row {
-      display: flex;
-      justify-content: space-between;
+
+  .search-input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px; /* Reducir el tamaño de la fuente */
   }
-  
-  .logo img {
-      max-width: 100%;
-      height: auto;
-  }
-  
-  .container {
-      padding: 40px;
-      width: 100%;
-      padding: 0 20px; /* Agrega espaciado opcional a los lados */
-      box-sizing: border-box;
-  }
-  
-  .menu ul li {
-      list-style-type: none;
-      color: #fff;
-      display: inline-block;
-      font-size: 20px;
-      margin-left: 30px;
-  }
-  
-  .menu ul li:hover {
-      color: #5dc1e9;
-      cursor: pointer;
-      transition: 0.4s ease-in-out;
-  }
-  
-  .menu_icon span {
-      background-color: white;
-  }
-  
-  .menu ul {
-      list-style: none;
-      padding: 0;
-  }
-  
-  .menu li {
-      margin: 10px 0;
-  }
-  
-  .menu button {
-      background-color: transparent;
-      border: 1px solid white;
-      color: white;
-      padding: 5px 10px;
-      cursor: pointer;
-  }
-  
-  .menu button:hover {
-      background-color: white;
-      color: #031d40;
-  }
-  
-  @media only screen and (max-width: 999px) {
-      .menu {
-          position: fixed;
-          right: -258px;
-          top: 64px;
-          width: 100%;
-          height: 100%;
-          background: #1367c2;
-          transition: 0.2s ease-in-out;
-      }
-      
-      .menu ul li {
-          display: block;
-          text-align: left;
-          margin: 0;
-          padding: 10px 0 10px 26px;
-          border-bottom: 1px solid #2c65ebab;
-      }
-      
-      .menu_icon {
-          display: inline-block;
-          position: relative;
-          right: 0;
-          top: 20px;
-      }
-      
-      .menu_icon span {
-          width: 32px;
-          height: 3px;
-          background: #fff;
-          display: block;
-          transition: 0.2s ease-in-out;
-      }
-      
-      .menu_icon span:nth-child(2) {
-          margin: 4px 0;
-      }
-      
-      .menu_icon_Class span:nth-child(2) {
-          display: none;
-      }
-      
-      .menu_icon_Class span:nth-child(1) {
-          transform: rotate(40deg);
-      }
-      
-      .menu_icon_Class span:nth-child(3) {
-          transform: rotate(-40deg);
-          margin-top: -3px;
-      }
-      
-      .menuClass {
-          right: 0;
-          transition: 0.4s ease-in-out;
-      }
-  }
-  
-  /* Estilo para la tabla de usuarios */
+
   .user-table-container {
-      width: 100%;
-      margin: 20px 0;
-      padding: 0 20px;
-      box-sizing: border-box;
+    margin: 20px 0;
+    padding: 0 20px;
+    box-sizing: border-box;
   }
-  
+
   .user-table {
-      width: 100%;
-      border-collapse: collapse;
-      text-align: left;
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
   }
-  
+
   .user-table th, .user-table td {
-      padding: 12px;
-      border-bottom: 1px solid #ddd;
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
   }
-  
+
   .user-table th {
-      background-color: #031d40;
-      color: white;
+    background-color: #031d40;
+    color: white;
   }
-  
+
   .user-table tbody tr:nth-child(even) {
-      background-color: #f2f2f2;
+    background-color: #f2f2f2;
   }
-  
+
   .delete-button {
-      background-color: #ff4c4c;
-      color: white;
-      border: none;
-      padding: 8px 16px;
-      cursor: pointer;
+    background-color: #ff4c4c;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
   }
-  
+
   .delete-button:hover {
-      background-color: #ff0000;
+    background-color: #ff0000;
   }
 </style>
-<div class="user-table-container" *ngIf="dataUsers.length > 0">
-  <h2 style="text-align: center;">Datos de Usuarios</h2>
-  <table class="user-table">
-      <thead>
-          <tr>
-              <th>Nombre</th>
-              <th>Apellido Paterno</th>
-              <th>Apellido Materno</th>
-              <th>Correo</th>
-              <th>Rol</th>
-          </tr>
-      </thead>
-      <tbody>
-          <tr *ngFor="let user of dataUsers">
-              <td>{{ user.name }}</td>
-              <td>{{ user.lastNameP }}</td>
-              <td>{{ user.lastNameM }}</td>
-              <td>{{ user.email }}</td>
-              <td>
-                <select [(ngModel)]="user.role" (change)="onRoleChange(user, $event)">
-                  <option value="user">User</option>
-                  <option value="admin">Admin</option>
-                </select>
-              </td>
-              
-              
-              
-              
-          </tr>
-      </tbody>
-  </table>
+
+<div class="search-container">
+  <input
+    type="text"
+    class="search-input"
+    placeholder="Buscar usuarios..."
+    [(ngModel)]="searchTerm"
+    (input)="filterUsers()"
+  />
 </div>
 
-<div *ngIf="dataUsers.length === 0">
-  <p>No se encontraron datos de usuarios.</p>
+<div class="user-table-container">
+  <h2 style="text-align: center;">Datos de Usuarios</h2>
+  
+  <table class="user-table" *ngIf="filteredUsers.length > 0">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Apellido Paterno</th>
+        <th>Apellido Materno</th>
+        <th>Correo</th>
+        <th>Rol</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of filteredUsers">
+        <td>{{ user.name }}</td>
+        <td>{{ user.lastNameP }}</td>
+        <td>{{ user.lastNameM }}</td>
+        <td>{{ user.email }}</td>
+        <td>
+          <select [(ngModel)]="user.role" (change)="onRoleChange(user, $event)">
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+          </select>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="filteredUsers.length === 0 && searchTerm">
+    <p>No se encontraron datos de usuarios.</p>
+  </div>
 </div>
