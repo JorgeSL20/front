@@ -57,7 +57,7 @@ export class CrearSubcategoriaComponent {
   }
 
   regresar() {
-    this.router.navigate(['/user/listar-subcategoria']);
+    this.router.navigate(['/admin/listar-subcategoria']);
   }
 
   showAlert(message: string, alertClass: string) {

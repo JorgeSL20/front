@@ -38,7 +38,7 @@ export class CrearCategoriaComponent {
   }
 
   regresar() {
-    this.router.navigate(['/user/listar-categoria']);
+    this.router.navigate(['/admin/listar-categoria']);
   }
 
   showAlert(message: string, alertClass: string) {

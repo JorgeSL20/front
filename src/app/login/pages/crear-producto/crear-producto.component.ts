@@ -93,7 +93,7 @@ export class CrearProductoComponent implements OnInit {
     }
   }
   regresar() {
-    this.router.navigate(['/user/listar-producto']);
+    this.router.navigate(['/admin/listar-producto']);
   }
   showAlert(message: string, alertClass: string) {
     const alertDiv = document.createElement('div');

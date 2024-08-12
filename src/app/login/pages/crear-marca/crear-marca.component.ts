@@ -38,7 +38,7 @@ export class CrearMarcaComponent {
   }
 
   regresar() {
-    this.router.navigate(['/user/listar-marca']);
+    this.router.navigate(['/admin/listar-marca']);
   }
   showAlert(message: string, alertClass: string) {
     const alertDiv = document.createElement('div');

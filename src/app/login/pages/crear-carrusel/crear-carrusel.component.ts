@@ -63,7 +63,7 @@ export class CrearCarruselComponent {
   }
 
   regresar() {
-    this.router.navigate(['/user/listar-carrusel']);
+    this.router.navigate(['/admin/listar-carrusel']);
   }
   showAlert(message: string, alertClass: string) {
     const alertDiv = document.createElement('div');
