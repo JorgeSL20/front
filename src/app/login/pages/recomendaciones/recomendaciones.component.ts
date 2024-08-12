@@ -1,12 +1,11 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
 
-
-
-@NgModule({
-  declarations: [],
-  imports: [
-    CommonModule
-  ]
+@Component({
+  selector: 'app-recomendaciones',
+  templateUrl: './recomendaciones.component.html',
+  styleUrls: ['./recomendaciones.component.css']
 })
-export class RecomendacionesModule { }
+
+export class RecomendacionesComponent {
+  // Lógica del componente aquí
+}

@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon'; // Importa MatIconModule
 import { GoogleMapsModule } from '@angular/google-maps';
+import { RecomendacionesComponent } from './pages/recomendaciones/recomendaciones.component';
 import { RouterModule } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
 import { CrearCuentaComponent } from './pages/crear-cuenta/crear-cuenta.component';
@@ -45,6 +46,7 @@ import { LoginService } from './services/login.service';
     LoginComponent,
     CrearCuentaComponent,
     RecuperarPasswordComponent,
+    RecomendacionesComponent,
     LayoutComponent,
     InicioComponent,
     HeaderComponent,

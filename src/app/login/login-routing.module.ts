@@ -4,6 +4,7 @@ import { LayoutComponent } from './pages/layout/layout.component';
 import { CrearCuentaComponent } from './pages/crear-cuenta/crear-cuenta.component';
 import { RecuperarPasswordComponent } from './pages/recuperar-password/recuperar-password.component';
 import { InicioComponent } from './pages/inicio/inicio.component';
+import { RecomendacionesComponent } from './pages/recomendaciones/recomendaciones.component';
 import { HeaderComponent } from './interfaces/header/header.component';
 import { FooterComponent } from './interfaces/footer/footer.component';
 import { ContactoComponent } from './interfaces/contacto/contacto.component';
@@ -48,7 +49,8 @@ const routes: Routes = [
       { path: 'preguntas', component: PreguntasComponent },
       { path: 'perfil', component: PerfilComponent },
       { path: 'editarperfil', component: EditarPerfilComponent },
-      { path: '**', component: NotFoundComponent }
+      { path: '**', component: NotFoundComponent },
+      { path: 'recomendaciones', component:RecomendacionesComponent}
     ]
   }
 ];
