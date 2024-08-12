@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+// components/crear-subcategoria.component.ts
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SubcategoriaService } from '../../services/subcategoria.service';
 import { CategoriaService } from '../../services/categoria.service';
@@ -9,19 +10,19 @@ import { Router } from '@angular/router';
   templateUrl: './crear-subcategoria.component.html',
   styleUrls: ['./crear-subcategoria.component.css']
 })
-export class CrearSubcategoriaComponent {
+export class CrearSubcategoriaComponent implements OnInit {
   myForm: FormGroup;
   categorias: any[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
-    private SubcategoriaService: SubcategoriaService,
+    private subcategoriaService: SubcategoriaService,
     private categoriaService: CategoriaService,
     private router: Router
   ) {
     this.myForm = this.formBuilder.group({
-      categoria: ['', Validators.required,Validators.pattern('^[A-Za-z\\s]+$')],
-      subcategoria: ['', [Validators.required, Validators.pattern('^[A-Za-z\\s]+$')]],
+      categoria: ['', [Validators.required, Validators.pattern('^[A-Za-z\\s]+$')]],
+      subcategoria: ['', [Validators.required, Validators.pattern('^[A-Za-z\\s]+$')]]
     });
   }
 
@@ -30,45 +31,24 @@ export class CrearSubcategoriaComponent {
   }
 
   guardarSubcategoria() {
-    if (this.myForm.invalid) {
-      return;
-    }
-  
-    const subcategoriaData = this.myForm.value;
-    const categoriaSeleccionada = subcategoriaData.categoria.trim().toLowerCase();
-    const subcategoriaNueva = subcategoriaData.subcategoria.trim().toLowerCase();
-  
-    // Verifica si la subcategoría ya existe en la categoría seleccionada
-    this.SubcategoriaService.obtenerSubcategoria().subscribe(
-      (subcategorias: any[]) => {
-        const subcategoriaDuplicada = subcategorias.some(subcategoria =>
-          subcategoria.categoria.trim().toLowerCase() === categoriaSeleccionada &&
-          subcategoria.subcategoria.trim().toLowerCase() === subcategoriaNueva
-        );
-  
-        if (subcategoriaDuplicada) {
-          this.showAlert('Esta subcategoría ya existe en la categoría seleccionada', 'alert-danger');
-          return;
-        }
-  
-        // Si no hay duplicados, crear la subcategoría
-        this.SubcategoriaService.crearSubcategoria(subcategoriaData).subscribe(
-          response => {
-            console.log(response);
-            this.router.navigate(['/admin/listar-subcategoria']);
-            this.showAlert('Subcategoría creada con éxito', 'alert-success');
-          },
-          error => {
+    if (this.myForm.valid) {
+      const subcategoriaData = this.myForm.value;
+      this.subcategoriaService.crearSubcategoria(subcategoriaData).subscribe(
+        response => {
+          console.log(response);
+          this.router.navigate(['/admin/listar-subcategoria']);
+          this.showAlert('Subcategoría creada con éxito', 'alert-success');
+        },
+        error => {
+          if (error.status === 400) { // Manejo del error 400
+            this.showAlert('La subcategoría ya existe', 'alert-danger');
+          } else {
             console.error(error);
           }
-        );
-      },
-      error => {
-        console.error('Error al obtener subcategorías:', error);
-      }
-    );
+        }
+      );
+    }
   }
-  
 
   obtenerCategorias(): void {
     this.categoriaService.obtenerCategoria().subscribe(
