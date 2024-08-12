@@ -48,12 +48,6 @@
       <div class="modal-body">
         <form [formGroup]="editarForm" (ngSubmit)="guardarSubcategoria()">
           <div class="mb-3">
-            <label for="categoria" class="form-label">Categoría</label>
-            <select id="categoria" formControlName="categoria" class="form-select">
-              <option *ngFor="let categoria of categorias" [value]="categoria.id">{{ categoria.categoria }}</option>
-            </select>
-          </div>
-          <div class="mb-3">
             <label for="subcategoria" class="form-label">SubCategoría</label>
             <input type="text" id="subcategoria" formControlName="subcategoria" class="form-control">
             <div *ngIf="editarForm.get('subcategoria')?.invalid && editarForm.get('subcategoria')?.touched" class="text-danger">

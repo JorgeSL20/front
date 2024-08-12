@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable,switchMap} from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
 import { Subcategoria } from '../interfaces/subcategoria.interface';
 
 @Injectable({
   providedIn: 'root'
 })
-
 export class SubcategoriaService {
   private url: string = 'https://proyectogatewayback-production.up.railway.app/subcategoria/';
 
@@ -33,12 +32,12 @@ export class SubcategoriaService {
     return this.http.delete<void>(`${this.url}${id}`);
   }
 
-  actualizarSubcategoria(id: number, updatedSubcategoria: Subcategoria): Observable<Subcategoria> {
+  actualizarSubcategoria(id: number, updatedSubcategoria: Partial<Subcategoria>): Observable<Subcategoria> {
     // Verificar unicidad antes de actualizar
-    return this.verificarSubcategoriaUnica(updatedSubcategoria.subcategoria).pipe(
+    return this.verificarSubcategoriaUnica(updatedSubcategoria.subcategoria!).pipe(
       switchMap(isUnique => {
         if (isUnique) {
-          return this.http.put<Subcategoria>(`${this.url}${id}`, updatedSubcategoria);
+          return this.http.patch<Subcategoria>(`${this.url}${id}`, updatedSubcategoria);
         } else {
           throw new Error('La subcategoría ya existe');
         }

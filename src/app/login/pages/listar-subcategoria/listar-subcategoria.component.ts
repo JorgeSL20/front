@@ -1,10 +1,7 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'; // Importar FormBuilder, FormGroup, y Validators
 import { SubcategoriaService } from '../../services/subcategoria.service';
-import { CategoriaService } from '../../services/categoria.service';
 import { Subcategoria } from '../../interfaces/subcategoria.interface';
-import { Categoria } from '../../interfaces/categoria.interface';
 
 @Component({
   selector: 'app-listar-subcategoria',
@@ -13,25 +10,23 @@ import { Categoria } from '../../interfaces/categoria.interface';
 })
 export class ListarSubcategoriaComponent implements OnInit {
   subcategorias: Subcategoria[] = [];
-  categorias: Categoria[] = [];
+  categorias: any[] = [];
   subcategoriaSeleccionada: Subcategoria | null = null;
   editarForm: FormGroup;
 
   constructor(
-    private router: Router,
-    @Inject(SubcategoriaService) private subcategoriaService: SubcategoriaService,
-    @Inject(CategoriaService) private categoriaService: CategoriaService,
-    private formBuilder: FormBuilder
+    private subcategoriaService: SubcategoriaService,
+    private formBuilder: FormBuilder // Inyectar FormBuilder
   ) {
+    // Inicializar el formulario
     this.editarForm = this.formBuilder.group({
       categoria: ['', Validators.required],
-      subcategoria: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]]
+      subcategoria: ['', Validators.required]
     });
   }
 
   ngOnInit(): void {
     this.obtenerSubcategorias();
-    this.obtenerCategorias();
   }
 
   obtenerSubcategorias(): void {
@@ -39,34 +34,10 @@ export class ListarSubcategoriaComponent implements OnInit {
       (subcategorias: Subcategoria[]) => {
         this.subcategorias = subcategorias;
       },
-      (error) => {
+      (error: any) => {  // Añadir el tipo `any` o el tipo adecuado para el error
         console.error('Error al obtener subcategorías:', error);
       }
     );
-  }
-
-  obtenerCategorias(): void {
-    this.categoriaService.obtenerCategoria().subscribe(
-      (categorias: Categoria[]) => {
-        this.categorias = categorias;
-      },
-      (error) => {
-        console.error('Error al obtener categorías:', error);
-      }
-    );
-  }
-
-  eliminarSubcategoria(id: number): void {
-    if (confirm('¿Estás seguro de eliminar esta subcategoría?')) {
-      this.subcategoriaService.eliminarSubcategoria(id).subscribe(
-        () => {
-          this.obtenerSubcategorias();
-        },
-        (error) => {
-          console.error('Error al eliminar subcategoría:', error);
-        }
-      );
-    }
   }
 
   toggleEditForm(subcategoria: Subcategoria | null): void {
@@ -90,38 +61,41 @@ export class ListarSubcategoriaComponent implements OnInit {
     if (this.editarForm.invalid) {
       return;
     }
-
-    const subcategoriaNueva = this.editarForm.get('subcategoria')?.value;
-    if (this.subcategorias.some(sub => sub.subcategoria === subcategoriaNueva && sub.id !== this.subcategoriaSeleccionada?.id)) {
-      this.editarForm.get('subcategoria')?.setErrors({ duplicate: true });
-      return;
-    }
-
+  
+    const updatedSubcategoria: Partial<Subcategoria> = {
+      subcategoria: this.editarForm.get('subcategoria')?.value
+    };
+  
     if (this.subcategoriaSeleccionada) {
-      const updatedSubcategoria: Subcategoria = {
-        ...this.subcategoriaSeleccionada,
-        categoria: this.editarForm.get('categoria')?.value,
-        subcategoria: this.editarForm.get('subcategoria')?.value
-      };
-
-      this.subcategoriaService.actualizarSubcategoria(updatedSubcategoria.id, updatedSubcategoria).subscribe(
+      this.subcategoriaService.actualizarSubcategoria(this.subcategoriaSeleccionada.id, updatedSubcategoria).subscribe(
         () => {
+          console.log('Subcategoría actualizada correctamente');
           this.obtenerSubcategorias();
-          // Cerrar el modal manualmente si es necesario
           const modalElement = document.getElementById('editarSubcategoriaModal');
           if (modalElement) {
             const modal = new (window as any).bootstrap.Modal(modalElement);
             modal.hide();
           }
         },
-        (error) => {
+        (error: any) => {  // Añadir el tipo `any` o el tipo adecuado para el error
           console.error('Error al actualizar subcategoría:', error);
+          // Mostrar un mensaje de error al usuario si es necesario
         }
       );
     }
   }
-
-  irAFormulario(): void {
-    this.router.navigate(['/admin/crear-subcategoria']);
+  
+  eliminarSubcategoria(id: number): void {
+    if (confirm('¿Estás seguro de eliminar esta subcategoría?')) {
+      this.subcategoriaService.eliminarSubcategoria(id).subscribe(
+        () => {
+          console.log('Subcategoría eliminada correctamente');
+          this.obtenerSubcategorias();
+        },
+        (error: any) => {  // Añadir el tipo `any` o el tipo adecuado para el error
+          console.error('Error al eliminar subcategoría:', error);
+        }
+      );
+    }
   }
 }
