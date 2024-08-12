@@ -1,11 +1,10 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { SubcategoriaService } from '../../services/subcategoria.service';
-import { Subcategoria } from '../../interfaces/subcategoria.interface';
-import { CategoriaService } from '../../services/categoria.service'; 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
-declare var bootstrap: any;
+import { SubcategoriaService } from '../../services/subcategoria.service';
+import { CategoriaService } from '../../services/categoria.service'; 
+import { Subcategoria } from '../../interfaces/subcategoria.interface';
+import { Categoria } from '../../interfaces/categoria.interface';
 
 @Component({
   selector: 'app-listar-subcategoria',
@@ -14,14 +13,14 @@ declare var bootstrap: any;
 })
 export class ListarSubcategoriaComponent implements OnInit {
   subcategorias: Subcategoria[] = [];
-  categorias: any[] = [];
+  categorias: Categoria[] = [];
   subcategoriaSeleccionada: Subcategoria | null = null;
   editarForm: FormGroup;
 
   constructor(
     private router: Router,
-    @Inject(CategoriaService) private categoriaService: CategoriaService,
-    @Inject(SubcategoriaService) private subcategoriaService: SubcategoriaService,
+    private categoriaService: CategoriaService,
+    private subcategoriaService: SubcategoriaService,
     private formBuilder: FormBuilder
   ) {
     this.editarForm = this.formBuilder.group({
@@ -36,10 +35,9 @@ export class ListarSubcategoriaComponent implements OnInit {
   }
 
   obtenerSubcategorias(): void {
-    this.subcategoriaService.obtenerSubcategorias().subscribe(
+    this.subcategoriaService.obtenerSubcategoria().subscribe(
       (subcategorias: Subcategoria[]) => {
         this.subcategorias = subcategorias;
-        console.log(this.subcategorias);
       },
       (error) => {
         console.error('Error al obtener subcategorías:', error);
@@ -48,8 +46,8 @@ export class ListarSubcategoriaComponent implements OnInit {
   }
 
   obtenerCategorias(): void {
-    this.categoriaService.obtenerCategorias().subscribe(
-      (categorias: any[]) => {
+    this.categoriaService.obtenerCategoria().subscribe(
+      (categorias: Categoria[]) => {
         this.categorias = categorias;
       },
       (error) => {
@@ -62,13 +60,10 @@ export class ListarSubcategoriaComponent implements OnInit {
     if (confirm('¿Estás seguro de eliminar esta subcategoría?')) {
       this.subcategoriaService.eliminarSubcategoria(id).subscribe(
         () => {
-          console.log('Subcategoría eliminada correctamente');
-          this.showAlert('Subcategoría eliminada correctamente', 'alert-success');
           this.obtenerSubcategorias();
         },
         (error) => {
           console.error('Error al eliminar subcategoría:', error);
-          this.showAlert('Error al eliminar subcategoría', 'alert-danger');
         }
       );
     }
@@ -81,12 +76,6 @@ export class ListarSubcategoriaComponent implements OnInit {
         subcategoria: subcategoria.subcategoria
       });
       this.subcategoriaSeleccionada = subcategoria;
-
-      const modalElement = document.getElementById('editarSubcategoriaModal');
-      if (modalElement) {
-        const modal = new bootstrap.Modal(modalElement);
-        modal.show();
-      }
     }
   }
 
@@ -95,29 +84,30 @@ export class ListarSubcategoriaComponent implements OnInit {
       return;
     }
 
-    const { categoria, subcategoria } = this.editarForm.value;
+    const subcategoriaNueva = this.editarForm.get('subcategoria')?.value;
+    if (this.subcategorias.some(sub => sub.subcategoria === subcategoriaNueva && sub.id !== this.subcategoriaSeleccionada?.id)) {
+      this.editarForm.get('subcategoria')?.setErrors({ duplicate: true });
+      return;
+    }
 
     if (this.subcategoriaSeleccionada) {
       const updatedSubcategoria: Subcategoria = {
         ...this.subcategoriaSeleccionada,
-        categoria,
-        subcategoria
+        categoria: this.editarForm.get('categoria')?.value,
+        subcategoria: this.editarForm.get('subcategoria')?.value
       };
 
       this.subcategoriaService.actualizarSubcategoria(updatedSubcategoria.id, updatedSubcategoria).subscribe(
         () => {
-          console.log('Subcategoría actualizada correctamente');
-          this.showAlert('Subcategoría actualizada correctamente', 'alert-success');
           this.obtenerSubcategorias();
+          // No se usa bootstrap.Modal para cerrar el modal
           const modalElement = document.getElementById('editarSubcategoriaModal');
           if (modalElement) {
-            const modal = new bootstrap.Modal(modalElement);
-            modal.hide();
+            (modalElement as any).style.display = 'none'; // Ocultar el modal manualmente
           }
         },
         (error) => {
           console.error('Error al actualizar subcategoría:', error);
-          this.showAlert('Error al actualizar subcategoría', 'alert-danger');
         }
       );
     }
@@ -125,18 +115,5 @@ export class ListarSubcategoriaComponent implements OnInit {
 
   irAFormulario(): void {
     this.router.navigate(['/admin/crear-subcategoria']);
-  }
-
-  showAlert(message: string, alertClass: string) {
-    const alertDiv = document.createElement('div');
-    alertDiv.className = `alert ${alertClass} fixed-top d-flex align-items-center justify-content-center`;
-    alertDiv.textContent = message;
-    alertDiv.style.fontSize = '20px';
-
-    document.body.appendChild(alertDiv);
-
-    setTimeout(() => {
-      alertDiv.remove();
-    }, 2000);
   }
 }
