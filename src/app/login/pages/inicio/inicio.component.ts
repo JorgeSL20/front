@@ -54,4 +54,9 @@ export class InicioComponent implements AfterViewInit, OnInit {
     });
   }
 
+  irARecomendaciones(): void {
+    this.router.navigate(['/admin/recomendaciones']);
+    this.router.navigate(['/user/recomendaciones']);
+  }
+
 }
