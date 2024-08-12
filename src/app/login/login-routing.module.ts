@@ -46,11 +46,11 @@ const routes: Routes = [
       { path: 'avisoprivacidad', component: AvisoPrivacidadComponent },
       { path: 'terminoscondiciones', component: TerminosCondicionesComponent },
       { path: 'politicacookies', component: PoliticaCookiesComponent },
+      { path: 'recomendaciones', component:RecomendacionesComponent},
       { path: 'preguntas', component: PreguntasComponent },
       { path: 'perfil', component: PerfilComponent },
       { path: 'editarperfil', component: EditarPerfilComponent },
       { path: '**', component: NotFoundComponent },
-      { path: 'recomendaciones', component:RecomendacionesComponent}
     ]
   }
 ];
