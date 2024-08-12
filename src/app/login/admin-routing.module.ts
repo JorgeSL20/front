@@ -40,7 +40,7 @@ const routes: Routes = [
       { path: 'adminusuarios', component: AdmonusuariosComponent },
       { path: 'adminpreguntas', component: AdmonpreguntasComponent },
       { path: 'listar-producto', component: ListarProductosComponent },
-      { path: '-producto', component: CrearProductoComponent },
+      { path: 'crear-producto', component: CrearProductoComponent },
       { path: '', redirectTo: 'adminusuarios', pathMatch: 'full' }
     ]
   }
