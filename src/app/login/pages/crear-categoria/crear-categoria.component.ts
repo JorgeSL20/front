@@ -28,14 +28,19 @@ export class CrearCategoriaComponent {
         response => {
           console.log(response);
           this.router.navigate(['/admin/listar-categoria']);
-          this.showAlert('Categoria Creada con exito', 'alert-success');
+          this.showAlert('Categoría creada con éxito', 'alert-success');
         },
         error => {
-          console.error(error);
+          if (error.status === 400) { // Manejo del error 400
+            this.showAlert('La categoría ya existe', 'alert-danger');
+          } else {
+            console.error(error);
+          }
         }
       );
     }
   }
+  
 
   regresar() {
     this.router.navigate(['/admin/listar-categoria']);
