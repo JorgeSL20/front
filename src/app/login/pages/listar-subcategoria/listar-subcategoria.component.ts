@@ -13,7 +13,7 @@ declare var bootstrap: any;
   styleUrls: ['./listar-subcategoria.component.css']
 })
 export class ListarSubcategoriaComponent implements OnInit {
-  subcategoria: Subcategoria[] = [];
+  subcategorias: Subcategoria[] = [];
   categorias: any[] = [];
   subcategoriaSeleccionada: Subcategoria | null = null;
   editarForm: FormGroup;
@@ -25,30 +25,30 @@ export class ListarSubcategoriaComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {
     this.editarForm = this.formBuilder.group({
-      categoria: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
-      subcategoria: ['', Validators.required, Validators.pattern('^[a-zA-Z ]*$')]
+      categoria: ['', Validators.required],
+      subcategoria: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]]
     });
   }
 
   ngOnInit(): void {
-    this.obtenerSubcategoria();
+    this.obtenerSubcategorias();
     this.obtenerCategorias();
   }
 
-  obtenerSubcategoria(): void {
-    this.subcategoriaService.obtenerSubcategoria().subscribe(
-      (subcategoria: Subcategoria[]) => {
-        this.subcategoria = subcategoria;
-        console.log(this.subcategoria);
+  obtenerSubcategorias(): void {
+    this.subcategoriaService.obtenerSubcategorias().subscribe(
+      (subcategorias: Subcategoria[]) => {
+        this.subcategorias = subcategorias;
+        console.log(this.subcategorias);
       },
       (error) => {
-        console.error('Error al obtener subcategoría:', error);
+        console.error('Error al obtener subcategorías:', error);
       }
     );
   }
 
   obtenerCategorias(): void {
-    this.categoriaService.obtenerCategoria().subscribe(
+    this.categoriaService.obtenerCategorias().subscribe(
       (categorias: any[]) => {
         this.categorias = categorias;
       },
@@ -59,12 +59,12 @@ export class ListarSubcategoriaComponent implements OnInit {
   }
 
   eliminarSubcategoria(id: number): void {
-    if (confirm('¿Estás seguro de eliminar esta categoría?')) {
+    if (confirm('¿Estás seguro de eliminar esta subcategoría?')) {
       this.subcategoriaService.eliminarSubcategoria(id).subscribe(
         () => {
-          console.log('Categoría eliminada correctamente');
-          this.showAlert('Categoría eliminada correctamente', 'alert-success');
-          this.obtenerSubcategoria();
+          console.log('Subcategoría eliminada correctamente');
+          this.showAlert('Subcategoría eliminada correctamente', 'alert-success');
+          this.obtenerSubcategorias();
         },
         (error) => {
           console.error('Error al eliminar subcategoría:', error);
@@ -77,11 +77,12 @@ export class ListarSubcategoriaComponent implements OnInit {
   toggleEditForm(subcategoria: Subcategoria | null): void {
     if (subcategoria) {
       this.editarForm.patchValue({
-        categoria: subcategoria.categoria
+        categoria: subcategoria.categoria,
+        subcategoria: subcategoria.subcategoria
       });
       this.subcategoriaSeleccionada = subcategoria;
 
-      const modalElement = document.getElementById('editarCategoriaModal');
+      const modalElement = document.getElementById('editarSubcategoriaModal');
       if (modalElement) {
         const modal = new bootstrap.Modal(modalElement);
         modal.show();
@@ -94,25 +95,29 @@ export class ListarSubcategoriaComponent implements OnInit {
       return;
     }
 
+    const { categoria, subcategoria } = this.editarForm.value;
+
     if (this.subcategoriaSeleccionada) {
       const updatedSubcategoria: Subcategoria = {
         ...this.subcategoriaSeleccionada,
-        categoria: this.editarForm.get('categoria')?.value
+        categoria,
+        subcategoria
       };
 
       this.subcategoriaService.actualizarSubcategoria(updatedSubcategoria.id, updatedSubcategoria).subscribe(
         () => {
-          console.log('Categoría actualizada correctamente');
-          this.showAlert('Categoría actualizada correctamente', 'alert-success');
-          this.obtenerSubcategoria();
-          const modalElement = document.getElementById('editarCategoriaModal');
+          console.log('Subcategoría actualizada correctamente');
+          this.showAlert('Subcategoría actualizada correctamente', 'alert-success');
+          this.obtenerSubcategorias();
+          const modalElement = document.getElementById('editarSubcategoriaModal');
           if (modalElement) {
             const modal = new bootstrap.Modal(modalElement);
             modal.hide();
           }
         },
         (error) => {
-          console.error('Error al actualizar categoría:', error);
+          console.error('Error al actualizar subcategoría:', error);
+          this.showAlert('Error al actualizar subcategoría', 'alert-danger');
         }
       );
     }
