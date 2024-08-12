@@ -9,7 +9,7 @@ import { Ubicacion } from '../interfaces/ubicacion.interface';
 })
 export class UbicacionService {
   private url: string = 'https://proyectogatewayback-production.up.railway.app/ubicacion/';
-
+  
   constructor(private http: HttpClient) {}
 
   obtenerUbicaciones(): Observable<Ubicacion[]> {
@@ -25,8 +25,11 @@ export class UbicacionService {
   }
 
   actualizarUbicacion(id: number, ubicacion: Ubicacion): Observable<Ubicacion> {
+    console.log('Actualizando ubicación con ID:', id);
+    console.log('Datos de ubicación:', ubicacion);
     return this.http.patch<Ubicacion>(`${this.url}${id}`, ubicacion);
   }
+  
 
   obtenerUbicacionPorId(id: number): Observable<Ubicacion> {
     return this.http.get<Ubicacion>(`${this.url}${id}`);

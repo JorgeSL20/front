@@ -44,19 +44,21 @@ export class CrearUbicacionComponent implements OnInit {
   actualizarUbicacion() {
     if (this.myForm.valid) {
       const ubicacionData = this.myForm.value;
+      console.log('Datos a enviar:', ubicacionData); // Verifica los datos
       this.ubicacionService.actualizarUbicacion(this.ubicacionId, ubicacionData).subscribe(
         response => {
-          console.log(response);
+          console.log('Respuesta del servidor:', response);
           this.router.navigate(['/admin/listar-ubicacion']);
           this.showAlert('Ubicación actualizada con éxito', 'alert-success');
         },
         error => {
-          console.error(error);
+          console.error('Error al actualizar la ubicación', error);
           this.showAlert('Error al actualizar la ubicación', 'alert-danger');
         }
       );
     }
   }
+  
 
   regresar() {
     this.router.navigate(['/admin/listar-ubicacion']);
