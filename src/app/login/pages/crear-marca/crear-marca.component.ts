@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MarcaService } from '../../services/marca.service';
 import { Router } from '@angular/router';
@@ -8,8 +8,9 @@ import { Router } from '@angular/router';
   templateUrl: './crear-marca.component.html',
   styleUrls: ['./crear-marca.component.css']
 })
-export class CrearMarcaComponent {
+export class CrearMarcaComponent implements OnInit {
   myForm: FormGroup;
+  marcasExistentes: string[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -21,19 +22,30 @@ export class CrearMarcaComponent {
     });
   }
 
+  ngOnInit(): void {
+    this.marcaService.obtenerMarca().subscribe(marcas => {
+      this.marcasExistentes = marcas.map(m => m.marca.toLowerCase());
+    });
+  }
+
   guardarMarca() {
-    if (this.myForm.valid) {
+    const nuevaMarca = this.myForm.get('marca')?.value.toLowerCase();
+
+    if (this.myForm.valid && !this.marcasExistentes.includes(nuevaMarca)) {
       const marcaData = this.myForm.value;
       this.marcaService.crearMarca(marcaData).subscribe(
         response => {
           console.log(response);
           this.router.navigate(['/admin/listar-marca']);
-          this.showAlert('Marca Creada con exito', 'alert-success');
+          this.showAlert('Marca Creada con éxito', 'alert-success');
         },
         error => {
           console.error(error);
+          this.showAlert('Error al crear la marca', 'alert-danger');
         }
       );
+    } else {
+      this.showAlert('La marca ya existe o el formulario no es válido', 'alert-warning');
     }
   }
 
