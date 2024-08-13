@@ -1,11 +1,9 @@
-// src/app/components/crear-producto/crear-producto.component.ts
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductoService } from '../../services/producto.service';
 import { CategoriaService } from '../../services/categoria.service'; 
 import { MarcaService } from '../../services/marca.service';
 import { Router } from '@angular/router';
-import { HttpUrlEncodingCodec } from '@angular/common/http';
 
 @Component({
   selector: 'app-crear-producto',
@@ -17,6 +15,8 @@ export class CrearProductoComponent implements OnInit {
   categorias: any[] = [];
   marcas: any[] = [];
   selectedFile: File | null = null;
+  isImageValid: boolean = true;
+  isPriceValid: boolean = true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -31,8 +31,8 @@ export class CrearProductoComponent implements OnInit {
       categoria: ['', Validators.required],
       marca: ['', Validators.required],
       descripcion: ['', Validators.required],
-      precio: ['', Validators.required],
-      existencias: ['', Validators.required],
+      precio: ['', [Validators.required, Validators.pattern("^[0-9]+(\.[0-9]{1,2})?$")]],
+      existencias: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
     });
   }
 
@@ -64,13 +64,39 @@ export class CrearProductoComponent implements OnInit {
   }
 
   onFileChange(event: any): void {
-    this.selectedFile = event.target.files[0];
+    const fileInput = event.target;
+    const file = fileInput.files[0];
+  
+    if (file) {
+      const validImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
+  
+      if (!validImageTypes.includes(file.type)) {
+        this.isImageValid = false;
+        this.selectedFile = null;
+        fileInput.value = '';  // Restablece el input de archivo
+        this.showAlert('El archivo seleccionado no es una imagen válida', 'alert-danger');
+      } else {
+        this.isImageValid = true;
+        this.selectedFile = file;
+      }
+    }
+  }
+  
+
+  validatePrice(): void {
+    const priceValue = this.myForm.get('precio')?.value;
+    if (priceValue < 0) {
+      this.isPriceValid = false;
+      alert('El precio no puede ser negativo.');
+    } else {
+      this.isPriceValid = true;
+    }
   }
 
   guardarProducto() {
-    if (this.myForm.valid && this.selectedFile) {
+    if (this.myForm.valid && this.isImageValid && this.isPriceValid) {
       const formData = new FormData();
-      formData.append('file', this.selectedFile);
+      formData.append('file', this.selectedFile as Blob);
       formData.append('producto', this.myForm.get('producto')?.value);
       formData.append('categoria', this.myForm.get('categoria')?.value);
       formData.append('marca', this.myForm.get('marca')?.value);
@@ -84,7 +110,7 @@ export class CrearProductoComponent implements OnInit {
         response => {
           console.log(response);
           this.router.navigate(['/admin/listar-producto']);
-          this.showAlert('Producto creado con exito', 'alert-success');
+          this.showAlert('Producto creado con éxito', 'alert-success');
         },
         error => {
           console.error(error);
@@ -92,9 +118,11 @@ export class CrearProductoComponent implements OnInit {
       );
     }
   }
+
   regresar() {
     this.router.navigate(['/admin/listar-producto']);
   }
+
   showAlert(message: string, alertClass: string) {
     const alertDiv = document.createElement('div');
     alertDiv.className = `alert ${alertClass} fixed-top d-flex align-items-center justify-content-center`;
@@ -106,5 +134,21 @@ export class CrearProductoComponent implements OnInit {
     setTimeout(() => {
       alertDiv.remove();
     }, 2000);
+  }
+
+  preventNegative(event: KeyboardEvent): void {
+    if (event.key === '-' || event.key === '+' || event.key === 'e') {
+      event.preventDefault();
+    }
+  }
+
+  validateNumberInput(event: KeyboardEvent): void {
+    const charCode = event.which ? event.which : event.keyCode;
+    const charStr = String.fromCharCode(charCode);
+  
+    // Permitir solo números y evitar negativos, signos positivos y 'e'
+    if (!/^\d$/.test(charStr)) {
+      event.preventDefault();
+    }
   }
 }
