@@ -109,6 +109,21 @@
                     *ngIf="myForm.get('password')?.hasError('pattern') && myForm.get('password')?.touched">
                     <i class="fas fa-exclamation-circle"></i>La contraseña debe contener al menos 8 caracteres, incluyendo mayúsculas, minúsculas, números y 2 caracteres especiales.
                   </div>
+                  <div class="error-message text-danger" *ngIf="minLengthWarning && myForm.get('password')?.touched">
+                    <i class="fas fa-exclamation-circle"></i> La contraseña debe tener al menos 8 caracteres.
+                  </div>
+                  <div class="error-message text-danger" *ngIf="uppercaseWarning && myForm.get('password')?.touched">
+                    <i class="fas fa-exclamation-circle"></i> La contraseña debe contener al menos una letra mayúscula.
+                  </div>
+                  <div class="error-message text-danger" *ngIf="lowercaseWarning && myForm.get('password')?.touched">
+                    <i class="fas fa-exclamation-circle"></i> La contraseña debe contener al menos una letra minúscula.
+                  </div>
+                  <div class="error-message text-danger" *ngIf="numberWarning && myForm.get('password')?.touched">
+                    <i class="fas fa-exclamation-circle"></i> La contraseña debe contener al menos un número.
+                  </div>
+                  <div class="error-message text-danger" *ngIf="specialCharWarning && myForm.get('password')?.touched">
+                    <i class="fas fa-exclamation-circle"></i> La contraseña debe contener al menos un carácter especial.
+                  </div>
                 </div>
                 <div class="col-md-6">
                   <label for="password2" class="form-label">Repita contraseña:</label>

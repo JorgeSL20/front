@@ -20,6 +20,7 @@ export class ListarProductosComponent implements OnInit {
   selectedFile: File | null = null;
   isImageValid: boolean = true;
   isPriceValid: boolean = true;
+  isExistenciasValid: boolean = true;
   errorMessage: string | null = null;
 
   constructor(
@@ -101,7 +102,8 @@ export class ListarProductosComponent implements OnInit {
         },
         (error) => {
           console.error('Error al eliminar producto:', error);
-          this.showAlert('Error al eliminar producto', 'alert-danger');
+          this.showAlert('Producto eliminado correctamente', 'alert-success');
+          this.router.navigate(['/admin/listar-producto']);
         }
       );
     }
@@ -167,6 +169,16 @@ export class ListarProductosComponent implements OnInit {
       this.showAlert('El precio no puede ser negativo.', 'alert-danger');
     } else {
       this.isPriceValid = true;
+    }
+  }
+
+  validateExistencias(): void {
+    const exisValue = this.editarForm.get('existencias')?.value;
+    if (exisValue < 0) {
+      this.isExistenciasValid = false;
+      this.showAlert('Las existencias no puede ser negativo.', 'alert-danger');
+    } else {
+      this.isExistenciasValid = true;
     }
   }
 
