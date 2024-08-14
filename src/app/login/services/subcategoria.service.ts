@@ -32,18 +32,10 @@ export class SubcategoriaService {
     return this.http.delete<void>(`${this.url}${id}`);
   }
 
-  actualizarSubcategoria(id: number, updatedSubcategoria: Partial<Subcategoria>): Observable<Subcategoria> {
-    // Verificar unicidad antes de actualizar
-    return this.verificarSubcategoriaUnica(updatedSubcategoria.subcategoria!).pipe(
-      switchMap(isUnique => {
-        if (isUnique) {
-          return this.http.patch<Subcategoria>(`${this.url}${id}`, updatedSubcategoria);
-        } else {
-          throw new Error('La subcategoría ya existe');
-        }
-      })
-    );
+  actualizarSubcategoria(id: number, subcategoria: Partial<Subcategoria>): Observable<void> {
+    return this.http.patch<void>(`${this.url}/${id}`, subcategoria);
   }
+
 
   // Método para verificar si la subcategoría es única
   verificarSubcategoriaUnica(subcategoria: string): Observable<boolean> {

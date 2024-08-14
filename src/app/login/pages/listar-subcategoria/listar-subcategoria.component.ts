@@ -71,15 +71,16 @@ export class ListarSubcategoriaComponent implements OnInit {
         () => {
           console.log('Subcategoría actualizada correctamente');
           this.obtenerSubcategorias();
+  
+          // Ocultar el modal
           const modalElement = document.getElementById('editarSubcategoriaModal');
           if (modalElement) {
             const modal = new (window as any).bootstrap.Modal(modalElement);
             modal.hide();
           }
         },
-        (error: any) => {  // Añadir el tipo `any` o el tipo adecuado para el error
+        (error: any) => {
           console.error('Error al actualizar subcategoría:', error);
-          // Mostrar un mensaje de error al usuario si es necesario
         }
       );
     }
