@@ -18,94 +18,95 @@
   justify-content: space-between;
   width: 18rem;
   margin: 0 10px 20px 10px;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.5s, transform 0.5s;
+  /* Eliminamos las propiedades que podrían impedir que las tarjetas sean visibles */
+  /* opacity: 0; */
+  /* transform: translateY(20px); */
+  /* transition: opacity 0.5s, transform 0.5s; */
 }
 
-.card.visible {
+/* .card.visible {
   opacity: 1;
   transform: translateY(0);
-}
+} */
 
 .card:hover {
   transform: scale(1.05);
 }
 
-/* Agrega esta regla para asegurarte de que el scroll funcione */
+/* Asegura el scroll para el contenedor de tarjetas si es necesario */
 .card-container {
   overflow-y: auto;
 }
 
+.card img {
+  height: 200px;
+}
 
-    .card img {
-      height: 200px;
-    }
+.card-body {
+  text-align: center;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 
-    .card-body {
-      text-align: center;
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
+.card-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
 
-    .card-title {
-      font-size: 1.2rem;
-      font-weight: bold;
-    }
+.card-text {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 10px;
+}
 
-    .card-text {
-      font-size: 1rem;
-      color: #555;
-      margin-bottom: 10px;
-    }
+.btn-container {
+  margin-top: auto;
+}
 
-    .btn-container {
-      margin-top: auto;
-    }
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
 
-    .btn-primary {
-      background-color: #007bff;
-      border-color: #007bff;
-    }
+.btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
 
-    .btn-primary:hover {
-      background-color: #0056b3;
-      border-color: #0056b3;
-    }
+.btn-success {
+  background-color: #28a745;
+  border-color: #28a745;
+}
 
-    .btn-success {
-      background-color: #28a745;
-      border-color: #28a745;
-    }
+.btn-success:hover {
+  background-color: #218838;
+  border-color: #218838;
+}
 
-    .btn-success:hover {
-      background-color: #218838;
-      border-color: #218838;
-    }
+.btn-disabled {
+  background-color: #6c757d;
+  border-color: #6c757d;
+  cursor: not-allowed;
+}
 
-    .btn-disabled {
-      background-color: #6c757d;
-      border-color: #6c757d;
-      cursor: not-allowed;
-    }
+.btn-disabled:hover {
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
 
-    .btn-disabled:hover {
-      background-color: #6c757d;
-      border-color: #6c757d;
-    }
+.out-of-stock {
+  color: red;
+  font-weight: bold;
+}
 
-    .out-of-stock {
-      color: red;
-      font-weight: bold;
-    }
+.carousel-item img {
+  max-height: 300px;
+  width: auto;
+  margin: auto;
+}
 
-    .carousel-item img {
-      max-height: 300px;
-      width: auto;
-      margin: auto;
-    }
   </style>
 </head>
 <body>
@@ -137,7 +138,7 @@
   </nav>
 
   <div class="card-container">
-    <div class="card" *ngFor="let producto of productosFiltrados">
+    <div class="card" *ngFor="let producto of productosPaginados">
       <img [src]="producto.url" class="card-img-top" alt="Imagen del producto">
       <div class="card-body">
         <h5 class="card-title">{{ producto.producto }}</h5>
@@ -147,24 +148,35 @@
         <p class="card-text" *ngIf="producto.existencias === 0" class="out-of-stock">Agotado</p>
         <div class="btn-container">
           <button class="btn btn-primary" (click)="abrirModal(producto)" style="margin-right: 10px;">Detalles</button>
-          <button 
-            class="btn btn-success" 
-            (click)="agregarAlCarrito(producto.id)" 
-            *ngIf="producto.existencias > 0"
-          >
+          <button class="btn btn-success" (click)="agregarAlCarrito(producto.id)" *ngIf="producto.existencias > 0">
             Añadir al carrito
           </button>
-          <button 
-            class="btn btn-disabled" 
-            *ngIf="producto.existencias === 0"
-            disabled
-          >
+          <button class="btn btn-disabled" *ngIf="producto.existencias === 0" disabled>
             Añadir al carrito
           </button>
         </div>
       </div>
     </div>
   </div>
+  
+  <!-- Controles de paginación -->
+  <nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+      <li class="page-item" [class.disabled]="paginaActual === 1">
+        <button class="page-link" (click)="cambiarPagina(paginaActual - 1)">Anterior</button>
+      </li>
+      <li class="page-item" *ngFor="let i of [].constructor(totalPaginas); let idx = index" [class.active]="idx + 1 === paginaActual">
+        <button class="page-link" (click)="cambiarPagina(idx + 1)">{{ idx + 1 }}</button>
+      </li>
+      <li class="page-item" [class.disabled]="paginaActual === totalPaginas">
+        <button class="page-link" (click)="cambiarPagina(paginaActual + 1)">Siguiente</button>
+      </li>
+    </ul>
+  </nav>
+  
+
+
+  
 
   <app-producto-detalles 
     *ngIf="productoSeleccionado" 

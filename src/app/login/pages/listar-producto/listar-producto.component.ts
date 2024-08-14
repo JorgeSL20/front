@@ -22,6 +22,12 @@ export class ListarProductosComponent implements OnInit {
   isPriceValid: boolean = true;
   errorMessage: string | null = null;
 
+  // Paginación
+  paginaActual: number = 1;
+  productosPorPagina: number = 10;
+  productosPaginados: Producto[] = [];
+  totalPaginas: number = 0;
+
   constructor(
     private router: Router,
     @Inject(ProductoService) private productoService: ProductoService,
@@ -68,11 +74,23 @@ export class ListarProductosComponent implements OnInit {
     this.productoService.obtenerProductos().subscribe(
       (productos: Producto[]) => {
         this.productos = productos;
+        this.totalPaginas = Math.ceil(this.productos.length / this.productosPorPagina);
+        this.cambiarPagina(1);
       },
       (error) => {
         console.error('Error al obtener productos:', error);
       }
     );
+  }
+
+  cambiarPagina(pagina: number): void {
+    if (pagina < 1 || pagina > this.totalPaginas) {
+      return;
+    }
+    this.paginaActual = pagina;
+    const inicio = (pagina - 1) * this.productosPorPagina;
+    const fin = inicio + this.productosPorPagina;
+    this.productosPaginados = this.productos.slice(inicio, fin);
   }
 
   actualizarExistencias(producto: Producto): void {
@@ -240,8 +258,8 @@ export class ListarProductosComponent implements OnInit {
     const charCode = event.which ? event.which : event.keyCode;
     const charStr = String.fromCharCode(charCode);
 
-    // Permitir solo números y evitar negativos, signos positivos y 'e'
-    if (!/^\d$/.test(charStr)) {
+    // Permitir solo números positivos y 'e'
+    if (!/^\d$/.test(charStr) && charStr !== 'e') {
       event.preventDefault();
     }
   }

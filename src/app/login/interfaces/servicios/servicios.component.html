@@ -6,104 +6,107 @@
   <title>Carrito</title>
   <style>
     .card-container {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: 20px;
-    }
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
 
-    .card {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      width: 18rem;
-      margin: 0 0px 0px 0px;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.5s, transform 0.5s;
-    }
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 18rem;
+  margin: 0 10px 20px 10px;
+  /* Eliminamos las propiedades que podrían impedir que las tarjetas sean visibles */
+  /* opacity: 0; */
+  /* transform: translateY(20px); */
+  /* transition: opacity 0.5s, transform 0.5s; */
+}
 
-    .card.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+/* .card.visible {
+  opacity: 1;
+  transform: translateY(0);
+} */
 
-    .card:hover {
-      transform: scale(1.05);
-    }
+.card:hover {
+  transform: scale(1.05);
+}
 
-    .card img {
-      height: 200px;
-    }
+/* Asegura el scroll para el contenedor de tarjetas si es necesario */
+.card-container {
+  overflow-y: auto;
+}
 
-    .card-body {
-      text-align: center;
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
+.card img {
+  height: 200px;
+}
 
-    .card-title {
-      font-size: 1.2rem;
-      font-weight: bold;
-    }
+.card-body {
+  text-align: center;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 
-    .card-text {
-      font-size: 1rem;
-      color: #555;
-      margin-bottom: 10px;
-    }
+.card-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
 
-    .btn-container {
-      margin-top: auto;
-    }
+.card-text {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 10px;
+}
 
-    .btn-primary {
-      background-color: #007bff;
-      border-color: #007bff;
-    }
+.btn-container {
+  margin-top: auto;
+}
 
-    .btn-primary:hover {
-      background-color: #0056b3;
-      border-color: #0056b3;
-    }
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
 
-    .btn-success {
-      background-color: #28a745;
-      border-color: #28a745;
-    }
+.btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
 
-    .btn-success:hover {
-      background-color: #218838;
-      border-color: #218838;
-    }
+.btn-success {
+  background-color: #28a745;
+  border-color: #28a745;
+}
 
-    .btn-disabled {
-      background-color: #6c757d;
-      border-color: #6c757d;
-      cursor: not-allowed;
-    }
+.btn-success:hover {
+  background-color: #218838;
+  border-color: #218838;
+}
 
-    .btn-disabled:hover {
-      background-color: #6c757d;
-      border-color: #6c757d;
-    }
+.btn-disabled {
+  background-color: #6c757d;
+  border-color: #6c757d;
+  cursor: not-allowed;
+}
 
-    .out-of-stock {
-      color: red;
-      font-weight: bold;
-    }
+.btn-disabled:hover {
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
 
-    .carousel-item img {
-      max-height: 300px;
-      width: auto;
-      margin: auto;
-    }
+.out-of-stock {
+  color: red;
+  font-weight: bold;
+}
 
-    #elemento {
-      display: none;
-    }
+.carousel-item img {
+  max-height: 300px;
+  width: auto;
+  margin: auto;
+}
+
   </style>
 </head>
 <body>
@@ -135,7 +138,7 @@
   </nav>
 
   <div class="card-container">
-    <div class="card" *ngFor="let producto of productosFiltrados" style="width: 18rem; margin: 0 10px 20px 10px;">
+    <div class="card" *ngFor="let producto of productosPaginados">
       <img [src]="producto.url" class="card-img-top" alt="Imagen del producto">
       <div class="card-body">
         <h5 class="card-title">{{ producto.producto }}</h5>
@@ -163,6 +166,23 @@
       </div>
     </div>
   </div>
+
+  <!-- Controles de paginación -->
+  <nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+      <li class="page-item" [class.disabled]="paginaActual === 1">
+        <button class="page-link" (click)="cambiarPagina(paginaActual - 1)">Anterior</button>
+      </li>
+      <li class="page-item" *ngFor="let i of [].constructor(totalPaginas); let idx = index" [class.active]="idx + 1 === paginaActual">
+        <button class="page-link" (click)="cambiarPagina(idx + 1)">{{ idx + 1 }}</button>
+      </li>
+      <li class="page-item" [class.disabled]="paginaActual === totalPaginas">
+        <button class="page-link" (click)="cambiarPagina(paginaActual + 1)">Siguiente</button>
+      </li>
+    </ul>
+  </nav>
+
+
 
   <app-producto-detalles 
     *ngIf="productoSeleccionado" 

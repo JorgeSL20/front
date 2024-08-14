@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, HostListener } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { Producto } from '../../interfaces/producto.interface';
 import { ProductoService } from '../../services/producto.service';
@@ -20,6 +20,12 @@ export class ServiciosComponent implements OnInit {
   productosFiltrados: Producto[] = [];
   productoSeleccionado: Producto | null = null;
 
+  // Paginación
+  paginaActual: number = 1;
+  productosPorPagina: number = 10;
+  productosPaginados: Producto[] = [];
+  totalPaginas: number = 0;
+
   constructor(
     private el: ElementRef,
     private router: Router,
@@ -37,7 +43,6 @@ export class ServiciosComponent implements OnInit {
   cargarDatosIniciales(): void {
     this.categoriaService.obtenerCategoria().subscribe(
       (categorias: any[]) => {
-        console.log('Categorías recibidas:', categorias); // Verificar datos
         this.categorias = categorias;
         this.marcaService.obtenerMarca().subscribe(
           (marcas: any[]) => {
@@ -54,12 +59,14 @@ export class ServiciosComponent implements OnInit {
       }
     );
   }
-  
+
   obtenerProductos(): void {
     this.productoService.obtenerProductos().subscribe(
       (productos: Producto[]) => {
         this.productos = productos;
-        this.productosFiltrados = productos; // Inicializa los productos filtrados
+        this.productosFiltrados = productos;
+        this.totalPaginas = Math.ceil(this.productosFiltrados.length / this.productosPorPagina);
+        this.cambiarPagina(1);
       },
       (error) => {
         console.error('Error al obtener productos:', error);
@@ -75,6 +82,35 @@ export class ServiciosComponent implements OnInit {
       producto.marca.toLowerCase().includes(termino) ||
       producto.descripcion.toLowerCase().includes(termino)
     );
+    this.totalPaginas = Math.ceil(this.productosFiltrados.length / this.productosPorPagina);
+    this.cambiarPagina(1);
+  }
+
+  cambiarPagina(pagina: number): void {
+    if (pagina < 1 || pagina > this.totalPaginas) {
+      return;
+    }
+    this.paginaActual = pagina;
+    const inicio = (pagina - 1) * this.productosPorPagina;
+    const fin = inicio + this.productosPorPagina;
+    this.productosPaginados = this.productosFiltrados.slice(inicio, fin);
+  }
+
+  agregarAlCarrito(productoId: number | undefined): void {
+    if (productoId === undefined) {
+      console.error('El id del producto es undefined');
+      return;
+    }
+    const cantidad = 1;
+    const item = { productoId: productoId, cantidad: cantidad };
+    this.carritoService.agregarOActualizarItem(item).subscribe(
+      response => {
+        this.showAlert('Producto agregado al carrito', 'alert-success');
+      },
+      error => {
+        this.showAlert('Error al agregar producto al carrito', 'alert-danger');
+      }
+    );
   }
 
   showAlert(message: string, alertClass: string) {
@@ -82,9 +118,7 @@ export class ServiciosComponent implements OnInit {
     alertDiv.className = `alert ${alertClass} fixed-top d-flex align-items-center justify-content-center`;
     alertDiv.textContent = message;
     alertDiv.style.fontSize = '20px';
-
     document.body.appendChild(alertDiv);
-
     setTimeout(() => {
       alertDiv.remove();
     }, 2000);
@@ -92,39 +126,11 @@ export class ServiciosComponent implements OnInit {
 
   abrirModal(producto: Producto) {
     this.productoSeleccionado = producto;
-    document.body.style.overflow = 'hidden'; // Evitar el scroll del fondo
+    document.body.style.overflow = 'hidden';
   }
 
   cerrarModal() {
     this.productoSeleccionado = null;
-    document.body.style.overflow = 'auto'; // Restaurar el scroll del fondo
-  }
-
-  agregarAlCarrito(producto: Producto) {
-    if (producto.existencias > 0) {
-      this.carritoService.agregarOActualizarItem({ productoId: producto.id, cantidad: 1 }).subscribe(
-        response => {
-          this.showAlert('Producto agregado al carrito', 'alert-success');
-        },
-        error => {
-          this.showAlert('Error al agregar el producto al carrito', 'alert-danger');
-        }
-      );
-    } else {
-      this.showAlert('El producto está agotado', 'alert-danger');
-    }
-  }
-
-  @HostListener('window:scroll', ['$event'])
-  onScroll(event: Event): void {
-    const cards = this.el.nativeElement.querySelectorAll('.card');
-    cards.forEach((card: HTMLElement) => {
-      const rect = card.getBoundingClientRect();
-      if (rect.top < window.innerHeight && rect.bottom >= 0) {
-        card.classList.add('visible');
-      } else {
-        card.classList.remove('visible');
-      }
-    });
+    document.body.style.overflow = 'auto';
   }
 }

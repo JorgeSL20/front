@@ -50,7 +50,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let producto of productos">
+                <tr *ngFor="let producto of productosPaginados">
                   <td><img [src]="producto.url" alt="Imagen del producto" class="img-fluid img-thumbnail" style="max-width: 100px;"></td>
                   <td>{{ producto.producto }}</td>
                   <td>{{ producto.categoria }}</td>
@@ -72,7 +72,22 @@
                 </tr>
               </tbody>
             </table>
+            
           </div>
+          <!-- Controles de paginación -->
+          <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+              <li class="page-item" [class.disabled]="paginaActual === 1">
+                <button class="page-link" (click)="cambiarPagina(paginaActual - 1)">Anterior</button>
+              </li>
+              <li class="page-item" *ngFor="let i of [].constructor(totalPaginas); let idx = index" [class.active]="idx + 1 === paginaActual">
+                <button class="page-link" (click)="cambiarPagina(idx + 1)">{{ idx + 1 }}</button>
+              </li>
+              <li class="page-item" [class.disabled]="paginaActual === totalPaginas">
+                <button class="page-link" (click)="cambiarPagina(paginaActual + 1)">Siguiente</button>
+              </li>
+            </ul>
+          </nav>
         </div>
       </div>
     </div>

@@ -20,6 +20,12 @@ export class ServiciospublicoComponent implements OnInit {
   productosFiltrados: Producto[] = [];
   productoSeleccionado: Producto | null = null;
 
+  // Paginación
+  paginaActual: number = 1;
+  productosPorPagina: number = 10;
+  productosPaginados: Producto[] = [];
+  totalPaginas: number = 0;  // Nueva propiedad para almacenar el número total de páginas
+
   constructor(
     private el: ElementRef,
     private router: Router,
@@ -32,14 +38,12 @@ export class ServiciospublicoComponent implements OnInit {
 
   ngOnInit(): void {
     this.cargarDatosIniciales();
-    // Agregar visibilidad al cargar la página
-    this.checkVisibility();
+    
   }
 
   cargarDatosIniciales(): void {
     this.categoriaService.obtenerCategoria().subscribe(
       (categorias: any[]) => {
-        console.log('Categorías recibidas:', categorias); // Verificar datos
         this.categorias = categorias;
         this.marcaService.obtenerMarca().subscribe(
           (marcas: any[]) => {
@@ -61,9 +65,10 @@ export class ServiciospublicoComponent implements OnInit {
     this.productoService.obtenerProductos().subscribe(
       (productos: Producto[]) => {
         this.productos = productos;
-        this.productosFiltrados = productos; // Inicializa los productos filtrados
-        // Asegurarse de que los productos sean visibles después de la carga
-        setTimeout(() => this.checkVisibility(), 100); // Esperar para aplicar la visibilidad
+        this.productosFiltrados = productos;
+        this.totalPaginas = Math.ceil(this.productosFiltrados.length / this.productosPorPagina);  // Calcular total de páginas
+        this.cambiarPagina(1); // Inicializa la primera página
+        
       },
       (error) => {
         console.error('Error al obtener productos:', error);
@@ -79,7 +84,21 @@ export class ServiciospublicoComponent implements OnInit {
       producto.marca.toLowerCase().includes(termino) ||
       producto.descripcion.toLowerCase().includes(termino)
     );
+    this.totalPaginas = Math.ceil(this.productosFiltrados.length / this.productosPorPagina);  // Calcular total de páginas tras filtrar
+    this.cambiarPagina(1); // Reiniciar a la primera página después de la búsqueda
   }
+
+  cambiarPagina(pagina: number): void {
+    if (pagina < 1 || pagina > this.totalPaginas) {
+        return; // Evita cambiar a páginas inexistentes
+    }
+
+    this.paginaActual = pagina;
+    const inicio = (pagina - 1) * this.productosPorPagina;
+    const fin = inicio + this.productosPorPagina;
+    this.productosPaginados = this.productosFiltrados.slice(inicio, fin);
+}
+
 
   agregarAlCarrito(productoId: number | undefined): void {
     if (productoId === undefined) {
@@ -119,28 +138,13 @@ export class ServiciospublicoComponent implements OnInit {
 
   abrirModal(producto: Producto) {
     this.productoSeleccionado = producto;
-    document.body.style.overflow = 'hidden'; // Evitar el scroll del fondo
+    document.body.style.overflow = 'hidden';
   }
 
   cerrarModal() {
     this.productoSeleccionado = null;
-    document.body.style.overflow = 'auto'; // Restaurar el scroll del fondo
+    document.body.style.overflow = 'auto';
   }
 
-  @HostListener('window:scroll', ['$event'])
-  onScroll(event: Event): void {
-    this.checkVisibility();
-  }
-
-  private checkVisibility(): void {
-    const cards = this.el.nativeElement.querySelectorAll('.card');
-    cards.forEach((card: HTMLElement) => {
-      const rect = card.getBoundingClientRect();
-      if (rect.top < window.innerHeight && rect.bottom >= 0) {
-        card.classList.add('visible');
-      } else {
-        card.classList.remove('visible');
-      }
-    });
-  }
+  
 }
