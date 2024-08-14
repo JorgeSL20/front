@@ -8,7 +8,7 @@ import { RoleGuard } from './login/guards/role.guard';
 
 const routes: Routes = [
   {
-    path: 'productos',
+    path: '',
     component: ServiciosComponent
   },
   {

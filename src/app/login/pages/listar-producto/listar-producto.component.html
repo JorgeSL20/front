@@ -104,18 +104,9 @@
       </div>
       <div class="modal-body">
         <form [formGroup]="editarForm" (ngSubmit)="guardarProducto()">
+          
           <div class="mb-3">
-            <label for="currentImage" class="form-label">Imagen Actual:</label>
-            <br>
-            <img id="currentImage" class="img-fluid img-thumbnail" style="max-width: 200px;" [src]="productoSeleccionado?.url">
-          </div>
-          <div class="mb-3">
-            <label for="editarFile" class="form-label">Imagen Nueva:</label>
-            <input formControlName="file" type="file" class="form-control" id="editarFile" (change)="onFileChange($event)">
-            <div *ngIf="!isImageValid" class="error-message mt-2">El archivo seleccionado no es una imagen válida</div>
-          </div>
-          <div class="mb-3">
-            <label for="editarProducto" class="form-label">Producto:</label>
+            <label for="editarProducto" class="form-label">Nombre del Producto:</label>
             <input formControlName="producto" type="text" class="form-control" id="editarProducto" required>
           </div>
           <div class="mb-3">
@@ -144,6 +135,17 @@
           <div class="mb-3">
             <label for="editarExistencias" class="form-label">Existencias:</label>
             <input formControlName="existencias" type="number" class="form-control" id="editarExistencias" min="0" step="1" required>
+            <div *ngIf="!isPriceValid" class="error-message mt-2">El Existencias no puede ser negativo.</div>
+          </div>
+          <div class="mb-3">
+            <label for="currentImage" class="form-label">Imagen Actual:</label>
+            <br>
+            <img id="currentImage" class="img-fluid img-thumbnail" style="max-width: 200px;" [src]="productoSeleccionado?.url">
+          </div>
+          <div class="mb-3">
+            <label for="editarFile" class="form-label">Imagen Nueva:</label>
+            <input formControlName="file" type="file" class="form-control" id="editarFile" (change)="onFileChange($event)">
+            <div *ngIf="!isImageValid" class="error-message mt-2">El archivo seleccionado no es una imagen válida</div>
           </div>
           <div class="d-flex justify-content-between">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>

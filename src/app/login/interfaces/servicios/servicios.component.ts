@@ -102,12 +102,18 @@ export class ServiciosComponent implements OnInit {
       return;
     }
     const cantidad = 1;
-    const item = { productoId: productoId, cantidad: cantidad };
+    const item = {
+      productoId: productoId,
+      cantidad: cantidad
+    };
+
     this.carritoService.agregarOActualizarItem(item).subscribe(
       response => {
+        console.log('Producto agregado o actualizado en el carrito:', response);
         this.showAlert('Producto agregado al carrito', 'alert-success');
       },
       error => {
+        console.error('Error al agregar producto al carrito:', error);
         this.showAlert('Error al agregar producto al carrito', 'alert-danger');
       }
     );
