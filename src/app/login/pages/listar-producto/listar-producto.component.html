@@ -134,8 +134,8 @@
           </div>
           <div class="mb-3">
             <label for="editarExistencias" class="form-label">Existencias:</label>
-            <input formControlName="existencias" type="number" class="form-control" id="editarExistencias" min="0" step="1" required>
-            <div *ngIf="!isPriceValid" class="error-message mt-2">El Existencias no puede ser negativo.</div>
+            <input formControlName="existencias" type="number" class="form-control" id="editarExistencias" min="0" step="1" required (input)="validateExistencias()"> 
+            <div *ngIf="!isExistenciasValid" class="error-message mt-2">El Existencias no puede ser negativo.</div>
           </div>
           <div class="mb-3">
             <label for="currentImage" class="form-label">Imagen Actual:</label>
