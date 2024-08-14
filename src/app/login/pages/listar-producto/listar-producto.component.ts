@@ -180,30 +180,34 @@ export class ListarProductosComponent implements OnInit {
       formData.append('precio', this.editarForm.get('precio')?.value);
       formData.append('existencias', this.editarForm.get('existencias')?.value);
   
-      // Verificar si se seleccionó una imagen
       if (this.selectedFile) {
-        if (!['image/jpeg', 'image/png', 'image/gif'].includes(this.selectedFile.type)) {
-          this.showAlert('Por favor, seleccione un archivo de imagen válido (jpg, jpeg, png, gif).', 'alert-danger');
-          return;
-        }
         formData.append('file', this.selectedFile);
       }
   
-      if (this.productoSeleccionado) {
-        this.productoService.actualizarProducto(this.productoSeleccionado.id, formData).subscribe(
-          () => {
-            this.showAlert('Producto actualizado correctamente', 'alert-success');
-            this.obtenerProductos();
-            this.closeModal();  // Llama al método para cerrar el modal
-          },
-          (error) => {
-            console.error('Error al actualizar producto:', error);
-            this.showAlert('Error al actualizar producto', 'alert-danger');
+      this.productoService.actualizarProducto(this.productoSeleccionado?.id || 0, formData).subscribe(
+        () => {
+          console.log('Producto actualizado correctamente');
+          this.obtenerProductos();
+          this.showAlert('Producto actualizado correctamente', 'alert-success');
+          
+          // Cerrar el modal después de guardar
+          const modalElement = document.getElementById('editarProductoModal');
+          if (modalElement) {
+            const modal = (window as any).bootstrap.Modal.getInstance(modalElement);
+            if (modal) {
+              modal.hide();
+            }
           }
-        );
-      }
+        },
+        (error) => {
+          console.error('Error al actualizar el producto:', error);
+          this.showAlert('Error al actualizar el producto', 'alert-danger');
+        }
+      );
     }
   }
+  
+  
   
   closeModal(): void {
     const modalElement = document.getElementById('editarProductoModal');
