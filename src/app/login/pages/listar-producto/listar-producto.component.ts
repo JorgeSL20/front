@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Producto } from '../../interfaces/producto.interface';
 import { ProductoService } from '../../services/producto.service';
@@ -28,6 +28,8 @@ export class ListarProductosComponent implements OnInit {
   productosPorPagina: number = 10;
   productosPaginados: Producto[] = [];
   totalPaginas: number = 0;
+
+  @ViewChild('productosTable') productosTable!: ElementRef;
 
   constructor(
     private router: Router,
@@ -74,9 +76,15 @@ export class ListarProductosComponent implements OnInit {
   obtenerProductos(): void {
     this.productoService.obtenerProductos().subscribe(
       (productos: Producto[]) => {
-        this.productos = productos;
+        // Ordenar los productos por fecha de creación, de más nuevo a más viejo
+        this.productos = productos.sort((a, b) => {
+          const fechaA = a.fechaCreacion ? new Date(a.fechaCreacion) : new Date(0);
+          const fechaB = b.fechaCreacion ? new Date(b.fechaCreacion) : new Date(0);
+          return fechaB.getTime() - fechaA.getTime(); // Ordenar de más nuevo a más viejo
+        });
+
         this.totalPaginas = Math.ceil(this.productos.length / this.productosPorPagina);
-        this.cambiarPagina(1);
+        this.cambiarPagina(1); // Cargar la primera página
       },
       (error) => {
         console.error('Error al obtener productos:', error);
@@ -120,7 +128,7 @@ export class ListarProductosComponent implements OnInit {
         },
         (error) => {
           console.error('Error al eliminar producto:', error);
-          this.showAlert('Producto eliminado correctamente', 'alert-success');
+          this.showAlert('Error al eliminar producto', 'alert-danger');
           this.router.navigate(['/admin/listar-producto']);
         }
       );
@@ -214,62 +222,45 @@ export class ListarProductosComponent implements OnInit {
         formData.append('file', this.selectedFile);
       }
   
-      this.productoService.actualizarProducto(this.productoSeleccionado?.id || 0, formData).subscribe(
-        () => {
-          console.log('Producto actualizado correctamente');
-          this.obtenerProductos();
-          this.showAlert('Producto actualizado correctamente', 'alert-success');
-          
-          // Cerrar el modal después de guardar
+      this.productoService.crearProducto(formData).subscribe(
+        (nuevoProducto: Producto) => {
+          console.log('Producto creado correctamente');
+          this.obtenerProductos(); // Recargar productos para actualizar la lista
+          this.scrollToNewProduct(nuevoProducto.id); // Desplazar al nuevo producto
+          this.editarForm.reset();
+          this.selectedFile = null;
+          this.isImageValid = true;
           const modalElement = document.getElementById('editarProductoModal');
           if (modalElement) {
-            const modal = (window as any).bootstrap.Modal.getInstance(modalElement);
-            if (modal) {
-              modal.hide();
-            }
+            const modal = new (window as any).bootstrap.Modal(modalElement);
+            modal.hide();
           }
         },
         (error) => {
-          console.error('Error al actualizar el producto:', error);
-          this.showAlert('Error al actualizar el producto', 'alert-danger');
+          console.error('Error al crear producto:', error);
+          this.showAlert('Error al crear producto', 'alert-danger');
         }
       );
-    }
-  }
-  
-  
-  
-  closeModal(): void {
-    const modalElement = document.getElementById('editarProductoModal');
-    if (modalElement) {
-      const modal = new (window as any).bootstrap.Modal(modalElement);
-      modal.hide();
+    } else {
+      this.showAlert('Por favor, corrija los errores en el formulario.', 'alert-danger');
     }
   }
 
-  regresar(): void {
-    this.router.navigate(['/admin/listar-producto']);
-  }
-
-  showAlert(message: string, alertClass: string) {
-    const alertDiv = document.createElement('div');
-    alertDiv.className = `alert ${alertClass} fixed-top d-flex align-items-center justify-content-center`;
-    alertDiv.textContent = message;
-    alertDiv.style.fontSize = '20px';
-
-    document.body.appendChild(alertDiv);
-
+  scrollToNewProduct(productId: number): void {
     setTimeout(() => {
-      alertDiv.remove();
-    }, 3000); // Tiempo extendido para que el usuario pueda leer el mensaje
+      const productoElement = document.getElementById(`producto-${productId}`);
+      if (productoElement) {
+        productoElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100); // Ajustar el tiempo si es necesario
   }
 
-  preventNegative(event: KeyboardEvent): void {
-    if (event.key === '-' || event.key === '+' || event.key === 'e') {
-      event.preventDefault();
-    }
+  showAlert(message: string, type: string): void {
+    this.errorMessage = message;
+    setTimeout(() => {
+      this.errorMessage = null;
+    }, 5000); // Ocultar el mensaje después de 5 segundos
   }
-
   validateNumberInput(event: KeyboardEvent): void {
     const charCode = event.which ? event.which : event.keyCode;
     const charStr = String.fromCharCode(charCode);

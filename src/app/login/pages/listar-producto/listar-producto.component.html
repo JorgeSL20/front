@@ -50,7 +50,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let producto of productosPaginados">
+                <tr *ngFor="let producto of productosPaginados" [attr.id]="'producto-' + producto.id">
                   <td><img [src]="producto.url" alt="Imagen del producto" class="img-fluid img-thumbnail" style="max-width: 100px;"></td>
                   <td>{{ producto.producto }}</td>
                   <td>{{ producto.categoria }}</td>
@@ -72,7 +72,6 @@
                 </tr>
               </tbody>
             </table>
-            
           </div>
           <!-- Controles de paginación -->
           <nav aria-label="Page navigation">

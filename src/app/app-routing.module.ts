@@ -3,13 +3,18 @@ import { RouterModule, Routes } from '@angular/router';
 import { ServiciosComponent } from './login/interfaces/servicios/servicios.component';
 import { LoginComponent } from './login/pages/login/login.component';
 import { NotFoundComponent } from './login/interfaces/not-found/not-found.component';
-import { CrearCuentaComponent } from './login/pages/crear-cuenta/crear-cuenta.component';
+import { CrearCuentaComponent } from './login/pages/crear-cuenta/crear-cuenta.component'
+import { RecuperarPasswordComponent } from './login/pages/recuperar-password/recuperar-password.component';
 import { RoleGuard } from './login/guards/role.guard';
 
 const routes: Routes = [
   {
     path: '',
     component: ServiciosComponent
+  },
+  {
+    path: 'recuperar-password',
+    component: RecuperarPasswordComponent
   },
   {
     path: 'login',

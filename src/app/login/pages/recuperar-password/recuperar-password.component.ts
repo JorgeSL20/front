@@ -188,7 +188,7 @@ export class RecuperarPasswordComponent {
       }
       this.loginService.cambiarPassword(newPasword, this.myForm.controls['email'].value).subscribe(data => {
         console.log(data)
-        this.router.navigate(['/user/login'])
+        this.router.navigate(['/login'])
         this.showAlert('Cambio de contraseña exitoso', 'alert-success');
       })
     })

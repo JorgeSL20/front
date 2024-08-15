@@ -82,7 +82,6 @@ export class CrearProductoComponent implements OnInit {
     }
   }
   
-
   validatePrice(): void {
     const priceValue = this.myForm.get('precio')?.value;
     if (priceValue < 0) {
@@ -109,8 +108,8 @@ export class CrearProductoComponent implements OnInit {
       this.productoService.crearProducto(formData).subscribe(
         response => {
           console.log(response);
-          this.router.navigate(['/admin/listar-producto']);
           this.showAlert('Producto creado con éxito', 'alert-success');
+          this.router.navigate(['/admin/listar-producto'], { queryParams: { nuevoProductoId: response.id } });
         },
         error => {
           console.error(error);

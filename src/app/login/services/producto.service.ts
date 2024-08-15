@@ -11,8 +11,8 @@ export class ProductoService {
 
   constructor(private http: HttpClient) { }
 
-  obtenerProductos(): Observable<Producto[]> {
-    return this.http.get<Producto[]>(this.url);
+  obtenerProductos(order: 'asc' | 'desc' = 'desc'): Observable<Producto[]> {
+    return this.http.get<Producto[]>(`${this.url}?_sort=fecha&_order=${order}`);
   }
 
   obtenerProductoPorId(id: number): Observable<Producto> {
@@ -30,6 +30,4 @@ export class ProductoService {
   eliminarProducto(id: number): Observable<void> {
     return this.http.delete<void>(`${this.url}/${id}`);
   }
-
-  
 }
