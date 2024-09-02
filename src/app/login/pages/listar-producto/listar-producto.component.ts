@@ -40,7 +40,7 @@ export class ListarProductosComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {
     this.editarForm = this.formBuilder.group({
-      file: ['', Validators.required],
+      file: [''],
       producto: ['', Validators.required],
       categoria: ['', Validators.required],
       marca: ['', Validators.required],
@@ -197,7 +197,7 @@ export class ListarProductosComponent implements OnInit {
     const priceValue = this.editarForm.get('precioMen')?.value;
     if (priceValue < 0) {
       this.isPriceValid = false;
-      this.showAlert('El precio no puede ser negativo.', 'alert-danger');
+      this.showAlert('El precio por menudeo no puede ser negativo.', 'alert-danger');
     } else {
       this.isPriceValid = true;
     }
@@ -207,17 +207,17 @@ export class ListarProductosComponent implements OnInit {
     const priceValue = this.editarForm.get('precioMay')?.value;
     if (priceValue < 0) {
       this.isPriceValid = false;
-      this.showAlert('El precio no puede ser negativo.', 'alert-danger');
+      this.showAlert('El precio por mayoreo no puede ser negativo.', 'alert-danger');
     } else {
       this.isPriceValid = true;
     }
   }
 
   validateCantidad(): void {
-    const priceValue = this.editarForm.get('precioMay')?.value;
+    const priceValue = this.editarForm.get('cantidadMay')?.value;
     if (priceValue < 0) {
       this.isPriceValid = false;
-      this.showAlert('El precio no puede ser negativo.', 'alert-danger');
+      this.showAlert('La cantidad no puede ser negativo.', 'alert-danger');
     } else {
       this.isPriceValid = true;
     }
