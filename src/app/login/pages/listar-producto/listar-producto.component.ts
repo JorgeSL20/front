@@ -235,43 +235,47 @@ export class ListarProductosComponent implements OnInit {
 
   guardarProducto(): void {
     if (this.editarForm.valid && this.isImageValid && this.isPriceValid) {
-      const formData = new FormData();
-      formData.append('producto', this.editarForm.get('producto')?.value);
-      formData.append('categoria', this.editarForm.get('categoria')?.value);
-      formData.append('marca', this.editarForm.get('marca')?.value);
-      formData.append('descripcion', this.editarForm.get('descripcion')?.value);
-      formData.append('cantidadMay', this.editarForm.get('cantidadMay')?.value);
-      formData.append('precioMen', this.editarForm.get('precioMen')?.value);
-      formData.append('precioMay', this.editarForm.get('precioMay')?.value);
-      formData.append('existencias', this.editarForm.get('existencias')?.value);
-  
-      if (this.selectedFile) {
-        formData.append('file', this.selectedFile);
-      }
-  
-      this.productoService.crearProducto(formData).subscribe(
-        (nuevoProducto: Producto) => {
-          console.log('Producto creado correctamente');
-          this.obtenerProductos(); // Recargar productos para actualizar la lista
-          this.scrollToNewProduct(nuevoProducto.id); // Desplazar al nuevo producto
-          this.editarForm.reset();
-          this.selectedFile = null;
-          this.isImageValid = true;
-          const modalElement = document.getElementById('editarProductoModal');
-          if (modalElement) {
-            const modal = new (window as any).bootstrap.Modal(modalElement);
-            modal.hide();
-          }
-        },
-        (error) => {
-          console.error('Error al crear producto:', error);
-          this.showAlert('Error al crear producto', 'alert-danger');
+      if (this.productoSeleccionado) {
+        const formData = new FormData();
+        formData.append('producto', this.editarForm.get('producto')?.value);
+        formData.append('categoria', this.editarForm.get('categoria')?.value);
+        formData.append('marca', this.editarForm.get('marca')?.value);
+        formData.append('descripcion', this.editarForm.get('descripcion')?.value);
+        formData.append('cantidadMay', this.editarForm.get('cantidadMay')?.value);
+        formData.append('precioMen', this.editarForm.get('precioMen')?.value);
+        formData.append('precioMay', this.editarForm.get('precioMay')?.value);
+        formData.append('existencias', this.editarForm.get('existencias')?.value);
+    
+        if (this.selectedFile) {
+          formData.append('file', this.selectedFile);
         }
-      );
+    
+        this.productoService.actualizarProducto(this.productoSeleccionado.id, formData).subscribe(
+          () => {
+            console.log('Producto actualizado correctamente');
+            this.obtenerProductos(); // Recargar productos para actualizar la lista
+            this.editarForm.reset();
+            this.selectedFile = null;
+            this.isImageValid = true;
+            const modalElement = document.getElementById('editarProductoModal');
+            if (modalElement) {
+              const modal = new (window as any).bootstrap.Modal(modalElement);
+              modal.hide();
+            }
+          },
+          (error) => {
+            console.error('Error al actualizar producto:', error);
+            this.showAlert('Error al actualizar producto', 'alert-danger');
+          }
+        );
+      } else {
+        this.showAlert('No se ha seleccionado un producto para editar.', 'alert-danger');
+      }
     } else {
       this.showAlert('Por favor, corrija los errores en el formulario.', 'alert-danger');
     }
   }
+  
 
   scrollToNewProduct(productId: number): void {
     setTimeout(() => {
