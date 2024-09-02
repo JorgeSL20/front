@@ -11,7 +11,7 @@ export class CarritoComponent implements OnInit {
   items: any[] = [];
   total: number = 0;
 
-  constructor(private carritoService: CarritoService, private router: Router) { }
+  constructor(private carritoService: CarritoService, private router: Router) {}
 
   ngOnInit(): void {
     this.cargarCarrito();
@@ -20,23 +20,26 @@ export class CarritoComponent implements OnInit {
   cargarCarrito(): void {
     this.carritoService.obtenerItemsDelCarrito().subscribe(
       (items: any[]) => {
-        this.items = items;
+        this.items = items.map(item => {
+          item.precioAplicado = item.cantidad > item.cantidadMay ? item.precioMay : item.precioMen;
+          return item;
+        });
         this.calcularTotal();
       },
-      (error) => {
+      error => {
         console.error('Error al obtener ítems del carrito:', error);
       }
     );
   }
 
   calcularTotal(): void {
-    this.total = this.items.reduce((sum, item) => sum + (item.productoPrecio * item.cantidad), 0);
+    this.total = this.items.reduce((sum, item) => sum + (item.precioAplicado * item.cantidad), 0);
   }
 
   eliminarItem(itemId: number): void {
     this.carritoService.eliminarItem(itemId).subscribe(
       response => {
-        this.cargarCarrito(); // Recargar el carrito después de eliminar un ítem
+        this.cargarCarrito();
         this.showAlert('Producto eliminado del carrito', 'alert-success');
       },
       error => {
@@ -48,7 +51,7 @@ export class CarritoComponent implements OnInit {
   incrementarCantidad(itemId: number, cantidadActual: number): void {
     this.carritoService.actualizarCantidad(itemId, cantidadActual + 1).subscribe(
       response => {
-        this.cargarCarrito(); // Recargar el carrito después de actualizar la cantidad
+        this.cargarCarrito();
         this.showAlert('Cantidad incrementada', 'alert-success');
       },
       error => {
@@ -61,7 +64,7 @@ export class CarritoComponent implements OnInit {
     if (cantidadActual > 1) {
       this.carritoService.actualizarCantidad(itemId, cantidadActual - 1).subscribe(
         response => {
-          this.cargarCarrito(); // Recargar el carrito después de actualizar la cantidad
+          this.cargarCarrito();
           this.showAlert('Cantidad decrementada', 'alert-success');
         },
         error => {

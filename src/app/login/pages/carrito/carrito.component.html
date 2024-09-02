@@ -44,13 +44,13 @@
       <tr *ngFor="let item of items">
         <td><img [src]="item.productoImagen" alt="{{ item.productoNombre }}" class="img-thumbnail product-image"></td>
         <td>{{ item.productoNombre }}</td>
-        <td>${{ item.productoPrecio | number:'1.2-2' }}</td>
+        <td>${{ item.precioAplicado | number:'1.2-2' }}</td>
         <td>
           <button (click)="decrementarCantidad(item.id, item.cantidad)" class="btn btn-secondary">-</button>
           {{ item.cantidad }}
           <button (click)="incrementarCantidad(item.id, item.cantidad)" class="btn btn-secondary">+</button>
         </td>
-        <td>${{ item.productoPrecio * item.cantidad | number:'1.2-2' }}</td>
+        <td>${{ item.precioAplicado * item.cantidad | number:'1.2-2' }}</td>
         <td><button (click)="eliminarItem(item.id)" class="btn btn-danger">Eliminar</button></td>
       </tr>
     </tbody>
