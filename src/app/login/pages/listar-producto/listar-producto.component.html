@@ -43,7 +43,9 @@
                   <th>Categoría</th>
                   <th>Marca</th>
                   <th>Descripción</th>
-                  <th>Precio</th>
+                  <th>Cantidad para mayoreo</th>
+                  <th>Precio Menudeo</th>
+                  <th>Precio Mayoreo</th>
                   <th>Existencias</th>
                   <th>Editar</th>
                   <th>Eliminar</th>
@@ -56,7 +58,9 @@
                   <td>{{ producto.categoria }}</td>
                   <td>{{ producto.marca }}</td>
                   <td>{{ producto.descripcion }}</td>
+                  <td>{{ producto.cantidadMay | currency }}</td>
                   <td>{{ producto.precioMen | currency }}</td>
+                  <td>{{ producto.precioMay | currency }}</td>
                   <td>
                     <div class="d-flex flex-column">
                       <input type="number" [(ngModel)]="producto.existencias" class="form-control mb-2" (keypress)="validateNumberInput($event)">
