@@ -253,6 +253,7 @@ export class ListarProductosComponent implements OnInit {
         this.productoService.actualizarProducto(this.productoSeleccionado.id, formData).subscribe(
           () => {
             console.log('Producto actualizado correctamente');
+            this.showAlert('Producto actualizado correctamente.', 'alert-success');
             this.obtenerProductos(); // Recargar productos para actualizar la lista
             this.editarForm.reset();
             this.selectedFile = null;
