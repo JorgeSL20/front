@@ -141,7 +141,7 @@ export class ListarProductosComponent implements OnInit {
   toggleEditForm(producto: Producto | null): void {
     if (producto) {
       this.editarForm.patchValue({
-        producto: producto.producto,
+        producto:  producto.producto,
         categoria: producto.categoria,
         marca: producto.marca,
         descripcion: producto.descripcion,
