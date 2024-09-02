@@ -34,7 +34,7 @@ export class CarritoService {
             cantidad,
             userId,
             productoNombre: producto.producto,
-            precio: producto.precio,
+            precio: producto.precioMen,
             url: producto.url
           }, { headers: this.getAuthHeaders() });
         } else {
@@ -67,7 +67,7 @@ export class CarritoService {
                   ...item,
                   productoNombre: producto?.producto || 'Desconocido',
                   productoImagen: producto?.url || 'default-image-url',
-                  productoPrecio: producto?.precio || 0
+                  productoPrecio: producto?.precioMen || 0
                 };
               });
               return of(itemsConDetalles);

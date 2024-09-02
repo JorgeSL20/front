@@ -142,7 +142,7 @@
       <img [src]="producto.url" class="card-img-top" alt="Imagen del producto">
       <div class="card-body">
         <h5 class="card-title">{{ producto.producto }}</h5>
-        <p class="card-text">{{ producto.precio | currency }}</p>
+        <p class="card-text">{{ producto.precioMen | currency }}</p>
         <p class="card-text">Marca: {{ producto.marca }}</p>
         <p class="card-text">Categoría: {{ producto.categoria }}</p>
         <p class="card-text" *ngIf="producto.existencias === 0" class="out-of-stock">Agotado</p>

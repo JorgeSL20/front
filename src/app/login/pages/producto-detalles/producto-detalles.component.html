@@ -114,7 +114,7 @@
   <div class="modal-body">
     <img [src]="producto.url" alt="Imagen del producto" class="modal-img">
     <p><strong>Descripción:</strong> {{ producto.descripcion }}</p>
-    <p><strong>Precio:</strong> {{ producto.precio | currency }}</p>
+    <p><strong>Precio:</strong> {{ producto.precioMen | currency }}</p>
     <p><strong>Marca:</strong> {{ producto.marca }}</p>
     <p><strong>Categoría:</strong> {{ producto.categoria }}</p>
     <p *ngIf="producto.existencias === 0" class="out-of-stock">Agotado</p>
