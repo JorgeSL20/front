@@ -102,7 +102,9 @@ export class CrearProductoComponent implements OnInit {
       formData.append('categoria', this.myForm.get('categoria')?.value);
       formData.append('marca', this.myForm.get('marca')?.value);
       formData.append('descripcion', this.myForm.get('descripcion')?.value);
-      formData.append('precio', this.myForm.get('precio')?.value);
+      formData.append('cantidadMay', this.myForm.get('cantidadMay')?.value);
+      formData.append('precioMen', this.myForm.get('precioMen')?.value);
+      formData.append('precioMay', this.myForm.get('precioMay')?.value);
       formData.append('existencias', this.myForm.get('existencias')?.value);
   
       console.log('FormData:', formData); // Verificar datos
