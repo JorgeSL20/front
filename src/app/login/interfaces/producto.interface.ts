@@ -7,7 +7,9 @@ export interface Producto {
   categoria: string;
   marca: string;
   descripcion: string;
-  precio: number;
+  cantidadMay: number;
+  precioMen: number;
+  precioMay: number;
   existencias: number;
   fechaCreacion?: string; // Opcional o asegura que tenga un valor predeterminado en todos los casos
 }

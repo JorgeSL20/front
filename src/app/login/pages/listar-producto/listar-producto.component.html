@@ -56,7 +56,7 @@
                   <td>{{ producto.categoria }}</td>
                   <td>{{ producto.marca }}</td>
                   <td>{{ producto.descripcion }}</td>
-                  <td>{{ producto.precio | currency }}</td>
+                  <td>{{ producto.precioMen | currency }}</td>
                   <td>
                     <div class="d-flex flex-column">
                       <input type="number" [(ngModel)]="producto.existencias" class="form-control mb-2" (keypress)="validateNumberInput($event)">
@@ -127,9 +127,19 @@
             <textarea formControlName="descripcion" class="form-control" id="editarDescripcion" rows="3" required></textarea>
           </div>
           <div class="mb-3">
-            <label for="editarPrecio" class="form-label">Precio:</label>
-            <input formControlName="precio" type="number" class="form-control" id="editarPrecio" min="0" step="any" required (input)="validatePrice()">
-            <div *ngIf="!isPriceValid" class="error-message mt-2">El precio no puede ser negativo.</div>
+            <label for="editarPrecio" class="form-label">Cantidad por mayoreo</label>
+            <input formControlName="cantidadMay" type="number" class="form-control" id="editarPrecio" min="0" step="any" required (input)="validateCantidad()">
+            <div *ngIf="!isPriceValid" class="error-message mt-2">El mayoreo no puede ser negativo.</div>
+          </div>
+          <div class="mb-3">
+            <label for="editarPrecio" class="form-label">Precio Menudeo:</label>
+            <input formControlName="precioMen" type="number" class="form-control" id="editarPrecioMen" min="0" step="any" required (input)="validatePriceMen()">
+            <div *ngIf="!isPriceValid" class="error-message mt-2">El precio de menudeo no puede ser negativo.</div>
+          </div>
+          <div class="mb-3">
+            <label for="editarPrecio" class="form-label">Precio Mayoreo:</label>
+            <input formControlName="precioMay" type="number" class="form-control" id="editarPrecioMay" min="0" step="any" required (input)="validatePriceMay()">
+            <div *ngIf="!isPriceValid" class="error-message mt-2">El precio de mayoreo no puede ser negativo.</div>
           </div>
           <div class="mb-3">
             <label for="editarExistencias" class="form-label">Existencias:</label>

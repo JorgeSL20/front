@@ -64,15 +64,37 @@
                   La descripción es obligatoria.
                 </div>
               </div>
+
+              <div class="mb-3">
+                <label for="cantidadMay" class="form-label">Cantidad para Mayoreo</label>
+                <input formControlName="cantidadMay" type="text" class="form-control" id="cantidadMay" (keypress)="validateNumberInput($event)">
+                <div *ngIf="myForm.get('cantidadMay')?.touched && myForm.get('cantidadMay')?.hasError('required')" class="text-danger">
+                  La cantidad es obligatorio.
+                </div>
+                <div *ngIf="myForm.get('cantidadMay')?.touched && myForm.get('cantidadMay')?.hasError('pattern')" class="text-danger">
+                  La cantidad debe ser un número válido.
+                </div>
+              </div>
               
               <div class="mb-3">
-                <label for="precio" class="form-label">Precio:</label>
-                <input formControlName="precio" type="text" class="form-control" id="precio" (keypress)="validateNumberInput($event)">
-                <div *ngIf="myForm.get('precio')?.touched && myForm.get('precio')?.hasError('required')" class="text-danger">
-                  El precio es obligatorio.
+                <label for="precioMen" class="form-label">Precio Menudeo:</label>
+                <input formControlName="precioMen" type="text" class="form-control" id="precioMen" (keypress)="validateNumberInput($event)">
+                <div *ngIf="myForm.get('precioMen')?.touched && myForm.get('precioMen')?.hasError('required')" class="text-danger">
+                  El precio por menudeo es obligatorio.
                 </div>
-                <div *ngIf="myForm.get('precio')?.touched && myForm.get('precio')?.hasError('pattern')" class="text-danger">
-                  El precio debe ser un número válido.
+                <div *ngIf="myForm.get('precioMen')?.touched && myForm.get('precioMen')?.hasError('pattern')" class="text-danger">
+                  El precio por menudeo debe ser un número válido.
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="precioMay" class="form-label">Precio Mayoreo:</label>
+                <input formControlName="precioMay" type="text" class="form-control" id="precioMay" (keypress)="validateNumberInput($event)">
+                <div *ngIf="myForm.get('precioMay')?.touched && myForm.get('precioMay')?.hasError('required')" class="text-danger">
+                  El precio por mayoreo es obligatorio.
+                </div>
+                <div *ngIf="myForm.get('precioMay')?.touched && myForm.get('precioMay')?.hasError('pattern')" class="text-danger">
+                  El precio mayoreo debe ser un número válido.
                 </div>
               </div>
               

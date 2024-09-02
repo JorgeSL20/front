@@ -40,12 +40,14 @@ export class ListarProductosComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {
     this.editarForm = this.formBuilder.group({
-      file: [''],
+      file: ['', Validators.required],
       producto: ['', Validators.required],
       categoria: ['', Validators.required],
       marca: ['', Validators.required],
       descripcion: ['', Validators.required],
-      precio: ['', [Validators.required, Validators.pattern("^[0-9]+(\.[0-9]{1,2})?$")]],
+      cantidadMay: ['', [Validators.required, Validators.pattern("^[0-9]+(\.[0-9]{1,2})?$")]],
+      precioMen: ['', [Validators.required, Validators.pattern("^[0-9]+(\.[0-9]{1,2})?$")]],
+      precioMay: ['', [Validators.required, Validators.pattern("^[0-9]+(\.[0-9]{1,2})?$")]],
       existencias: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
     });
   }
@@ -143,7 +145,9 @@ export class ListarProductosComponent implements OnInit {
         categoria: producto.categoria,
         marca: producto.marca,
         descripcion: producto.descripcion,
-        precio: producto.precio,
+        cantidadMay: producto.cantidadMay,
+        precioMen: producto.precioMen,
+        precioMay: producto.precioMay,
         existencias: producto.existencias,
       });
       this.productoSeleccionado = producto;
@@ -189,8 +193,28 @@ export class ListarProductosComponent implements OnInit {
     }
   }
 
-  validatePrice(): void {
-    const priceValue = this.editarForm.get('precio')?.value;
+  validatePriceMen(): void {
+    const priceValue = this.editarForm.get('precioMen')?.value;
+    if (priceValue < 0) {
+      this.isPriceValid = false;
+      this.showAlert('El precio no puede ser negativo.', 'alert-danger');
+    } else {
+      this.isPriceValid = true;
+    }
+  }
+
+  validatePriceMay(): void {
+    const priceValue = this.editarForm.get('precioMay')?.value;
+    if (priceValue < 0) {
+      this.isPriceValid = false;
+      this.showAlert('El precio no puede ser negativo.', 'alert-danger');
+    } else {
+      this.isPriceValid = true;
+    }
+  }
+
+  validateCantidad(): void {
+    const priceValue = this.editarForm.get('precioMay')?.value;
     if (priceValue < 0) {
       this.isPriceValid = false;
       this.showAlert('El precio no puede ser negativo.', 'alert-danger');
@@ -216,7 +240,9 @@ export class ListarProductosComponent implements OnInit {
       formData.append('categoria', this.editarForm.get('categoria')?.value);
       formData.append('marca', this.editarForm.get('marca')?.value);
       formData.append('descripcion', this.editarForm.get('descripcion')?.value);
-      formData.append('precio', this.editarForm.get('precio')?.value);
+      formData.append('cantidadMay', this.editarForm.get('cantidadMay')?.value);
+      formData.append('precioMen', this.editarForm.get('precioMen')?.value);
+      formData.append('precioMay', this.editarForm.get('precioMay')?.value);
       formData.append('existencias', this.editarForm.get('existencias')?.value);
   
       if (this.selectedFile) {

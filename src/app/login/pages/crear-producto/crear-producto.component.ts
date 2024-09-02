@@ -31,7 +31,9 @@ export class CrearProductoComponent implements OnInit {
       categoria: ['', Validators.required],
       marca: ['', Validators.required],
       descripcion: ['', Validators.required],
-      precio: ['', [Validators.required, Validators.pattern("^[0-9]+(\.[0-9]{1,2})?$")]],
+      cantidadMay: ['', [Validators.required, Validators.pattern("^[0-9]+(\.[0-9]{1,2})?$")]],
+      precioMen: ['', [Validators.required, Validators.pattern("^[0-9]+(\.[0-9]{1,2})?$")]],
+      precioMay: ['', [Validators.required, Validators.pattern("^[0-9]+(\.[0-9]{1,2})?$")]],
       existencias: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
     });
   }
