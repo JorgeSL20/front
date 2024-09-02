@@ -22,7 +22,7 @@ export class ServiciospublicoComponent implements OnInit {
 
   // Paginación
   paginaActual: number = 1;
-  productosPorPagina: number = 10;
+  productosPorPagina: number = 16;
   productosPaginados: Producto[] = [];
   totalPaginas: number = 0;  // Nueva propiedad para almacenar el número total de páginas
 

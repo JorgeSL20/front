@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
   templateUrl: './listar-producto.component.html',
   styleUrls: ['./listar-producto.component.css']
 })
+
 export class ListarProductosComponent implements OnInit {
   productos: Producto[] = [];
   categorias: any[] = [];
