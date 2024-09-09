@@ -24,9 +24,10 @@ export class CarritoComponent implements OnInit {
           const precioMen = item.precioMen ?? 0; // Valor predeterminado de 0 si es nulo o indefinido
           const precioMay = item.precioMay ?? 0; // Valor predeterminado de 0 si es nulo o indefinido
           const cantidadMay = item.cantidadMay ?? 0; // Valor predeterminado de 0 si es nulo o indefinido
-          
-          // Aplicar el precio dependiendo de la cantidad
-          item.precioAplicado = item.cantidad > cantidadMay ? precioMay : precioMen;
+  
+          // Asigna precioMen por defecto, y si la cantidad supera cantidadMay, asigna precioMay
+          item.precioAplicado = item.cantidad >= cantidadMay ? precioMay : precioMen;
+  
           return item;
         });
         this.calcularTotal();
