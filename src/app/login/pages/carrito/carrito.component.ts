@@ -21,7 +21,12 @@ export class CarritoComponent implements OnInit {
     this.carritoService.obtenerItemsDelCarrito().subscribe(
       (items: any[]) => {
         this.items = items.map(item => {
-          item.precioAplicado = item.cantidad > item.cantidadMay ? item.precioMay : item.precioMen;
+          const precioMen = item.precioMen ?? 0; // Valor predeterminado de 0 si es nulo o indefinido
+          const precioMay = item.precioMay ?? 0; // Valor predeterminado de 0 si es nulo o indefinido
+          const cantidadMay = item.cantidadMay ?? 0; // Valor predeterminado de 0 si es nulo o indefinido
+          
+          // Aplicar el precio dependiendo de la cantidad
+          item.precioAplicado = item.cantidad > cantidadMay ? precioMay : precioMen;
           return item;
         });
         this.calcularTotal();
