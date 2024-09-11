@@ -34,7 +34,9 @@ export class CarritoService {
             cantidad,
             userId,
             productoNombre: producto.producto,
-            precio: producto.precioMen,
+            productoPrecioMen: producto.precioMen, // Precio de menudeo
+            productoPrecioMay: producto.precioMay, // Precio de mayoreo
+            productoCantidadMay: producto.cantidadMay,
             url: producto.url
           }, { headers: this.getAuthHeaders() });
         } else {
@@ -53,21 +55,23 @@ export class CarritoService {
             console.error('Formato de datos incorrecto:', items);
             return of([]);
           }
-
+  
           return this.productoService.obtenerProductos().pipe(
             switchMap(productos => {
               if (!Array.isArray(productos)) {
                 console.error('Formato de datos incorrecto:', productos);
                 return of([]);
               }
-
+  
               const itemsConDetalles = items.map(item => {
                 const producto = productos.find(p => p.id === item.productoId);
                 return {
                   ...item,
                   productoNombre: producto?.producto || 'Desconocido',
                   productoImagen: producto?.url || 'default-image-url',
-                  productoPrecio: producto?.precioMen || 0
+                  productoPrecioMen: producto?.precioMen || 0, // PrecioMen
+                  productoPrecioMay: producto?.precioMay || 0,  // PrecioMay
+                  productoCantidadMay: producto?.cantidadMay || 0,
                 };
               });
               return of(itemsConDetalles);

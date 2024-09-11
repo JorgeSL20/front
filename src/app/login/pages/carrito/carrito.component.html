@@ -45,15 +45,26 @@
         <td><img [src]="item.productoImagen" alt="{{ item.productoNombre }}" class="img-thumbnail product-image"></td>
         <td>{{ item.productoNombre }}</td>
 
-        <!-- Muestra el precio aplicado: precioMen si la cantidad es menor a cantidadMay, de lo contrario, precioMay -->
-        <td>${{ item.precioAplicado | number:'1.2-2' }}</td>
+        <!-- Muestra el precio aplicado: siempre será precioMen ahora -->
+        <td>
+          ${{ item.precioAplicado | number:'1.2-2' }}
+          <div *ngIf="item.cantidad >= item.productoCantidadMay; else noDescuento" class="text-success">
+            Descuento aplicado
+          </div>
+          <ng-template #noDescuento>
+            <div class="text-muted">
+              A partir de {{ item.productoCantidadMay }} artículos se aplicará un descuento.
+            </div>
+          </ng-template>
+        </td>
         
         <!-- Controles para incrementar/decrementar la cantidad -->
         <td>
           <button (click)="decrementarCantidad(item.id, item.cantidad)" class="btn btn-secondary">-</button>
-          {{ item.cantidad }}
+          <input type="number" [value]="item.cantidad" (change)="actualizarCantidad(item.id, $event)" class="form-control d-inline-block text-center" style="width: 60px;" min="1" />
           <button (click)="incrementarCantidad(item.id, item.cantidad)" class="btn btn-secondary">+</button>
         </td>
+        
 
         <!-- Muestra el total para cada producto (precioAplicado * cantidad) -->
         <td>${{ item.precioAplicado * item.cantidad | number:'1.2-2' }}</td>

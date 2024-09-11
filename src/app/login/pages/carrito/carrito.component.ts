@@ -21,12 +21,18 @@ export class CarritoComponent implements OnInit {
     this.carritoService.obtenerItemsDelCarrito().subscribe(
       (items: any[]) => {
         this.items = items.map(item => {
-          const precioMen = item.precioMen ?? 0; // Valor predeterminado de 0 si es nulo o indefinido
-          const precioMay = item.precioMay ?? 0; // Valor predeterminado de 0 si es nulo o indefinido
-          const cantidadMay = item.cantidadMay ?? 0; // Valor predeterminado de 0 si es nulo o indefinido
-  
-          // Asigna precioMen por defecto, y si la cantidad supera cantidadMay, asigna precioMay
-          item.precioAplicado = item.cantidad >= cantidadMay ? precioMay : precioMen;
+          console.log(`Producto: ${item.productoNombre}, PrecioMen: ${item.productoPrecioMen}, PrecioMay: ${item.productoPrecioMay}, cantidadMay: ${item.productoCantidadMay}`);
+          
+          const precioMen = item.productoPrecioMen || 0;
+          const precioMay = item.productoPrecioMay || 0;
+          const cantidadMay = item.productoCantidadMay || 0;
+          
+          // Verificar si la cantidad comprada es igual o mayor a la cantidad para aplicar precioMay
+          if (item.cantidad >= cantidadMay) {
+            item.precioAplicado = precioMay;
+          } else {
+            item.precioAplicado = precioMen;
+          }
   
           return item;
         });
@@ -79,6 +85,21 @@ export class CarritoComponent implements OnInit {
       );
     }
   }
+
+  actualizarCantidad(itemId: number, event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    const nuevaCantidad = Math.max(1, +inputElement.value); // Asegura que la cantidad sea al menos 1
+    this.carritoService.actualizarCantidad(itemId, nuevaCantidad).subscribe(
+      response => {
+        this.cargarCarrito(); // Vuelve a cargar el carrito para reflejar los cambios
+        this.showAlert('Cantidad actualizada', 'alert-success');
+      },
+      error => {
+        console.error('Error al actualizar la cantidad:', error);
+      }
+    );
+  }
+  
 
   showAlert(message: string, alertClass: string) {
     const alertDiv = document.createElement('div');
