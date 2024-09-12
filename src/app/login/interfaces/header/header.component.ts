@@ -1,34 +1,37 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { LoginService } from '../../services/login.service';
+import { CarritoService } from '../../services/carrito.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
 
   menuVariable: boolean = false;
-  isLoggedIn: boolean = false; // Variable para almacenar el estado de autenticación
+  isLoggedIn: boolean = false;
+  totalItemsCarrito: number = 0;
+  intervalId: any;
+  carritoSubscription: Subscription | null = null;  // Inicializar en null
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private loginService: LoginService // Inyecta el servicio LoginService
+    private loginService: LoginService,
+    private carritoService: CarritoService
   ) { }
 
   showAlert(message: string, alertClass: string) {
-    // Crea un div para el mensaje
     const alertDiv = document.createElement('div');
     alertDiv.className = `alert ${alertClass} fixed-top d-flex align-items-center justify-content-center`;
     alertDiv.textContent = message;
-    alertDiv.style.fontSize = '20px'; // Cambia el tamaño del texto
+    alertDiv.style.fontSize = '20px'; 
 
-    // Agrega el mensaje al cuerpo del documento
     document.body.appendChild(alertDiv);
 
-    // Elimina el mensaje después de unos segundos
     setTimeout(() => {
       alertDiv.remove();
     }, 2000);
@@ -46,6 +49,31 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.checkLoggedIn();
+    this.actualizarCantidadCarritoCadaSegundo();
+  }
+
+  ngOnDestroy() {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+    if (this.carritoSubscription) {
+      this.carritoSubscription.unsubscribe();  // Desuscribirse
+    }
+  }
+
+  actualizarCantidadCarritoCadaSegundo() {
+    this.intervalId = setInterval(() => {
+      this.obtenerCantidadCarrito();
+    }, 1000);
+  }
+
+  obtenerCantidadCarrito() {
+    if (this.carritoSubscription) {
+      this.carritoSubscription.unsubscribe(); // Desuscribirse antes de la nueva suscripción
+    }
+    this.carritoSubscription = this.carritoService.obtenerItemsDelCarrito().subscribe((items: any[]) => {
+      this.totalItemsCarrito = items.reduce((sum, item) => sum + item.cantidad, 0);
+    });
   }
 
   scrollToSection(sectionId: string): void {

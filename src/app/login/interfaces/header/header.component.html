@@ -60,6 +60,17 @@ header {
   text-align: center; /* Centrar el botón de cerrar sesión */
 }
 
+.badge {
+  position: relative;
+  top: -15px;
+  right: 10px;
+  padding: 5px 10px;
+  border-radius: 50%;
+  background-color: red;
+  color: white;
+}
+
+
 @media (max-width: 768px) {
   .menu {
     display: none;
@@ -147,6 +158,8 @@ header {
                 <li class="nav-item">
                   <a class="nav-link active" routerLink="/user/mi-carrito" routerLinkActive="active-link">
                     <mat-icon> shopping_cart</mat-icon>
+                     <!-- Mostrar el número de productos solo si hay productos en el carrito -->
+                  <span *ngIf="totalItemsCarrito > 0" class="badge bg-danger">{{ totalItemsCarrito }}</span>
                   </a>
                 </li>
 
