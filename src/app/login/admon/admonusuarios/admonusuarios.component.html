@@ -56,6 +56,20 @@
   .delete-button:hover {
     background-color: #ff0000;
   }
+
+  @media (max-width: 768px) {
+    .search-container {
+      position: relative;
+      top: auto;
+      right: auto;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    .user-table th, .user-table td {
+      padding: 8px;
+    }
+  }
 </style>
 
 <div class="search-container">
@@ -70,32 +84,35 @@
 
 <div class="user-table-container">
   <h2 style="text-align: center;">Datos de Usuarios</h2>
-  
-  <table class="user-table" *ngIf="filteredUsers.length > 0">
-    <thead>
-      <tr>
-        <th>Nombre</th>
-        <th>Apellido Paterno</th>
-        <th>Apellido Materno</th>
-        <th>Correo</th>
-        <th>Rol</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let user of filteredUsers">
-        <td>{{ user.name }}</td>
-        <td>{{ user.lastNameP }}</td>
-        <td>{{ user.lastNameM }}</td>
-        <td>{{ user.email }}</td>
-        <td>
-          <select [(ngModel)]="user.role" (change)="onRoleChange(user, $event)">
-            <option value="user">User</option>
-            <option value="admin">Admin</option>
-          </select>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+
+  <!-- Clase table-responsive añadida para hacer la tabla desplazable en pantallas pequeñas -->
+  <div class="table-responsive">
+    <table class="user-table" *ngIf="filteredUsers.length > 0">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Apellido Paterno</th>
+          <th>Apellido Materno</th>
+          <th>Correo</th>
+          <th>Rol</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of filteredUsers">
+          <td>{{ user.name }}</td>
+          <td>{{ user.lastNameP }}</td>
+          <td>{{ user.lastNameM }}</td>
+          <td>{{ user.email }}</td>
+          <td>
+            <select [(ngModel)]="user.role" (change)="onRoleChange(user, $event)">
+              <option value="user">User</option>
+              <option value="admin">Admin</option>
+            </select>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
   <div *ngIf="filteredUsers.length === 0 && searchTerm">
     <p>No se encontraron datos de usuarios.</p>
