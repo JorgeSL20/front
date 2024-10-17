@@ -1,35 +1,75 @@
 <style>
-.carrito-container {
-  margin: 20px;
-}
+  .carrito-container {
+    margin: 20px;
+  }
 
-.product-image {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-}
+  .product-image {
+    width: 100%;
+    max-width: 100px;
+    height: 100px;
+    object-fit: cover;
+  }
 
-.table {
-  width: 100%; /* Asegura que la tabla ocupe el ancho completo del contenedor */
-}
+  .table {
+    width: 100%;
+  }
 
-.total-container {
-  text-align: right;
-  margin-right: 20px; /* Ajusta este valor según sea necesario para la separación del borde */
-}
+  .total-container {
+    text-align: right;
+    margin-right: 20px;
+  }
 
-.empty-cart-message {
-  text-align: center;
-  font-size: 1.5rem; /* Ajusta el tamaño de la fuente como desees */
-  margin-top: 20px; /* Espacio superior para separar del contenido */
-}
+  .empty-cart-message {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-top: 20px;
+  }
 
- </style>
+  @media (max-width: 768px) {
+    .carrito-container {
+      margin: 10px;
+    }
+
+    .table th, .table td {
+      font-size: 0.9rem;
+    }
+
+    .total-container {
+      text-align: center;
+      margin: 10px 0;
+    }
+
+    .total-container h3 {
+      font-size: 1.2rem;
+    }
+
+    .product-image {
+      width: 80px;
+      height: 80px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .table th, .table td {
+      font-size: 0.8rem;
+    }
+
+    .product-image {
+      width: 60px;
+      height: 60px;
+    }
+
+    .total-container {
+      text-align: center;
+    }
+  }
+</style>
+
 <app-header></app-header>
 <br>
 <br>
 <div *ngIf="items.length > 0" class="carrito-container">
-  <table class="table table-bordered">
+  <table class="table table-bordered table-responsive-sm">
     <thead>
       <tr>
         <th>Imagen</th>
@@ -57,14 +97,13 @@
             </div>
           </ng-template>
         </td>
-        
+
         <!-- Controles para incrementar/decrementar la cantidad -->
-        <td>
-          <button (click)="decrementarCantidad(item.id, item.cantidad)" class="btn btn-secondary">-</button>
-          <input type="number" [value]="item.cantidad" (change)="actualizarCantidad(item.id, $event)" class="form-control d-inline-block text-center" style="width: 60px;" min="1" />
-          <button (click)="incrementarCantidad(item.id, item.cantidad)" class="btn btn-secondary">+</button>
+        <td class="d-flex flex-column flex-sm-row justify-content-center align-items-center">
+          <button (click)="decrementarCantidad(item.id, item.cantidad)" class="btn btn-secondary mb-2 mb-sm-0 me-sm-2">-</button>
+          <input type="number" [value]="item.cantidad" (change)="actualizarCantidad(item.id, $event)" class="form-control text-center" style="width: 60px;" min="1" />
+          <button (click)="incrementarCantidad(item.id, item.cantidad)" class="btn btn-secondary mt-2 mt-sm-0 ms-sm-2">+</button>
         </td>
-        
 
         <!-- Muestra el total para cada producto (precioAplicado * cantidad) -->
         <td>${{ item.precioAplicado * item.cantidad | number:'1.2-2' }}</td>
