@@ -1,19 +1,18 @@
 // src/app/pages/pago/pago.component.ts
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { CarritoService } from '../../services/carrito.service';
 import { AuthService } from '../../services/auth.service';
-import { PagoService } from '../../services/pago.service';
-import { environment } from '../../../../environments/environment';
-import { loadScript } from '@paypal/paypal-js';
 import { Router } from '@angular/router';
 import { Observable, forkJoin } from 'rxjs';
+
+declare var paypal: any;
 
 @Component({
   selector: 'app-pago',
   templateUrl: './pago.component.html',
   styleUrls: ['./pago.component.css']
 })
-export class PagoComponent implements OnInit {
+export class PagoComponent implements OnInit, AfterViewInit {
   items: any[] = [];
   total: number = 0;
   userEmail: string | null = null;
@@ -21,7 +20,6 @@ export class PagoComponent implements OnInit {
   constructor(
     private carritoService: CarritoService,
     private authService: AuthService,
-    private pagoService: PagoService,
     private router: Router
   ) { }
 
@@ -32,7 +30,6 @@ export class PagoComponent implements OnInit {
         const precioMay = item.productoPrecioMay || 0;
         const cantidadMay = item.productoCantidadMay || 0;
 
-        // Verificar si la cantidad comprada es igual o mayor a la cantidad para aplicar el precio de mayoreo
         if (item.cantidad >= cantidadMay) {
           item.precioAplicado = precioMay;
         } else {
@@ -43,7 +40,6 @@ export class PagoComponent implements OnInit {
       });
 
       this.total = this.items.reduce((acc, item) => acc + (item.precioAplicado * item.cantidad), 0);
-      this.initializePayPalButton();
     });
 
     this.authService.getCurrentUserEmail().subscribe(email => {
@@ -51,117 +47,60 @@ export class PagoComponent implements OnInit {
     });
   }
 
-  createOrder = (data: any, actions: any) => {
-    return actions.order.create({
-      purchase_units: [{
-        amount: {
-          currency_code: 'MXN',
-          value: this.total.toFixed(2)
-        }
-      }],
-      application_context: {
-        shipping_preference: 'NO_SHIPPING'
-      }
-    }).then((orderId: string) => {
-      if (orderId) {
-        return orderId;
-      } else {
-        console.error('Invalid response format:', orderId);
-        throw new Error('Failed to create PayPal order');
-      }
-    }).catch((error: any) => {
-      console.error('Error creating PayPal order:', error);
-      throw new Error('Failed to create PayPal order');
-    });
-  };
+  ngAfterViewInit(): void {
+    this.renderPaypalButton();
+  }
 
-  onApprove = (data: any, actions: any) => {
-    return actions.order.capture().then((details: any) => {
-      const orderId = data.orderID;
-
-      if (orderId) {
-        this.pagoService.capturarPago(orderId).subscribe(
-          response => {
-            if (response.status === 200) {
-              this.showAlert('Pago procesado exitosamente', 'alert-success');
-              // Vaciar el carrito después de la compra
-              this.carritoService.vaciarCarrito().subscribe(() => {
-                this.actualizarExistencias().subscribe(() => {
-                  this.router.navigate(['user/gracias']);
-                }, (error: any) => {
-                  console.error('Error al actualizar las existencias:', error);
-                });
-              }, (error: any) => {
-                console.error('Error al vaciar el carrito:', error);
-              });
-            } else if (response.status === 409) {
-              this.showAlert('Pago procesado exitosamente', 'alert-success');
-              // También vaciar el carrito y actualizar las existencias
-              this.carritoService.vaciarCarrito().subscribe(() => {
-                this.actualizarExistencias().subscribe(() => {
-                  this.router.navigate(['user/gracias']);
-                }, (error: any) => {
-                  console.error('Error al actualizar las existencias:', error);
-                });
-              }, (error: any) => {
-                console.error('Error al vaciar el carrito:', error);
-              });
+  renderPaypalButton(): void {
+    paypal.Buttons({
+      style: {
+        color: 'blue',
+        shape: 'pill',
+        label: 'pay',
+        layout: 'vertical'
+      },
+      createOrder: (data: any, actions: any) => {
+        return actions.order.create({
+          purchase_units: [{
+            amount: {
+              value: this.total.toFixed(2), // Monto total en MXN
+              currency_code: 'MXN'
             }
-          },
-          (error: any) => {
-            console.error('Error capturing payment:', error);
-            this.showAlert('Error al capturar el pago. Por favor, intenta nuevamente', 'alert-danger');
-          }
-        );
-      } else {
-        console.error('Invalid order ID:', orderId);
-      }
-    }).catch((error: any) => {
-      console.error('Error during payment approval:', error);
-      this.showAlert('Error al aprobar el pago. Por favor, intenta nuevamente', 'alert-danger');
-    });
-  };
+          }]
+        });
+      },
+      onApprove: (data: any, actions: any) => {
+        return actions.order.capture().then((details: any) => {
+          // Lógica después de que el pago es capturado exitosamente
+          this.showAlert('Pago realizado con éxito.', 'alert-success');
 
-  initializePayPalButton(): void {
-    loadScript({
-      clientId: environment.paypalClientId,
-      currency: 'MXN'
-    }).then((paypal) => {
-      if (paypal && paypal.Buttons) {
-        paypal.Buttons({
-          createOrder: this.createOrder,
-          onApprove: this.onApprove,
-          onError: (err: any) => {
-            console.error('PayPal Button Error:', err);
-            this.showAlert('Error al cargar el botón de PayPal. Por favor, intenta nuevamente', 'alert-danger');
-          }
-        }).render('#paypal-button-container');
-      } else {
-        console.error('Failed to load PayPal script');
-        this.showAlert('Error al cargar el script de PayPal. Por favor, intenta nuevamente', 'alert-danger');
+          // Actualizar existencias en la base de datos
+          this.actualizarExistencias().subscribe(() => {
+            // Redirigir o limpiar el carrito después del pago
+            this.carritoService.vaciarCarrito().subscribe(() => {
+              this.router.navigate(['/user/mi-carrito']);
+            });
+          });
+        });
+      },
+      onError: (err: any) => {
+        this.showAlert('Ocurrió un error en el pago.', 'alert-danger');
       }
-    }).catch(err => {
-      console.error('Error loading PayPal script:', err);
-      this.showAlert('Error al cargar el script de PayPal. Por favor, intenta nuevamente', 'alert-danger');
-    });
+    }).render('#paypal-button-container'); // Renderizar el botón de PayPal en el div con id "paypal-button-container"
   }
 
   showAlert(message: string, alertClass: string) {
-    // Crea un div para el mensaje
     const alertDiv = document.createElement('div');
     alertDiv.className = `alert ${alertClass} fixed-top d-flex align-items-center justify-content-center`;
     alertDiv.textContent = message;
-    alertDiv.style.fontSize = '20px'; // Cambia el tamaño del texto
+    alertDiv.style.fontSize = '20px';
 
-    // Agrega el mensaje al cuerpo del documento
     document.body.appendChild(alertDiv);
 
-    // Elimina el mensaje después de unos segundos
     setTimeout(() => {
       alertDiv.remove();
     }, 2000);
   }
-
 
   actualizarExistencias(): Observable<any> {
     const updates = this.items.map(item => {

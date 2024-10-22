@@ -29,18 +29,14 @@
     text-align: right;
     margin-top: 20px;
   }
-  
-  #paypal-button-container {
-    margin-top: 20px;
-  }
-  
+
   .empty-cart-message {
     text-align: center;
     font-size: 1.5rem;
     margin-top: 20px;
   }
 </style>
-
+<!-- src/app/pages/pago/pago.component.html -->
 <app-header></app-header>
 <div class="pago-container">
   <h2>Resumen de la compra</h2>
@@ -78,6 +74,9 @@
   <button routerLink="/user/mi-carrito" class="btn btn-primary">Regresar</button>
   <div class="total-container">
     <h3>Total: ${{ total | number:'1.2-2' }}</h3>
-    <div id="paypal-button-container"></div>
   </div>
+
+  <!-- Contenedor para el botón de PayPal -->
+  <div id="paypal-button-container"></div>
 </div>
+
