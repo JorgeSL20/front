@@ -39,46 +39,45 @@
     font-size: 1.5rem;
     margin-top: 20px;
   }
-  </style>
-  
-  <app-header></app-header>
-  <div class="pago-container">
-    <h2>Resumen de la compra</h2>
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>Imagen</th>
-          <th>Nombre</th>
-          <th>Precio</th>
-          <th>Cantidad</th>
-          <th>Total</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of items">
-          <td><img [src]="item.productoImagen" alt="{{ item.productoNombre }}" class="img-thumbnail product-image"></td>
-          <td>{{ item.productoNombre }}</td>
-          <td>
-            ${{ item.precioAplicado | number:'1.2-2' }}
-            <div *ngIf="item.cantidad >= item.productoCantidadMay; else noDescuento" class="text-success">
-              Descuento aplicado
+</style>
+
+<app-header></app-header>
+<div class="pago-container">
+  <h2>Resumen de la compra</h2>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Imagen</th>
+        <th>Nombre</th>
+        <th>Precio</th>
+        <th>Cantidad</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of items">
+        <td><img [src]="item.productoImagen" alt="{{ item.productoNombre }}" class="img-thumbnail product-image"></td>
+        <td>{{ item.productoNombre }}</td>
+        <td>
+          ${{ item.precioAplicado | number:'1.2-2' }}
+          <div *ngIf="item.cantidad >= item.productoCantidadMay; else noDescuento" class="text-success">
+            Descuento aplicado
+          </div>
+          <ng-template #noDescuento>
+            <div class="text-muted">
+              A partir de {{ item.productoCantidadMay }} artículos se aplicará un descuento.
             </div>
-            <ng-template #noDescuento>
-              <div class="text-muted">
-                A partir de {{ item.productoCantidadMay }} artículos se aplicará un descuento.
-              </div>
-            </ng-template>
-          </td>
-          <td>{{ item.cantidad }}</td>
-          <td>${{ item.precioAplicado * item.cantidad | number:'1.2-2' }}</td>
-        </tr>
-      </tbody>
-      
-    </table>
-    <button routerLink="/user/mi-carrito" class="btn btn-primary">Regresar</button>
-    <div class="total-container">
-      <h3>Total: ${{ total | number:'1.2-2' }}</h3>
-      <div id="paypal-button-container"></div>
-    </div>
+          </ng-template>
+        </td>
+        <td>{{ item.cantidad }}</td>
+        <td>${{ item.precioAplicado * item.cantidad | number:'1.2-2' }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button routerLink="/user/mi-carrito" class="btn btn-primary">Regresar</button>
+  <div class="total-container">
+    <h3>Total: ${{ total | number:'1.2-2' }}</h3>
+    <div id="paypal-button-container"></div>
   </div>
-  
+</div>

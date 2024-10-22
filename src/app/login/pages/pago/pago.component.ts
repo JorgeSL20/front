@@ -1,3 +1,4 @@
+// src/app/pages/pago/pago.component.ts
 import { Component, OnInit } from '@angular/core';
 import { CarritoService } from '../../services/carrito.service';
 import { AuthService } from '../../services/auth.service';
@@ -30,26 +31,25 @@ export class PagoComponent implements OnInit {
         const precioMen = item.productoPrecioMen || 0;
         const precioMay = item.productoPrecioMay || 0;
         const cantidadMay = item.productoCantidadMay || 0;
-        
+
         // Verificar si la cantidad comprada es igual o mayor a la cantidad para aplicar el precio de mayoreo
         if (item.cantidad >= cantidadMay) {
           item.precioAplicado = precioMay;
         } else {
           item.precioAplicado = precioMen;
         }
-  
+
         return item;
       });
-  
+
       this.total = this.items.reduce((acc, item) => acc + (item.precioAplicado * item.cantidad), 0);
       this.initializePayPalButton();
     });
-  
+
     this.authService.getCurrentUserEmail().subscribe(email => {
       this.userEmail = email;
     });
   }
-  
 
   createOrder = (data: any, actions: any) => {
     return actions.order.create({
@@ -82,21 +82,9 @@ export class PagoComponent implements OnInit {
       if (orderId) {
         this.pagoService.capturarPago(orderId).subscribe(
           response => {
-            if (response.status === 200) {
+            if (response.status === 200 || response.status === 409) {
               this.showAlert('Pago procesado exitosamente', 'alert-success');
-              // Vaciar el carrito después de la compra
-              this.carritoService.vaciarCarrito().subscribe(() => {
-                this.actualizarExistencias().subscribe(() => {
-                  this.router.navigate(['user/gracias']);
-                }, (error: any) => {
-                  console.error('Error al actualizar las existencias:', error);
-                });
-              }, (error: any) => {
-                console.error('Error al vaciar el carrito:', error);
-              });
-            } else if (response.status === 409) {
-              this.showAlert('Pago procesado exitosamente', 'alert-success');
-              // También vaciar el carrito y actualizar las existencias
+              // Vaciar el carrito y actualizar existencias
               this.carritoService.vaciarCarrito().subscribe(() => {
                 this.actualizarExistencias().subscribe(() => {
                   this.router.navigate(['user/gracias']);
@@ -147,22 +135,17 @@ export class PagoComponent implements OnInit {
   }
 
   showAlert(message: string, alertClass: string) {
-    // Crea un div para el mensaje
     const alertDiv = document.createElement('div');
     alertDiv.className = `alert ${alertClass} fixed-top d-flex align-items-center justify-content-center`;
     alertDiv.textContent = message;
-    alertDiv.style.fontSize = '20px'; // Cambia el tamaño del texto
-
-    // Agrega el mensaje al cuerpo del documento
+    alertDiv.style.fontSize = '20px';
     document.body.appendChild(alertDiv);
 
-    // Elimina el mensaje después de unos segundos
     setTimeout(() => {
       alertDiv.remove();
     }, 2000);
   }
 
-  // Nueva función para actualizar las existencias después de la compra
   actualizarExistencias(): Observable<any> {
     const updates = this.items.map(item => {
       return this.carritoService.actualizarCantidad(item.productoId, item.cantidad);
