@@ -26,15 +26,30 @@ export class PagoComponent implements OnInit {
 
   ngOnInit(): void {
     this.carritoService.obtenerItemsDelCarrito().subscribe(items => {
-      this.items = items;
-      this.total = this.items.reduce((acc, item) => acc + (item.productoPrecio * item.cantidad), 0);
+      this.items = items.map(item => {
+        const precioMen = item.productoPrecioMen || 0;
+        const precioMay = item.productoPrecioMay || 0;
+        const cantidadMay = item.productoCantidadMay || 0;
+        
+        // Verificar si la cantidad comprada es igual o mayor a la cantidad para aplicar el precio de mayoreo
+        if (item.cantidad >= cantidadMay) {
+          item.precioAplicado = precioMay;
+        } else {
+          item.precioAplicado = precioMen;
+        }
+  
+        return item;
+      });
+  
+      this.total = this.items.reduce((acc, item) => acc + (item.precioAplicado * item.cantidad), 0);
       this.initializePayPalButton();
     });
-
+  
     this.authService.getCurrentUserEmail().subscribe(email => {
       this.userEmail = email;
     });
   }
+  
 
   createOrder = (data: any, actions: any) => {
     return actions.order.create({

@@ -58,11 +58,22 @@
         <tr *ngFor="let item of items">
           <td><img [src]="item.productoImagen" alt="{{ item.productoNombre }}" class="img-thumbnail product-image"></td>
           <td>{{ item.productoNombre }}</td>
-          <td>${{ item.productoPrecio | number:'1.2-2' }}</td>
+          <td>
+            ${{ item.precioAplicado | number:'1.2-2' }}
+            <div *ngIf="item.cantidad >= item.productoCantidadMay; else noDescuento" class="text-success">
+              Descuento aplicado
+            </div>
+            <ng-template #noDescuento>
+              <div class="text-muted">
+                A partir de {{ item.productoCantidadMay }} artículos se aplicará un descuento.
+              </div>
+            </ng-template>
+          </td>
           <td>{{ item.cantidad }}</td>
-          <td>${{ item.productoPrecio * item.cantidad | number:'1.2-2' }}</td>
+          <td>${{ item.precioAplicado * item.cantidad | number:'1.2-2' }}</td>
         </tr>
       </tbody>
+      
     </table>
     <button routerLink="/user/mi-carrito" class="btn btn-primary">Regresar</button>
     <div class="total-container">
