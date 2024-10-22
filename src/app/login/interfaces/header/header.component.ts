@@ -14,7 +14,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   menuVariable: boolean = false;
   isLoggedIn: boolean = false;
   totalItemsCarrito: number = 0;
-  intervalId: any;
   carritoSubscription: Subscription | null = null;  // Inicializar en null
 
   constructor(
@@ -49,22 +48,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.checkLoggedIn();
-    this.actualizarCantidadCarritoCadaSegundo();
+    this.obtenerCantidadCarrito(); // Llamamos a la función una sola vez en ngOnInit
   }
 
   ngOnDestroy() {
-    if (this.intervalId) {
-      clearInterval(this.intervalId);
-    }
     if (this.carritoSubscription) {
       this.carritoSubscription.unsubscribe();  // Desuscribirse
     }
-  }
-
-  actualizarCantidadCarritoCadaSegundo() {
-    this.intervalId = setInterval(() => {
-      this.obtenerCantidadCarrito();
-    }, 1000);
   }
 
   obtenerCantidadCarrito() {
