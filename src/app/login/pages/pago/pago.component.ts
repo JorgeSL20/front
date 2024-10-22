@@ -82,9 +82,21 @@ export class PagoComponent implements OnInit {
       if (orderId) {
         this.pagoService.capturarPago(orderId).subscribe(
           response => {
-            if (response.status === 200 || response.status === 409) {
+            if (response.status === 200) {
               this.showAlert('Pago procesado exitosamente', 'alert-success');
-              // Vaciar el carrito y actualizar existencias
+              // Vaciar el carrito después de la compra
+              this.carritoService.vaciarCarrito().subscribe(() => {
+                this.actualizarExistencias().subscribe(() => {
+                  this.router.navigate(['user/gracias']);
+                }, (error: any) => {
+                  console.error('Error al actualizar las existencias:', error);
+                });
+              }, (error: any) => {
+                console.error('Error al vaciar el carrito:', error);
+              });
+            } else if (response.status === 409) {
+              this.showAlert('Pago procesado exitosamente', 'alert-success');
+              // También vaciar el carrito y actualizar las existencias
               this.carritoService.vaciarCarrito().subscribe(() => {
                 this.actualizarExistencias().subscribe(() => {
                   this.router.navigate(['user/gracias']);
@@ -135,16 +147,21 @@ export class PagoComponent implements OnInit {
   }
 
   showAlert(message: string, alertClass: string) {
+    // Crea un div para el mensaje
     const alertDiv = document.createElement('div');
     alertDiv.className = `alert ${alertClass} fixed-top d-flex align-items-center justify-content-center`;
     alertDiv.textContent = message;
-    alertDiv.style.fontSize = '20px';
+    alertDiv.style.fontSize = '20px'; // Cambia el tamaño del texto
+
+    // Agrega el mensaje al cuerpo del documento
     document.body.appendChild(alertDiv);
 
+    // Elimina el mensaje después de unos segundos
     setTimeout(() => {
       alertDiv.remove();
     }, 2000);
   }
+
 
   actualizarExistencias(): Observable<any> {
     const updates = this.items.map(item => {
