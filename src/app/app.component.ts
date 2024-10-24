@@ -42,6 +42,19 @@ export class AppComponent implements OnInit {
         this.showOnlineNotification();
       }
     });
+
+    // Registrar el Service Worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js')
+          .then((registration) => {
+            console.log('Service Worker registrado con éxito:', registration);
+          })
+          .catch((error) => {
+            console.error('Error al registrar el Service Worker:', error);
+          });
+      });
+    }
   }
 
   handleInput(): void {
@@ -50,12 +63,10 @@ export class AppComponent implements OnInit {
 
   // Funciones para mostrar las notificaciones de estado de red
   showOfflineNotification() {
-    //alert('¡Has perdido la conexión a Internet!');
     this.showAlert('¡Has perdido la conexión a Internet!', 'alert-danger');
   }
 
   showOnlineNotification() {
-  //alert('¡Has recuperado la conexión a Internet!');
     this.showAlert('¡Has recuperado la conexión a Internet!', 'alert-success');
   }
 
