@@ -67,12 +67,13 @@ export class PagoComponent implements OnInit, AfterViewInit {
         return actions.order.create({
           purchase_units: [{
             amount: {
-              value: this.total.toFixed(2),  // Monto total en MXN con dos decimales
-              currency_code: 'MXN'           // Asegurar que la moneda es MXN
+              value: this.total.toFixed(2),  // Total con dos decimales
+              currency_code: 'MXN'           // Código de moneda correcto
             }
           }]
         });
       },
+      
       onApprove: (data: any, actions: any) => {
         // Capturar el pago después de la aprobación
         return actions.order.capture().then((details: any) => {
