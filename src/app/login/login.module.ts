@@ -29,12 +29,10 @@ import { EditarPerfilComponent } from './pages/editar-perfil/editar-perfil.compo
 import { ServiciospublicoComponent } from './publico/serviciospublico/serviciospublico.component';
 import { CarritoComponent } from './pages/carrito/carrito.component';
 import { PagoComponent } from './pages/pago/pago.component';
-import { PaypalButtonComponent } from './pages/paypal-button/paypal-button.component';
 import { PagoService } from './services/pago.service'; 
 import { CarritoService } from './services/carrito.service';
 import { AuthService } from './services/auth.service';
 import { ProductoDetallesComponent } from './pages/producto-detalles/producto-detalles.component';
-import { PaymentSuccessComponent } from './pages/payment-success/payment-success.component';
 
 
 //CAPTCHA//
@@ -66,9 +64,7 @@ import { LoginService } from './services/login.service';
     ServiciospublicoComponent,
     CarritoComponent,
     PagoComponent,
-    PaypalButtonComponent,
     ProductoDetallesComponent,
-    PaymentSuccessComponent,
   ],
   imports: [
     CommonModule,

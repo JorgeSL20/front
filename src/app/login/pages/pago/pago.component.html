@@ -1,3 +1,4 @@
+<!-- src/app/pages/pago/pago.component.html -->
 <app-header></app-header>
 <div class="pago-container">
   <h2>Resumen de la compra</h2>
@@ -32,14 +33,7 @@
     </tbody>
   </table>
 
-  <button routerLink="/user/mi-carrito" class="btn btn-primary">Regresar</button>
-  
   <div class="total-container">
     <h3>Total: ${{ total | number:'1.2-2' }}</h3>
-
-    <!-- src/app/pages/pago/pago.component.html -->
-<script src="https://www.paypal.com/sdk/js?client-id=ATsjMKAs_LTSuQ-eNG--2U8eU_UA2_QVZBE33wvED02t5KWcyGRFeQOw4mmaJMhIcbFKsk7skvbbFC48&currency=MXN"></script>
-<div id="paypal-button-container"></div>
-
   </div>
 </div>

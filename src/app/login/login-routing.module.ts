@@ -22,7 +22,6 @@ import { PreguntasComponent } from './interfaces/preguntas/preguntas.component';
 import { CarritoComponent } from './pages/carrito/carrito.component';
 import { PagoComponent } from './pages/pago/pago.component';
 import { ProductoDetallesComponent } from './pages/producto-detalles/producto-detalles.component';
-import { PaymentSuccessComponent } from './pages/payment-success/payment-success.component';
 
 const routes: Routes = [
   {
@@ -33,7 +32,6 @@ const routes: Routes = [
       { path: 'inicio', component: InicioComponent },
       { path: 'mi-carrito', component: CarritoComponent },
       { path: 'pago', component: PagoComponent },
-      { path: 'paymentsuccess', component: PaymentSuccessComponent },
       { path: 'detalles', component: ProductoDetallesComponent },
       { path: 'header', component: HeaderComponent },
       { path: 'footer', component: FooterComponent },
