@@ -5,7 +5,6 @@ const urlsToCache = [
   '/styles.css',      // Archivos de estilos
   '/main.js',         // Archivo JavaScript principal
   '/offline.html',    // Página que se mostrará cuando no haya conexión
-  // Añade más archivos que deseas cachear de forma estática
 ];
 
 // Evento de instalación para cachear archivos estáticos
@@ -41,10 +40,12 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(
       caches.open(CACHE_NAME).then((cache) => {
         return fetch(event.request).then((response) => {
-          cache.put(event.request, response.clone());  // Almacenar en caché la respuesta de la API
+          // Almacenar en caché la respuesta de la API
+          cache.put(event.request, response.clone());
           return response;
         }).catch(() => {
-          return caches.match(event.request);  // Intentar servir desde caché si falla la red
+          // Intentar servir desde caché si falla la red
+          return caches.match(event.request);
         });
       })
     );
