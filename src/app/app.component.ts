@@ -50,10 +50,24 @@ export class AppComponent implements OnInit {
 
   // Funciones para mostrar las notificaciones de estado de red
   showOfflineNotification() {
-    alert('¡Has perdido la conexión a Internet!');
+    //alert('¡Has perdido la conexión a Internet!');
+    this.showAlert('¡Has perdido la conexión a Internet!', 'alert-danger');
   }
 
   showOnlineNotification() {
-    alert('¡Has recuperado la conexión a Internet!');
+  //alert('¡Has recuperado la conexión a Internet!');
+    this.showAlert('¡Has recuperado la conexión a Internet!', 'alert-success');
+  }
+
+  showAlert(message: string, alertClass: string) {
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert ${alertClass} fixed-top d-flex align-items-center justify-content-center`;
+    alertDiv.textContent = message;
+    alertDiv.style.fontSize = '20px';
+
+    document.body.appendChild(alertDiv);
+    setTimeout(() => {
+      alertDiv.remove();
+    }, 5000);
   }
 }
