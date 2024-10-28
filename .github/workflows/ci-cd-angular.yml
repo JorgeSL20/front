@@ -22,16 +22,16 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18.14'  # Aseguramos que sea 18.14 o superior para Angular CLI
+          node-version: '18.14'
 
       - name: Verify Node.js version
-        run: node -v  # Imprimir la versión de Node.js para verificar que sea la correcta
+        run: node -v
 
       - name: Install dependencies
         run: npm install
 
       - name: Build Angular project
-        run: npm run build -- --prod
+        run: npm run build -- --configuration production  # Cambiado a la nueva sintaxis
 
       - name: Run tests
         run: npm test -- --watch=false
