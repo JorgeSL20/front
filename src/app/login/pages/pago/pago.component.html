@@ -1,39 +1,109 @@
 <!-- src/app/pages/pago/pago.component.html -->
+<style>
+  .pago-container {
+    margin: 20px;
+  }
+
+  .product-image {
+    width: 100%;
+    max-width: 100px;
+    height: 100px;
+    object-fit: cover;
+  }
+
+  .total-container {
+    text-align: right;
+    margin-right: 20px;
+  }
+
+  .empty-cart-message {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-top: 20px;
+  }
+
+  @media (max-width: 768px) {
+    .pago-container {
+      margin: 10px;
+    }
+
+    .total-container {
+      text-align: center;
+      margin: 10px 0;
+    }
+
+    .total-container h3 {
+      font-size: 1.2rem;
+    }
+
+    .product-image {
+      width: 80px;
+      height: 80px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .product-image {
+      width: 60px;
+      height: 60px;
+    }
+
+    .total-container {
+      text-align: center;
+    }
+  }
+</style>
+
 <app-header></app-header>
-<div class="pago-container">
-  <h2>Resumen de la compra</h2>
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th>Imagen</th>
-        <th>Nombre</th>
-        <th>Precio</th>
-        <th>Cantidad</th>
-        <th>Total</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of items">
-        <td><img [src]="item.productoImagen" alt="{{ item.productoNombre }}" class="img-thumbnail product-image"></td>
-        <td>{{ item.productoNombre }}</td>
-        <td>
-          ${{ item.precioAplicado | number:'1.2-2' }}
-          <div *ngIf="item.cantidad >= item.productoCantidadMay; else noDescuento" class="text-success">
-            Descuento aplicado
-          </div>
-          <ng-template #noDescuento>
-            <div class="text-muted">
-              A partir de {{ item.productoCantidadMay }} artículos se aplicará un descuento.
+<br>
+<br>
+<div *ngIf="items.length > 0" class="pago-container">
+  <div class="table-responsive"> <!-- Clase añadida para hacer la tabla responsive -->
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Imagen</th>
+          <th>Nombre</th>
+          <th>Precio</th>
+          <th>Cantidad</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of items">
+          <td><img [src]="item.productoImagen" alt="{{ item.productoNombre }}" class="img-thumbnail product-image"></td>
+          <td>{{ item.productoNombre }}</td>
+
+          <!-- Muestra el precio aplicado -->
+          <td>
+            ${{ item.precioAplicado | number:'1.2-2' }}
+            <div *ngIf="item.cantidad >= item.productoCantidadMay; else noDescuento" class="text-success">
+              Descuento aplicado
             </div>
-          </ng-template>
-        </td>
-        <td>{{ item.cantidad }}</td>
-        <td>${{ item.precioAplicado * item.cantidad | number:'1.2-2' }}</td>
-      </tr>
-    </tbody>
-  </table>
+            <ng-template #noDescuento>
+              <div class="text-muted">
+                A partir de {{ item.productoCantidadMay }} artículos se aplicará un descuento.
+              </div>
+            </ng-template>
+          </td>
+
+          <!-- Muestra la cantidad -->
+          <td>{{ item.cantidad }}</td>
+
+          <!-- Muestra el total para cada producto (precioAplicado * cantidad) -->
+          <td>${{ item.precioAplicado * item.cantidad | number:'1.2-2' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
   <div class="total-container">
     <h3>Total: ${{ total | number:'1.2-2' }}</h3>
+    <button id="btn-pagar" class="btn btn-primary">Pagar con Mercado Pago</button>
   </div>
+  
+</div>
+
+<div *ngIf="items.length === 0" class="empty-cart-message">
+  <p>No hay productos en tu compra.</p>
 </div>
