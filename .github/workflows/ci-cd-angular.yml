@@ -54,12 +54,11 @@ jobs:
           # Verificar versión de Chrome
           google-chrome-stable --version
           
-          # Ejecutar pruebas en modo headless con ajustes de Chrome y nueva URL
-          npx testcafe "chrome:headless --no-sandbox --disable-gpu --disable-dev-shm-usage" "https://gateway-soluciones.netlify.app/#/" e2e/tests/test1.js --debug-on-fail
+          # Ejecutar pruebas en modo headless con ajustes de Chrome
+          npx testcafe "chrome:headless --no-sandbox --disable-gpu --disable-dev-shm-usage" e2e/tests/test1.js --debug-on-fail
 
       - name: Desplegar aplicación (opcional)
         if: success()
         run: |
           echo "Desplegando la aplicación..."
-
 
