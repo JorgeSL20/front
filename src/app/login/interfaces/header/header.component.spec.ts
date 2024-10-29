@@ -1,9 +1,5 @@
-/* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
-
-
+import { HttpClientModule } from '@angular/common/http'; // Importa HttpClientModule
 import { HeaderComponent } from './header.component';
 
 describe('HeaderComponent', () => {
@@ -12,7 +8,8 @@ describe('HeaderComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HeaderComponent ]
+      imports: [HttpClientModule], // Agrega HttpClientModule aquí
+      declarations: [HeaderComponent]
     })
     .compileComponents();
   }));

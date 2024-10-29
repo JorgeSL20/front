@@ -1,9 +1,7 @@
-/* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
-
+import { HttpClientTestingModule } from '@angular/common/http/testing'; // Importa el módulo de pruebas de HttpClient
 import { PerfilComponent } from './perfil.component';
+import { LoginService } from '../../services/login.service';  // Asegúrate de importar tu servicio de login si es necesario
 
 describe('PerfilComponent', () => {
   let component: PerfilComponent;
@@ -11,7 +9,9 @@ describe('PerfilComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PerfilComponent ]
+      imports: [HttpClientTestingModule], // Agrega el módulo de pruebas aquí
+      declarations: [PerfilComponent],
+      providers: [LoginService] // Asegúrate de proporcionar tu servicio si lo necesitas
     })
     .compileComponents();
   }));

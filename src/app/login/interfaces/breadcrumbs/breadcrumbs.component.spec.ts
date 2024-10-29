@@ -1,9 +1,7 @@
-/* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
-
+import { ActivatedRoute } from '@angular/router'; // Importa ActivatedRoute
 import { BreadcrumbsComponent } from './breadcrumbs.component';
+import { of } from 'rxjs'; // Importa 'of' para simular el comportamiento del Observable
 
 describe('BreadcrumbsComponent', () => {
   let component: BreadcrumbsComponent;
@@ -11,7 +9,19 @@ describe('BreadcrumbsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BreadcrumbsComponent ]
+      declarations: [BreadcrumbsComponent],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            // Simula el objeto ActivatedRoute según tus necesidades
+            params: of({}), // Simula los parámetros de la ruta
+            snapshot: {
+              params: {}
+            }
+          }
+        }
+      ]
     })
     .compileComponents();
   }));

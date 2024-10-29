@@ -1,9 +1,7 @@
-/* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
-
+import { HttpClientModule } from '@angular/common/http'; // Importa HttpClientModule
 import { AdmonpreguntasComponent } from './admonpreguntas.component';
+import { LoginService } from '../../services/login.service'; 
 
 describe('AdmonpreguntasComponent', () => {
   let component: AdmonpreguntasComponent;
@@ -11,7 +9,9 @@ describe('AdmonpreguntasComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdmonpreguntasComponent ]
+      imports: [HttpClientModule], // Agrega HttpClientModule aquí
+      declarations: [AdmonpreguntasComponent],
+      providers: [LoginService] // Asegúrate de incluir tu servicio
     })
     .compileComponents();
   }));

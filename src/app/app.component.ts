@@ -9,8 +9,7 @@ import { NetworkStatusService } from './network-status.service'; // Importa el s
 })
 export class AppComponent implements OnInit {
   inputValue: string = '';
-  outputValue: string = ''; // Asegúrate de que esta línea está presente en tu código.
-  
+  outputValue: string = '';
   public isOnline = true; // Estado inicial de conectividad: conectado
 
   constructor(
@@ -18,8 +17,6 @@ export class AppComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private networkStatusService: NetworkStatusService // Inyectamos el servicio de red
   ) {}
-
-  title = '404';
 
   ngOnInit() {
     // Suscribirse a los eventos de navegación

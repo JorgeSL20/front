@@ -1,9 +1,6 @@
-/* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
-
 import { AvisoPrivacidadComponent } from './avisoPrivacidad.component';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'; // Importa CUSTOM_ELEMENTS_SCHEMA
 
 describe('AvisoPrivacidadComponent', () => {
   let component: AvisoPrivacidadComponent;
@@ -11,7 +8,8 @@ describe('AvisoPrivacidadComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AvisoPrivacidadComponent ]
+      declarations: [ AvisoPrivacidadComponent ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA] // Agrega CUSTOM_ELEMENTS_SCHEMA aquí
     })
     .compileComponents();
   }));

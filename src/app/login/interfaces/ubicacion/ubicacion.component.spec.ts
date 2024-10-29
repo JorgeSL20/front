@@ -1,9 +1,7 @@
-/* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
-
+import { HttpClientModule } from '@angular/common/http'; // Importa HttpClientModule
 import { UbicacionComponent } from './ubicacion.component';
+import { UbicacionService } from '../../services/ubicacion.service'; // Asegúrate de que la ruta sea correcta
 
 describe('UbicacionComponent', () => {
   let component: UbicacionComponent;
@@ -11,7 +9,9 @@ describe('UbicacionComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UbicacionComponent ]
+      imports: [HttpClientModule], // Agrega HttpClientModule aquí
+      declarations: [UbicacionComponent],
+      providers: [UbicacionService] // También asegúrate de proporcionar el servicio si lo usas
     })
     .compileComponents();
   }));

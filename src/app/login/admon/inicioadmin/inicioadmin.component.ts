@@ -6,7 +6,7 @@ import { Carrusel } from '../../interfaces/carrusel.interface';
 @Component({
   selector: 'app-inicioadmin',
   templateUrl: './inicioadmin.component.html',
-  styleUrl: './inicioadmin.component.css'
+  styleUrls: ['./inicioadmin.component.css']  // Asegúrate de que aquí sea styleUrls (con una 's')
 })
 export class InicioadminComponent implements AfterViewInit, OnInit {
   @ViewChild('reproductorVideo') reproductorVideo!: ElementRef<HTMLVideoElement>;
@@ -52,5 +52,4 @@ export class InicioadminComponent implements AfterViewInit, OnInit {
         .catch((error: any) => console.error('Error al reiniciar el video:', error));
     });
   }
-
 }

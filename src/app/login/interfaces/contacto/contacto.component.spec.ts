@@ -1,9 +1,6 @@
-/* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
-
 import { ContactoComponent } from './contacto.component';
+import { HeaderComponent } from '../header/header.component';// Ajusta la ruta del archivo
 
 describe('ContactoComponent', () => {
   let component: ContactoComponent;
@@ -11,9 +8,8 @@ describe('ContactoComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ContactoComponent ]
-    })
-    .compileComponents();
+      declarations: [ContactoComponent, HeaderComponent] // Incluye AppHeaderComponent aquí
+    }).compileComponents();
   }));
 
   beforeEach(() => {

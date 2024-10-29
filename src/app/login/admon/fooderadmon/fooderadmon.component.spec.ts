@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { FooderadmonComponent } from './fooderadmon.component';
 
 describe('FooderadmonComponent', () => {
@@ -8,10 +7,12 @@ describe('FooderadmonComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FooderadmonComponent]
+      declarations: [FooderadmonComponent]  // Cambia aquí: usa declarations en lugar de imports
     })
     .compileComponents();
-    
+  });
+
+  beforeEach(() => {
     fixture = TestBed.createComponent(FooderadmonComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
