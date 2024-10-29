@@ -51,9 +51,8 @@ jobs:
       - name: Build Angular project
         run: npm run build -- --configuration production
 
-        name: Ejecutar pruebas de TestCafe
-        run: |
-          xvfb-run -a npx testcafe chrome:headless e2e/test1.js --debug-on-fail
+      - name: Run TestCafe tests
+        run: xvfb-run -a npx testcafe chrome:headless e2e/test1.js --debug-on-fail
 
   deploy:
     runs-on: ubuntu-latest
@@ -61,3 +60,4 @@ jobs:
     steps:
       - name: Deploy to hosting service
         run: echo "Despliegue"
+
