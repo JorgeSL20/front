@@ -35,7 +35,9 @@
           "https://fonts.gstatic.com/s/opensans/v40/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTS-muw.woff2",
           "https://gateway-soluciones.netlify.app/ngsw.json?ngsw-cache-bust=0.38389067138709354",
           "https://res.cloudinary.com/dkwb9vcbb/image/upload/v*/carrusel_images/**",
-          "https://res.cloudinary.com/dkwb9vcbb/image/upload/v*/producto_images/**"
+          "https://res.cloudinary.com/dkwb9vcbb/image/upload/v*/producto_images/**",
+          "https://gateway-soluciones.netlify.app/assets/videoGateWay.mp3",
+          "https://gateway-soluciones.netlify.app/"
         ]
       }
     }
