@@ -52,7 +52,7 @@ jobs:
         run: npm run build -- --configuration production
 
       - name: Run TestCafe tests
-        run: xvfb-run -a npx testcafe chrome:headless e2e/test1.js --debug-on-fail
+        run: xvfb-run -a npx testcafe chrome:headless e2e/tests/test1.js --debug-on-fail
 
   deploy:
     runs-on: ubuntu-latest
