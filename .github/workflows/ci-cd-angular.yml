@@ -11,60 +11,51 @@ on:
       - develop
   workflow_dispatch:
 
+# Definición de los trabajos (jobs)
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      # Checkout del código fuente
+      - name: Checkout código
+        uses: actions/checkout@v4.2.1
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18.14'
-
-      - name: Verify Node.js version
-        run: node -v
-
-      - name: Install Chrome dependencies
+      # Instalación de dependencias necesarias para Chrome headless
+      - name: Instalar dependencias necesarias para Chrome
         run: |
           sudo apt-get update
           sudo apt-get install -y \
-          libnss3 \
-          libgconf-2-4 \
-          libxss1 \
-          libxi6 \
-          libgdk-pixbuf2.0-0 \
-          libgtk-3-0 \
-          xvfb \
-          fonts-liberation \
-          libappindicator3-1 \
-          libasound2 \
-          google-chrome-stable
+            libnss3 \
+            libgconf-2-4 \
+            libxss1 \
+            libxi6 \
+            libgdk-pixbuf2.0-0 \
+            libgtk-3-0 \
+            xvfb \
+            fonts-liberation \
+            libappindicator3-1 \
+            libasound2
 
-      - name: Install dependencies
-        run: npm install
+      # Configuración de Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.X'  # Especifica la versión de Node.js
 
-      - name: Run Angular tests
-        run: npm run test -- --watch=false || true
-
-      - name: Build Angular project
-        run: npm run build -- --configuration production
-
-      - name: List project files for debugging
-        run: ls -R
-
-      - name: Run TestCafe tests
-        env:
-          DISPLAY: ':99.0'
+      # Instalación de dependencias
+      - name: Instalar dependencias
         run: |
-          Xvfb :99 -screen 0 1920x1080x16 &
-          npx testcafe "chrome:headless --no-sandbox --disable-dev-shm-usage" e2e/tests/test1.js --debug-on-fail
+          npm ci --legacy-peer-deps
+          npm install -g testcafe --legacy-peer-deps  # Instala TestCafe globalmente
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy to hosting service
-        run: echo "Despliegue"
+      # Ejecutar pruebas de TestCafe en modo headless con Xvfb
+      - name: Ejecutar pruebas de TestCafe
+        run: |
+          xvfb-run -a npx testcafe chrome:headless e2e/tests/test1.js --debug-on-fail # Asegúrate de que la ruta de test.js sea correcta
+
+      # (Opcional) Paso para desplegar la aplicación
+      - name: Desplegar aplicación
+        run: |
+          echo "Desplegando la aplicación..."
+          # Aquí iría el comando de despliegue, usando las variables de entorno necesarias
