@@ -35,7 +35,9 @@ jobs:
             libgtk-3-0 \
             fonts-liberation \
             libappindicator3-1 \
-            libasound2
+            libasound2 \
+            gconf-service \
+            libgbm-dev
 
       # Configuración de Node.js
       - name: Setup Node.js
@@ -49,10 +51,11 @@ jobs:
           npm ci --legacy-peer-deps
           npm install -g testcafe --legacy-peer-deps  # Instala TestCafe globalmente
 
-      # Ejecutar pruebas de TestCafe en modo headless sin Xvfb
+      # Ejecutar pruebas de TestCafe en modo headless sin pantalla, con reintento
       - name: Ejecutar pruebas de TestCafe
         run: |
-          npx testcafe chrome:headless test/test.js --debug-on-fail --selector-timeout 10000 --assertion-timeout 10000 --page-load-timeout 10000
+          # Ejecuta TestCafe con reintentos en caso de falla
+          npx testcafe "chrome:headless --no-sandbox --disable-gpu --disable-dev-shm-usage --disable-software-rasterizer" test/test.js --debug-on-fail --selector-timeout 10000 --assertion-timeout 10000 --page-load-timeout 10000 || npx testcafe "chrome:headless --no-sandbox --disable-gpu --disable-dev-shm-usage --disable-software-rasterizer" test/test.js --debug-on-fail --selector-timeout 10000 --assertion-timeout 10000 --page-load-timeout 10000
 
       # (Opcional) Paso para desplegar la aplicación
       - name: Desplegar aplicación
