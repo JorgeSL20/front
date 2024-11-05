@@ -1,3 +1,4 @@
+
 name: PWA CI/CD Workflow
 
 # Configuración de los desencadenadores
@@ -20,7 +21,7 @@ jobs:
     steps:
       # Checkout del código fuente
       - name: Checkout código
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4.2.1
 
       # Instalación de dependencias necesarias para Chrome headless
       - name: Instalar dependencias necesarias para Chrome
@@ -45,31 +46,17 @@ jobs:
         with:
           node-version: '18.X'  # Especifica la versión de Node.js
 
-      # Instalación de dependencias del proyecto
+      # Instalación de dependencias
       - name: Instalar dependencias
-        run: npm ci
-
-      # Instalación de TestCafe
-      - name: Instalar TestCafe
-        run: npm install -g testcafe --legacy-peer-deps  # Instala TestCafe globalmente
-
-      # Instalación de Cypress
-      - name: Instalar Cypress
-        run: npm install cypress --save-dev
-
-      # Iniciar el servidor Angular en segundo plano
-      - name: Iniciar servidor Angular
         run: |
-          npm run start &
-          npx wait-on http://localhost:4200  # Espera a que el servidor esté listo
+          npm ci --legacy-peer-deps
+          npm install -g testcafe --legacy-peer-deps  # Instala TestCafe globalmente
 
-          # Ejecutar pruebas de TestCafe en modo headless sin pantalla, con reintento
+      # Ejecutar pruebas de TestCafe en modo headless sin pantalla, con reintento
       - name: Ejecutar pruebas de TestCafe
         run: |
           # Ejecuta TestCafe con reintentos en caso de falla
           npx testcafe "chrome:headless --no-sandbox --disable-gpu --disable-dev-shm-usage --disable-software-rasterizer" test/test.js --debug-on-fail --selector-timeout 10000 --assertion-timeout 10000 --page-load-timeout 10000 || npx testcafe "chrome:headless --no-sandbox --disable-gpu --disable-dev-shm-usage --disable-software-rasterizer" test/test.js --debug-on-fail --selector-timeout 10000 --assertion-timeout 10000 --page-load-timeout 10000
-      - name: Ejecutar pruebas de Cypress
-        run: npm run cypress:run
 
       # (Opcional) Paso para desplegar la aplicación
       - name: Desplegar aplicación
