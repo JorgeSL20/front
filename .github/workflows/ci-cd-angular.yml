@@ -53,7 +53,7 @@ jobs:
       # Ejecutar pruebas de TestCafe en modo headless con Xvfb
       - name: Ejecutar pruebas de TestCafe
         run: |
-          xvfb-run -a npx testcafe chrome:headless test/test.js --debug-on-fail # Asegúrate de que la ruta de test.js sea correcta
+          xvfb-run -a npx testcafe chrome:headless test/test1.js --debug-on-fail # Asegúrate de que la ruta de test.js sea correcta
 
       # (Opcional) Paso para desplegar la aplicación
       - name: Desplegar aplicación
