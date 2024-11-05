@@ -1,25 +1,29 @@
-name: Angular CI/CD Workflow
+name: PWA CI/CD Workflow
 
+# Configuración de los desencadenadores
 on:
   push:
     branches:
+      - master
       - main
-      - develop
   pull_request:
     branches:
+      - master
       - main
-      - develop
   workflow_dispatch:
 
+# Definición de los trabajos (jobs)
 jobs:
   test:
     runs-on: ubuntu-latest
 
     steps:
+      # Checkout del código fuente
       - name: Checkout código
         uses: actions/checkout@v4.2.1
 
-      - name: Instalar dependencias necesarias para Chrome headless
+      # Instalación de dependencias necesarias para Chrome headless
+      - name: Instalar dependencias necesarias para Chrome
         run: |
           sudo apt-get update
           sudo apt-get install -y \
@@ -34,25 +38,25 @@ jobs:
             libappindicator3-1 \
             libasound2
 
-      - name: Instalar Google Chrome
-        run: |
-          wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-          echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
-          sudo apt-get update
-          sudo apt-get install -y google-chrome-stable
-
-      - name: Configurar Node.js
+      # Configuración de Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '18.X'  # Especifica la versión de Node.js
 
+      # Instalación de dependencias
       - name: Instalar dependencias
         run: |
           npm ci --legacy-peer-deps
-          npm install -g testcafe --legacy-peer-deps
+          npm install -g testcafe --legacy-peer-deps  # Instala TestCafe globalmente
 
-      - name: Ejecutar pruebas de TestCafe en modo headless
+      # Ejecutar pruebas de TestCafe en modo headless con Xvfb
+      - name: Ejecutar pruebas de TestCafe
         run: |
-          sudo Xvfb :99 -screen 0 1920x1080x16 &
-          sleep 5  # Asegúrate de que Xvfb esté completamente iniciado
-          xvfb-run -a npx testcafe chrome:headless --no-sandbox --disable-gpu --disable-dev-shm-usage e2e/tests/test1.js --debug-on-fail
+          xvfb-run -a npx testcafe chrome:headless tests/test.js --debug-on-fail # Asegúrate de que la ruta de test.js sea correcta
+
+      # (Opcional) Paso para desplegar la aplicación
+      - name: Desplegar aplicación
+        run: |
+          echo "Desplegando la aplicación..."
+          # Aquí iría el comando de despliegue, usando las variables de entorno necesarias

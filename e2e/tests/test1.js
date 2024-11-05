@@ -1,14 +1,10 @@
 import { Selector } from 'testcafe';
 
-// Configura el fixture y la página inicial
-fixture `Verificación de URL`
-    .page `https://gateway-soluciones.netlify.app/#/`; // Cambia esta URL según sea necesario
+fixture `Mi primera prueba en Angular`
+    .page `http://localhost:4200`;
 
-// Define un test
-test('Verifica que la página carga correctamente', async t => {
-    // Obtiene la URL actual
-    const currentUrl = await t.eval(() => window.location.href);
-
-    // Verifica que la URL actual es la esperada
-    await t.expect(currentUrl).eql('https://gateway-soluciones.netlify.app/#/'); // Cambia la URL si es necesario
-});
+test('Verificar título de la página', async t => {
+    await t
+        .wait(10000) // Esperar 10 segundos para asegurar que la página se cargue completamente
+        .click(Selector('.Detalles').nth(0)) // Simular clic en el primer elemento de la lista de productos
+        .expect(Selector('.Cerrar').exists).ok();});
