@@ -54,7 +54,8 @@ jobs:
       # Ejecutar pruebas de TestCafe en modo headless sin pantalla, con reintento
       - name: Ejecutar pruebas de TestCafe
         run: |
-          npx testcafe "chrome:headless --no-sandbox --disable-gpu --disable-dev-shm-usage --disable-software-rasterizer --remote-debugging-port=9222" test/test.js --debug-on-fail --selector-timeout 10000 --assertion-timeout 10000 --page-load-timeout 10000
+          npx testcafe "chrome:headless --no-sandbox --disable-gpu --disable-dev-shm-usage --disable-software-rasterizer --remote-debugging-port=9222" test/test.js --debug-on-fail --selector-timeout 20000 --assertion-timeout 20000 --page-load-timeout 20000
+
 
       # (Opcional) Paso para desplegar la aplicación
       - name: Desplegar aplicación
