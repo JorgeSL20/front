@@ -56,6 +56,13 @@ jobs:
         run: |
           npx testcafe "chrome:headless --no-sandbox --disable-gpu --disable-dev-shm-usage --disable-software-rasterizer" test/test.js || npx testcafe "firefox:headless" test/test.js
 
+      # Instalación de Cypress
+      - name: Instalar Cypress
+        run: npm install cypress --save-dev
+
+      # Ejecutar pruebas de Cypress en modo headless
+      - name: Ejecutar pruebas de Cypress
+        run: npx cypress run
 
       # (Opcional) Paso para desplegar la aplicación
       - name: Desplegar aplicación
