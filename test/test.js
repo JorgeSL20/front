@@ -8,10 +8,9 @@ test('Buscar "audifonos", ver detalles y añadir al carrito', async t => {
   const searchBar = Selector('input[type="search"]');
   const searchButton = Selector('button').withText('Buscar');
   
-  // Selector de la tarjeta del producto y los botones de detalle y añadir al carrito
+  // Selector del título del producto, y botones de "Detalles" y "Añadir al carrito"
   const productTitle = Selector('.card-title').withText('audifonos');
   const detailButton = productTitle.parent('.card-body').find('button').withText('Detalles');
-  const closeModalButton = Selector('.modal-footer button').withText('Cerrar'); // Ajusta según tu modal
   const addToCartButton = productTitle.parent('.card-body').find('button').withText('Añadir al carrito');
 
   // Realizar búsqueda de "audifonos"
@@ -19,17 +18,18 @@ test('Buscar "audifonos", ver detalles y añadir al carrito', async t => {
     .typeText(searchBar, 'audifonos')
     .click(searchButton);
 
-  // Verificar que el producto esté visible después de la búsqueda
+  // Verificar que el producto "audifonos" esté visible después de la búsqueda
   await t.expect(productTitle.exists).ok('El producto "audifonos" no fue encontrado');
 
-  // Clic en el botón de detalles
+  // Clic en el botón de "Detalles"
   await t.click(detailButton);
 
-  // Esperar a que se abra el modal y verificar
+  // Esperar a que se abra el modal de detalles y verificar que esté presente
   const modal = Selector('.modal'); // Asegúrate de que este selector coincida con tu modal de detalles
   await t.expect(modal.exists).ok('El modal de detalles no se abrió');
 
-  // Cerrar el modal
+  // Cerrar el modal de detalles
+  const closeModalButton = modal.find('button').withText('Cerrar'); // Ajusta según el texto en el botón de cerrar modal
   await t.click(closeModalButton);
   await t.expect(modal.exists).notOk('El modal de detalles no se cerró correctamente');
 
@@ -37,6 +37,6 @@ test('Buscar "audifonos", ver detalles y añadir al carrito', async t => {
   await t.click(addToCartButton);
 
   // Verificar que estamos en la página de login
-  const loginPageTitle = Selector('h1').withText('Login'); // Ajusta según el contenido de la página de login
-  await t.expect(loginPageTitle.exists).ok('No se redirigió a la página de login');
+  const loginPageIndicator = Selector('h1').withText('Login'); // Ajusta si la página de login tiene otro elemento identificador
+  await t.expect(loginPageIndicator.exists).ok('No se redirigió a la página de login');
 });
