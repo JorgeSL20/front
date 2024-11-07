@@ -1,56 +1,42 @@
 import { Selector } from 'testcafe';
 
-// Configura el fixture y la página inicial
-fixture`Formulario de Registro`
-    .page`https://gateway-soluciones.netlify.app/#/registro`; // Cambia esta URL según sea necesario
+fixture('Pruebas de carrito de compras')
+  .page('https://gateway-soluciones.netlify.app/#/'); // URL de la aplicación en producción
 
-// Define un test
-test('Completa el formulario de registro y verifica mensajes de error', async t => {
-    // Selecciona los campos del formulario
-    const nameInput = Selector('#campo1');
-    const lastNamePInput = Selector('#campoApellidoPaterno');
-    const lastNameMInput = Selector('#campoApellidoMaterno');
-    const emailInput = Selector('#campoEmail');
-    const passwordInput = Selector('#password');
-    const password2Input = Selector('#contrasena2');
-    const preguntaSelect = Selector('#campoPregunta');
-    const respuestaInput = Selector('#campoRyyespuesta');
-    const termsCheckbox = Selector('#checkboxTerminos');
-    const submitButton = Selector('button').withText('Crear cuenta');
+test('Buscar "audifonos", ver detalles y añadir al carrito', async t => {
+  // Selector de la barra de búsqueda y del botón de buscar
+  const searchBar = Selector('input[type="search"]');
+  const searchButton = Selector('button').withText('Buscar');
+  
+  // Selector de la tarjeta del producto y los botones de detalle y añadir al carrito
+  const productTitle = Selector('.card-title').withText('audifonos');
+  const detailButton = productTitle.parent('.card-body').find('button').withText('Detalles');
+  const closeModalButton = Selector('.modal-footer button').withText('Cerrar'); // Ajusta según tu modal
+  const addToCartButton = productTitle.parent('.card-body').find('button').withText('Añadir al carrito');
 
-    // Intenta enviar el formulario sin llenar los campos
-    await t
-        .click(submitButton)
-        .expect(nameInput.parent('.error-message').withText('Nombre es un campo obligatorio.').exists).ok()
-        .expect(lastNamePInput.parent('.error-message').withText('El campo es obligatorio.').exists).ok()
-        .expect(lastNameMInput.parent('.error-message').withText('El campo es obligatorio.').exists).ok()
-        .expect(emailInput.parent('.error-message').withText('El campo es obligatorio.').exists).ok()
-        .expect(passwordInput.parent('.error-message').withText('El campo es obligatorio.').exists).ok()
-        .expect(password2Input.parent('.error-message').withText('El campo es obligatorio.').exists).ok()
-        .expect(termsCheckbox.parent('.invalid-feedback').withText('Debes aceptar los términos y condiciones.').exists).ok();
+  // Realizar búsqueda de "audifonos"
+  await t
+    .typeText(searchBar, 'audifonos')
+    .click(searchButton);
 
-    // Llenar los campos correctamente y verificar que los errores desaparecen
-    await t
-        .typeText(nameInput, 'Juan')
-        .typeText(lastNamePInput, 'Pérez')
-        .typeText(lastNameMInput, 'González')
-        .typeText(emailInput, 'juan@example.com')
-        .typeText(passwordInput, 'Password123!')
-        .typeText(password2Input, 'Password123!')
-        .click(preguntaSelect)
-        .click(preguntaSelect.find('option').withText('¿Lugar Favorito?'))
-        .typeText(respuestaInput, 'Playa')
-        .click(termsCheckbox)
-        
-        // Verifica que los mensajes de error ya no aparecen después de llenar los campos
-        .expect(nameInput.parent('.error-message').exists).notOk()
-        .expect(lastNamePInput.parent('.error-message').exists).notOk()
-        .expect(lastNameMInput.parent('.error-message').exists).notOk()
-        .expect(emailInput.parent('.error-message').exists).notOk()
-        .expect(passwordInput.parent('.error-message').exists).notOk()
-        .expect(password2Input.parent('.error-message').exists).notOk()
-        .expect(termsCheckbox.parent('.invalid-feedback').exists).notOk();
+  // Verificar que el producto esté visible después de la búsqueda
+  await t.expect(productTitle.exists).ok('El producto "audifonos" no fue encontrado');
 
-    // Nota: Puedes simular el clic en el botón de envío solo si el reCAPTCHA está resuelto.
-    // Para efectos de prueba, asumimos que el botón de enviar ya está habilitado al cumplir todos los requisitos.
+  // Clic en el botón de detalles
+  await t.click(detailButton);
+
+  // Esperar a que se abra el modal y verificar
+  const modal = Selector('.modal'); // Asegúrate de que este selector coincida con tu modal de detalles
+  await t.expect(modal.exists).ok('El modal de detalles no se abrió');
+
+  // Cerrar el modal
+  await t.click(closeModalButton);
+  await t.expect(modal.exists).notOk('El modal de detalles no se cerró correctamente');
+
+  // Clic en el botón "Añadir al carrito", que debe llevar al usuario a la página de login
+  await t.click(addToCartButton);
+
+  // Verificar que estamos en la página de login
+  const loginPageTitle = Selector('h1').withText('Login'); // Ajusta según el contenido de la página de login
+  await t.expect(loginPageTitle.exists).ok('No se redirigió a la página de login');
 });
