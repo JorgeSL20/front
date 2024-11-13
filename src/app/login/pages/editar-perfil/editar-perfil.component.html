@@ -103,6 +103,18 @@
               </div>
             </div>
 
+                        <!-- Foto de perfil -->
+            <div class="mb-3">
+              <label class="form-label">Foto de Perfil:</label>
+              <input type="file" (change)="onFileSelected($event)" accept="image/*" capture="camera" class="form-control">
+            </div>
+
+            <!-- Muestra la imagen seleccionada -->
+            <div *ngIf="imageUrl">
+              <img [src]="imageUrl" alt="Imagen seleccionada" class="img-fluid mt-3" style="max-height: 200px;">
+            </div>
+
+            
             <!-- BOTÓN CENTRADO -->
             <div class="d-grid gap-2 col-6 mx-auto">
               <button [disabled]="!myForm.valid" type="submit" class="btn btn-primary">GUARDAR CAMBIOS</button>

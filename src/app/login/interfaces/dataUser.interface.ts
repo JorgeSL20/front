@@ -5,5 +5,6 @@ export interface DataUser {
   email: string;
   pregunta: string;
   respuesta: string;
-  role: string;  // Asegúrate de que la propiedad 'role' esté incluida
+  role: string; 
+  url:string // Asegúrate de que la propiedad 'role' esté incluida
 }

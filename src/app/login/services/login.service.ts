@@ -24,6 +24,27 @@ export class LoginService {
   //url:string = 'http://localhost:3000/'
   url:string = 'https://proyectogatewayback-production.up.railway.app/'
 
+  uploadImageAndUpdateProfile(file: File, userId: string): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file, file.name);
+
+    return this.http.post<any>(`${this.url}auth/upload-image/${userId}`, formData).pipe(
+      tap(response => {
+        // Si la subida fue exitosa, actualizamos la URL de la imagen del usuario
+        const imageUrl = response.secure_url;
+        this.updateUserProfile(userId, { imageUrl }).subscribe();
+      }),
+      catchError(error => {
+        console.error('Error al subir la imagen:', error);
+        throw error;
+      })
+    );
+  }
+
+  // Método para actualizar el perfil del usuario
+  updateUserProfile(id: string, data: any): Observable<any> {
+    return this.http.patch(`${this.url}auth/perfil/${id}`, data);
+  }
   getUserByEmail(emai:string){
     return this.http.get<User>(this.url + 'auth/'+emai)
   }

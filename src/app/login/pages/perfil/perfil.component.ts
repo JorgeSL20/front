@@ -15,7 +15,8 @@ export class PerfilComponent implements OnInit {
     email: "",
     pregunta:"",
     respuesta:"",
-    role:""
+    role:"",
+    url:"",
   };
 
   constructor(private loginService: LoginService) { }
