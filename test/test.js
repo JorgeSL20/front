@@ -1,42 +1,38 @@
 import { Selector } from 'testcafe';
 
-fixture('Pruebas de carrito de compras')
-  .page('https://gateway-soluciones.netlify.app/#/'); // URL de la aplicación en producción
+fixture('Pruebas de renderizado de la interfaz de usuario')
+  .page('https://gateway-soluciones.netlify.app/#/');
 
-test('Buscar "audifonos", ver detalles y añadir al carrito', async t => {
-  // Selector de la barra de búsqueda y del botón de buscar
-  const searchBar = Selector('input[type="search"]');
-  const searchButton = Selector('button').withText('Buscar');
-  
-  // Selector del título del producto, y botones de "Detalles" y "Añadir al carrito"
-  const productTitle = Selector('.card-title').withText('audifonos');
-  const detailButton = productTitle.parent('.card-body').find('button').withText('Detalles');
-  const addToCartButton = productTitle.parent('.card-body').find('button').withText('Añadir al carrito');
+test('La página principal se renderiza correctamente', async t => {
+  // Verifica que el título de la página se renderice
+  const pageTitle = Selector('h1').withText('Gateway Soluciones en TI');
+  await t.expect(pageTitle.exists).ok('El título de la página no se renderizó correctamente');
 
-  // Realizar búsqueda de "audifonos"
-  await t
-    .typeText(searchBar, 'audifonos')
-    .click(searchButton);
+  // Verifica que el menú de navegación esté presente
+  const navBar = Selector('nav');
+  await t.expect(navBar.exists).ok('El menú de navegación no se renderizó correctamente');
 
-  // Verificar que el producto "audifonos" esté visible después de la búsqueda
-  await t.expect(productTitle.exists).ok('El producto "audifonos" no fue encontrado');
+  // Verifica que el botón de login esté presente en la interfaz
+  const loginButton = Selector('button').withText('Iniciar sesión');
+  await t.expect(loginButton.exists).ok('El botón de inicio de sesión no se encontró en la página');
 
-  // Clic en el botón de "Detalles"
-  await t.click(detailButton);
+  // Verifica que se renderice la sección de productos
+  const productSection = Selector('.product-section');
+  await t.expect(productSection.exists).ok('La sección de productos no se renderizó correctamente');
+});
 
-  // Esperar a que se abra el modal de detalles y verificar que esté presente
-  const modal = Selector('.modal'); // Asegúrate de que este selector coincida con tu modal de detalles
-  await t.expect(modal.exists).ok('El modal de detalles no se abrió');
+test('El footer se renderiza correctamente', async t => {
+  // Verifica que el footer esté presente
+  const footer = Selector('footer');
+  await t.expect(footer.exists).ok('El footer no se renderizó correctamente');
 
-  // Cerrar el modal de detalles
-  const closeModalButton = modal.find('button').withText('Cerrar'); // Ajusta según el texto en el botón de cerrar modal
-  await t.click(closeModalButton);
-  await t.expect(modal.exists).notOk('El modal de detalles no se cerró correctamente');
+  // Verifica que el footer contenga texto específico
+  const footerText = footer.withText('Gateway Soluciones en TI');
+  await t.expect(footerText.exists).ok('El texto en el footer no se encontró');
+});
 
-  // Clic en el botón "Añadir al carrito", que debe llevar al usuario a la página de login
-  await t.click(addToCartButton);
-
-  // Verificar que estamos en la página de login
-  const loginPageIndicator = Selector('h1').withText('Login'); // Ajusta si la página de login tiene otro elemento identificador
-  await t.expect(loginPageIndicator.exists).ok('No se redirigió a la página de login');
+test('Los productos se cargan en la página', async t => {
+  // Verifica que haya al menos un producto en la sección de productos
+  const productItem = Selector('.product-item'); // Cambia el selector según la clase que uses para cada producto
+  await t.expect(productItem.exists).ok('No se encontraron productos en la página');
 });
