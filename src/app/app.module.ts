@@ -36,4 +36,13 @@ import { ServiceWorkerModule } from '@angular/service-worker';
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class AppModule { }
+export class AppModule { 
+  constructor() {
+    // Verifica si el navegador soporta Service Workers y registra el personalizado
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/custom-service-worker.js')
+        .then(reg => console.log('Custom Service Worker registrado:', reg))
+        .catch(err => console.error('Error al registrar el Custom Service Worker:', err));
+    }
+  }
+}
