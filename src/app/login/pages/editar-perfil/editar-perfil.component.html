@@ -111,6 +111,21 @@
                 <img [src]="myForm.get('url')?.value" alt="Imagen de perfil" class="img-thumbnail" width="200" />
               </div>
             </div>
+            <div class="mb-3">
+              <label class="form-label">Tomar Foto:</label>
+              <div *ngIf="isCameraActive">
+                <video #videoElement width="100%" height="auto" autoplay></video>
+                <br />
+                <button type="button" class="btn btn-primary" (click)="takePhoto()">Tomar Foto</button>
+                <button type="button" class="btn btn-danger" (click)="stopCamera()">Detener Cámara</button>
+              </div>
+              <div *ngIf="photoTaken">
+                <img [src]="photoTaken" alt="Foto tomada" class="img-fluid mt-3" />
+              </div>
+              <div *ngIf="!isCameraActive && !photoTaken">
+                <button type="button" class="btn btn-success" (click)="activateCamera()">Activar Cámara</button>
+              </div>
+            </div>
 
             <!-- BOTÓN CENTRADO -->
             <div class="d-grid gap-2 col-6 mx-auto">

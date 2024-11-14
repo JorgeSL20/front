@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, Validators, } from '@angular/forms';
 import { LoginService } from '../../services/login.service';
 import { DataUser } from '../../interfaces/dataUser.interface';
 
@@ -21,6 +21,14 @@ export class EditarPerfilComponent implements OnInit {
     role: "",
     url:""
   };
+
+  @ViewChild('videoElement') videoElement!: ElementRef<HTMLVideoElement>;
+  @ViewChild('canvasElement') canvasElement!: ElementRef<HTMLCanvasElement>;
+
+  // Variables para manejar el stream de la cámara
+  private stream!: MediaStream;
+  isCameraActive: boolean = false;
+  photoTaken: string | null = null; // Almacena la foto tomada
 
   myForm: FormGroup = this.fb.group({
     name: ['', [Validators.required, Validators.minLength(3), Validators.pattern(/^[a-zA-Z\s]*$/)]],
@@ -49,6 +57,48 @@ export class EditarPerfilComponent implements OnInit {
         });
       });
     }
+  }
+
+  activateCamera(): void {
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then((stream) => {
+          this.stream = stream;
+          this.videoElement.nativeElement.srcObject = stream;
+          this.isCameraActive = true;
+        })
+        .catch((error) => {
+          console.error('Error al acceder a la cámara:', error);
+          this.isCameraActive = false;
+        });
+    } else {
+      console.error('Tu navegador no soporta acceso a la cámara.');
+    }
+  }
+
+  takePhoto(): void {
+    if (this.canvasElement && this.videoElement) {
+      const canvas = this.canvasElement.nativeElement;
+      const video = this.videoElement.nativeElement;
+
+      // Establecer las dimensiones del canvas igual que el video
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+
+      const context = canvas.getContext('2d');
+      if (context) {
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        this.photoTaken = canvas.toDataURL('image/png'); // Guardar la imagen tomada
+      }
+    }
+  }
+
+  stopCamera(): void {
+    if (this.stream) {
+      const tracks = this.stream.getTracks();
+      tracks.forEach(track => track.stop());
+    }
+    this.isCameraActive = false;
   }
 
   // Método para manejar la carga del archivo
