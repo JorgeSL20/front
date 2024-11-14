@@ -22,8 +22,6 @@ export class EditarPerfilComponent implements OnInit {
     url:""
   };
 
-  imageUrl: string | null = null; // Variable para la URL de la imagen seleccionada
-
   myForm: FormGroup = this.fb.group({
     name: ['', [Validators.required, Validators.minLength(3), Validators.pattern(/^[a-zA-Z\s]*$/)]],
     lastNameP: ['', [Validators.required, Validators.minLength(3), Validators.pattern(/^[a-zA-ZáéíóúüÁÉÍÓÚÜ\s]*$/)]],
@@ -31,13 +29,12 @@ export class EditarPerfilComponent implements OnInit {
     email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
     pregunta: ['', [Validators.required]],
     respuesta: ['', [Validators.required, Validators.minLength(3), Validators.pattern(/^[a-zA-ZáéíóúüÁÉÍÓÚÜñÑ\s]*$/)]],
-    url: ['']  // Verifica que el control 'url' esté definido aquí
+    url: ['', []] // La URL de la imagen
   });
-  
 
   constructor(private fb: FormBuilder, private loginService: LoginService) { }
 
-   ngOnInit(): void {
+  ngOnInit(): void {
     this.idUser = localStorage.getItem('token');
     if (this.idUser) {
       this.loginService.getDataUser(this.idUser).subscribe(data => {
@@ -48,33 +45,95 @@ export class EditarPerfilComponent implements OnInit {
           email: data.email,
           pregunta: data.pregunta,
           respuesta: data.respuesta,
-          url: data.url // Asignar la URL de la imagen al form
+          url: data.url // Inicializar la URL de la imagen
         });
-        this.imageUrl = data.url; // Si ya tiene imagen, mostrarla
       });
     }
   }
 
-  onFileSelected(event: any): void {
-    const file: File = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.imageUrl = e.target.result;
-        this.myForm.patchValue({ url: this.imageUrl });  // Actualiza la URL de la imagen en el formulario
+  // Método para manejar la carga del archivo
+  onFileChange(event: any): void {
+    const file = event.target.files[0];
+  
+    // Crear una instancia de Image para cargar la imagen
+    const img = new Image();
+    const reader = new FileReader();
+  
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      img.src = reader.result as string;
+      img.onload = () => {
+        const width = img.width;
+        const height = img.height;
+  
+        // Redimensionar la imagen si excede las dimensiones de 800x800 píxeles
+        const maxWidth = 800;
+        const maxHeight = 800;
+  
+        // Calcular el factor de escala para redimensionar la imagen
+        const scaleFactor = Math.min(maxWidth / width, maxHeight / height);
+        const newWidth = width * scaleFactor;
+        const newHeight = height * scaleFactor;
+  
+        // Crear un canvas para redimensionar la imagen
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+  
+        if (ctx) {
+          // Configurar el canvas con las nuevas dimensiones
+          canvas.width = newWidth;
+          canvas.height = newHeight;
+  
+          // Dibujar la imagen redimensionada en el canvas
+          ctx.drawImage(img, 0, 0, newWidth, newHeight);
+  
+          // Convertir la imagen redimensionada a base64
+          const resizedImage = canvas.toDataURL(file.type);
+  
+          // Asignar la imagen redimensionada al formulario
+          this.myForm.patchValue({
+            url: resizedImage
+          });
+        }
       };
-      reader.readAsDataURL(file);
-    }
+    };
   }
+  
 
-  updateData(): void {
-    if (this.idUser) {
-      this.loginService.updateUser(this.idUser, this.myForm.value).subscribe(
-        () => this.showAlert('Datos actualizados', 'alert-success'),
-        (error) => this.showAlert(`Error: ${error.message}`, 'alert-danger')
-      );
+
+updateData(): void {
+  if (this.idUser) {
+    // Crear un objeto FormData para enviar los datos del formulario y el archivo
+    const formData = new FormData();
+
+    // Agregar los campos del formulario a FormData
+    for (let key in this.myForm.value) {
+      if (this.myForm.value[key]) {
+        formData.append(key, this.myForm.value[key]);
+      }
     }
+
+    // Si hay un archivo, agregarlo también
+    const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement | null;
+    if (fileInput && fileInput.files) {
+      const file: File | null = fileInput.files[0] || null;
+      if (file) {
+        formData.append('file', file);
+      }
+    }
+
+    // Llamar al servicio para actualizar los datos, pasando formData
+    this.loginService.updateUser(this.idUser, formData).subscribe(
+      () => this.showAlert('Datos actualizados', 'alert-success'),
+      (error) => {
+        console.error('Error al actualizar los datos:', error);
+        this.showAlert(`Error: ${error.message}`, 'alert-danger');
+      }
+    );
   }
+}
+
+
 
   showAlert(message: string, alertClass: string): void {
     const alertDiv = document.createElement('div');

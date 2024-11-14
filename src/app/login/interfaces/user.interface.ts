@@ -7,7 +7,8 @@ export interface User {
   password: string;
   pregunta: string;
   respuesta: string;
-  role: string; // Asegúrate de que este campo exista
+  role: string;
+  url:string // Asegúrate de que este campo exista
 }
 
 
