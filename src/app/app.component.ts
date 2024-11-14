@@ -52,6 +52,9 @@ export class AppComponent implements OnInit {
           });
       });
     }
+
+    // Solicitar permiso para las notificaciones
+    this.requestNotificationPermission();
   }
 
   handleInput(): void {
@@ -77,5 +80,33 @@ export class AppComponent implements OnInit {
     setTimeout(() => {
       alertDiv.remove();
     }, 5000);
+  }
+
+  // Solicitar permiso para las notificaciones
+  requestNotificationPermission(): void {
+    if ('Notification' in window) {
+      if (Notification.permission === 'granted') {
+        this.showPeriodicNotification();
+      } else if (Notification.permission !== 'denied') {
+        Notification.requestPermission().then(permission => {
+          if (permission === 'granted') {
+            console.log('Permiso para notificaciones concedido');
+            this.showPeriodicNotification();
+          } else {
+            console.log('Permiso para notificaciones denegado');
+          }
+        });
+      }
+    }
+  }
+
+  // Función para mostrar notificación periódica cada minuto
+  showPeriodicNotification(): void {
+    setInterval(() => {
+      new Notification("¡Tienes una cita pendiente!", {
+        body: "Agenda una cita o mira nuestros servicios",
+        icon: './assets/images/logo.png'
+      });
+    }, 5000); // Cambiar a 60000 para 1 minuto en producción
   }
 }
