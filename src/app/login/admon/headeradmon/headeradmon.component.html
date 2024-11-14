@@ -145,6 +145,16 @@ app-header, app-footer {
         padding: 10px 20px;
     }
 }
+.profile-pic {
+    float: right; /* Mueve la imagen a la derecha */
+    margin-right: 10px;
+    margin-left: auto; /* Empuja la imagen a la derecha sin afectar otros elementos */
+}
+
+.logout-btn {
+    margin-left: 5px;
+}
+
 
     </style>   
    <header>
@@ -186,9 +196,13 @@ app-header, app-footer {
                             <br>
                             <li class="nav-item">
                                 <div class="logout-btn">
-                                    <button (click)="cerrarSesion()" class="btn btn-outline-light">Cerrar sesión</button>
+                                  <button (click)="cerrarSesion()" class="btn btn-outline-light">Cerrar sesión</button>
                                 </div>
-                            </li>
+                              </li>
+                              <!-- Imagen de perfil -->
+                                <li class="nav-item profile-pic">
+                                    <img *ngIf="dataUser.url" [src]="dataUser.url" alt="Perfil" class="rounded-circle" width="80" height="60">
+                                </li>
                         </ng-container>
                         <ng-container *ngIf="!isLoggedIn">
                             <li class="nav-item">

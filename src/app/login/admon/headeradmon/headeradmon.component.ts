@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataUser } from '../../interfaces/dataUser.interface';
 import { LoginService } from '../../services/login.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-headeradmon',
@@ -18,6 +19,21 @@ export class HeaderadmonComponent implements OnInit {
     private route: ActivatedRoute,
     private loginService: LoginService // Inyecta el servicio LoginService
   ) { }
+
+
+  totalItemsCarrito: number = 0;
+  carritoSubscription: Subscription | null = null;  // Inicializar en null
+  dataUser: DataUser = {
+    name: '',
+    lastNameP: '',
+    lastNameM: '',
+    email: '',
+    pregunta: '',
+    respuesta: '',
+    role: '',
+    url: '',  // Asegúrate de inicializar la URL de la imagen
+  };
+
 
   showAlert(message: string, alertClass: string) {
     // Crea un div para el mensaje
@@ -39,6 +55,15 @@ export class HeaderadmonComponent implements OnInit {
     this.menuVariable = !this.menuVariable;
   }
 
+  loadUserData() {
+    const idUser = localStorage.getItem('token');
+    if (idUser !== null) {
+      this.loginService.getDataUser(idUser).subscribe(data => {
+        this.dataUser = data;  // Asignar los datos del usuario a la propiedad dataUser
+      });
+    }
+  }
+
   checkLoggedIn() {
     this.loginService.isLoggedIn().subscribe((loggedIn: boolean) => {
       this.isLoggedIn = loggedIn; 
@@ -47,6 +72,7 @@ export class HeaderadmonComponent implements OnInit {
 
   ngOnInit() {
     this.checkLoggedIn();
+    this.loadUserData(); 
   }
 
   scrollToSection(sectionId: string): void {
