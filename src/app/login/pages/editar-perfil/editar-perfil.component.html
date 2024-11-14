@@ -1,5 +1,110 @@
-<app-header></app-header>
+<style>
+  /* Estilos generales para el formulario */
+.container {
+  max-width: 900px;
+  margin-top: 50px;
+}
 
+/* Estilos para la cámara */
+video {
+  width: 100%;
+  max-width: 400px;
+  margin-top: 20px;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+}
+
+/* Canvas para tomar la foto */
+canvas {
+  display: none;
+}
+
+/* Estilos para los botones */
+button {
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 10px 0;
+}
+
+/* Botón para activar cámara */
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Estilo para el botón de cámara activa */
+button[type="button"] {
+  background-color: #007bff;
+  color: white;
+  border: none;
+}
+
+button[type="button"]:hover {
+  background-color: #0056b3;
+}
+
+/* Estilos para la imagen de perfil */
+img {
+  max-width: 100%;
+  border-radius: 10px;
+  margin-top: 15px;
+}
+
+/* Sección del formulario de la cámara */
+.form-group {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #218838;
+}
+
+/* Estilo para los mensajes de error */
+.error-message {
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.error-message i {
+  margin-right: 5px;
+}
+
+.error-message.text-danger {
+  color: #dc3545;
+}
+
+/* Ajustes generales */
+.card {
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+  padding: 30px;
+}
+
+.card-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+</style>
+
+<app-header></app-header>
 <div class="container mt-5">
   <div class="row justify-content-center">
     <div class="col-md-6">
@@ -103,28 +208,26 @@
               </div>
             </div>
 
-            <!-- SELECCIONAR LA IMAGEN -->
-            <div class="mb-3">
-              <label for="image" class="form-label">Imagen de Perfil:</label>
-              <input type="file" (change)="onFileChange($event)" class="form-control" />
+             <!-- SELECCIONAR LA IMAGEN -->
+             <div class="form-group">
+              <label for="url">Imagen de Perfil</label>
+              <input type="file" id="fileInput" (change)="onFileChange($event)" class="form-control" />
               <div *ngIf="myForm.get('url')?.value">
-                <img [src]="myForm.get('url')?.value" alt="Imagen de perfil" class="img-thumbnail" width="200" />
+                <img [src]="myForm.get('url')?.value" alt="Imagen de perfil" class="img-fluid mt-3" />
               </div>
             </div>
-            <div class="mb-3">
-              <label class="form-label">Tomar Foto:</label>
+
+            <!-- Video y cámara -->
+            <div class="container mt-5 text-center">
+              <button (click)="activateCamera()" [disabled]="isCameraActive">Activar Cámara</button>
+              
               <div *ngIf="isCameraActive">
-                <video #videoElement width="100%" height="auto" autoplay></video>
-                <br />
-                <button type="button" class="btn btn-primary" (click)="takePhoto()">Tomar Foto</button>
-                <button type="button" class="btn btn-danger" (click)="stopCamera()">Detener Cámara</button>
+                <button (click)="takePhoto()">Tomar Foto</button>
+                <button (click)="stopCamera()">Detener Cámara</button>
               </div>
-              <div *ngIf="photoTaken">
-                <img [src]="photoTaken" alt="Foto tomada" class="img-fluid mt-3" />
-              </div>
-              <div *ngIf="!isCameraActive && !photoTaken">
-                <button type="button" class="btn btn-success" (click)="activateCamera()">Activar Cámara</button>
-              </div>
+              
+              <video #videoElement autoplay></video>
+              <canvas #canvasElement style="display: none;"></canvas>
             </div>
 
             <!-- BOTÓN CENTRADO -->
