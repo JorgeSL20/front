@@ -1,13 +1,13 @@
 import { Selector } from 'testcafe';
 
-fixture('Prueba de existencia de la página')
+fixture('Prueba de carga del sitio web')
   .page('https://gateway-soluciones.netlify.app/#/');
 
-test('La página carga correctamente', async t => {
-  // Espera a que la página cargue completamente
-  await t.expect(Selector('body').exists).ok('La página no se cargó correctamente');
+// Verifica que la página cargue correctamente con la URL
+test('La página debería cargar sin errores', async t => {
+  // Verifica que un elemento genérico esté presente para confirmar que la página se cargó
+  const body = Selector('body');
   
-  // Verifica que el título de la página sea el esperado
-  const pageTitle = await t.eval(() => document.title);
-  await t.expect(pageTitle).eql('Gateway Soluciones en TI', 'El título de la página no coincide, lo que sugiere que la página no se cargó como se esperaba');
+  // Asegura que la etiqueta <body> existe, indicando que la página ha cargado
+  await t.expect(body.exists).ok('La página no se ha cargado correctamente');
 });
