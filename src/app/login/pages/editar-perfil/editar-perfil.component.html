@@ -219,6 +219,8 @@ button:hover {
 
             <!-- Video y cámara -->
             <div class="container mt-5 text-center">
+              <video #videoElement autoplay></video>
+              <canvas #canvasElement style="display: none;"></canvas>
               <button (click)="activateCamera()" [disabled]="isCameraActive">Activar Cámara</button>
               
               <div *ngIf="isCameraActive">
@@ -226,8 +228,7 @@ button:hover {
                 <button (click)="stopCamera()">Detener Cámara</button>
               </div>
               
-              <video #videoElement autoplay></video>
-              <canvas #canvasElement style="display: none;"></canvas>
+              
             </div>
 
             <!-- BOTÓN CENTRADO -->

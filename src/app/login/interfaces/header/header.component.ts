@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { LoginService } from '../../services/login.service';
 import { CarritoService } from '../../services/carrito.service';
 import { Subscription } from 'rxjs';
+import { DataUser } from '../../interfaces/dataUser.interface'; // Asegúrate de importar DataUser
 
 @Component({
   selector: 'app-header',
@@ -15,6 +16,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isLoggedIn: boolean = false;
   totalItemsCarrito: number = 0;
   carritoSubscription: Subscription | null = null;  // Inicializar en null
+  dataUser: DataUser = {
+    name: '',
+    lastNameP: '',
+    lastNameM: '',
+    email: '',
+    pregunta: '',
+    respuesta: '',
+    role: '',
+    url: '',  // Asegúrate de inicializar la URL de la imagen
+  };
 
   constructor(
     private router: Router,
@@ -42,8 +53,20 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   checkLoggedIn() {
     this.loginService.isLoggedIn().subscribe((loggedIn: boolean) => {
-      this.isLoggedIn = loggedIn; 
+      this.isLoggedIn = loggedIn;
+      if (this.isLoggedIn) {
+        this.loadUserData();  // Cargar los datos del usuario cuando esté logueado
+      }
     });
+  }
+
+  loadUserData() {
+    const idUser = localStorage.getItem('token');
+    if (idUser !== null) {
+      this.loginService.getDataUser(idUser).subscribe(data => {
+        this.dataUser = data;  // Asignar los datos del usuario a la propiedad dataUser
+      });
+    }
   }
 
   ngOnInit() {
@@ -93,5 +116,4 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.router.navigate(['login']);
     this.showAlert('Sesión cerrada con éxito', 'alert-success');
   }
-
 }

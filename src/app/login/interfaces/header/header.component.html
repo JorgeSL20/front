@@ -1,189 +1,215 @@
 <style>
-header {
-  background-color: #031d40; /* Fondo azul */
-  padding: 10px 0;
-  position: relative;
-}
-
-.menu_icon {
-  display: none;
-  cursor: pointer;
-  position: absolute;
-  right: 10px; /* Mover el botón del menú a la derecha */
-  top: 10px; /* Ajustar la posición verticalmente */
-  z-index: 1200; /* Asegurar que esté por encima del menú desplegable */
-}
-
-.menu_icon span {
-  display: block;
-  width: 25px;
-  height: 3px;
-  margin: 5px auto;
-  background-color: white;
-}
-
-.menu {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.menu ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-.menu li {
-  display: block;
-  margin-left: 0; /* Eliminado el margen izquierdo para las opciones del menú */
-  margin-bottom: 10px; /* Espacio entre cada elemento del menú */
-}
-
-.menu li:last-child {
-  margin-bottom: 0; /* Sin margen inferior para el último elemento del menú */
-}
-
-.menu li a {
-  color: white;
-  text-decoration: none;
-  padding: 10px 20px;
-  transition: all 0.3s ease; /* Transición suave para efectos hover */
-  display: block; /* Hacer que los enlaces ocupen todo el ancho del menú */
-}
-
-.menu li a:hover {
-  background-color: rgba(255, 255, 255, 0.1); /* Color de fondo al hacer hover */
-  border-radius: 5px; /* Bordes redondeados */
-}
-
-.menu .logout-btn {
-  text-align: center; /* Centrar el botón de cerrar sesión */
-}
-
-.badge {
-  position: relative;
-  top: -15px;
-  right: 10px;
-  padding: 5px 10px;
-  border-radius: 50%;
-  background-color: red;
-  color: white;
-}
-
-
-@media (max-width: 768px) {
-  .menu {
-    display: none;
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 250px;
-    height: 100%;
-    background-color: #031d40;
-    flex-direction: column;
-    align-items: start;
-    padding-top: 20px;
-    transition: transform 0.3s ease-in-out;
-    transform: translateX(100%);
-    z-index: 1100; /* Asegura que esté sobre otros elementos */
+  header {
+    background-color: #031d40; /* Fondo azul */
+    padding: 10px 0;
+    position: relative;
   }
-
+  
   .menu_icon {
+    display: none;
+    cursor: pointer;
+    position: absolute;
+    right: 10px; /* Mover el botón del menú a la derecha */
+    top: 10px; /* Ajustar la posición verticalmente */
+    z-index: 1200; /* Asegurar que esté por encima del menú desplegable */
+  }
+  
+  .menu_icon span {
     display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    background-color: white;
   }
-
-  .menu.active {
+  
+  .menu {
     display: flex;
-    transform: translateX(0);
+    justify-content: flex-end;
   }
-
+  
+  .menu ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
   .menu li {
     display: block;
-    margin: 10px 0;
-    width: 100%;
+    margin-left: 0; /* Eliminado el margen izquierdo para las opciones del menú */
+    margin-bottom: 10px; /* Espacio entre cada elemento del menú */
   }
-
+  
+  .menu li:last-child {
+    margin-bottom: 0; /* Sin margen inferior para el último elemento del menú */
+  }
+  
   .menu li a {
-    width: 100%;
+    color: white;
+    text-decoration: none;
     padding: 10px 20px;
+    transition: all 0.3s ease; /* Transición suave para efectos hover */
+    display: block; /* Hacer que los enlaces ocupen todo el ancho del menú */
   }
-
+  
   .menu li a:hover {
     background-color: rgba(255, 255, 255, 0.1); /* Color de fondo al hacer hover */
     border-radius: 5px; /* Bordes redondeados */
   }
-
+  
   .menu .logout-btn {
     text-align: center; /* Centrar el botón de cerrar sesión */
   }
-  .nav-item mat-icon {
-  font-size: 24px; /* Ajusta el tamaño del icono */
-  color: #000; /* Ajusta el color del icono */
-}
-
   
-}
-
-</style>
-    
+  .badge {
+    position: relative;
+    top: -15px;
+    right: 10px;
+    padding: 5px 10px;
+    border-radius: 50%;
+    background-color: red;
+    color: white;
+  }
+  
+  .user-profile {
+    display: inline-block;
+    margin-right: 20px;
+  }
+  
+  .user-profile .img-profile {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  @media (max-width: 768px) {
+    .menu {
+      display: none;
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 250px;
+      height: 100%;
+      background-color: #031d40;
+      flex-direction: column;
+      align-items: start;
+      padding-top: 20px;
+      transition: transform 0.3s ease-in-out;
+      transform: translateX(100%);
+      z-index: 1100;
+    }
+  
+    .menu_icon {
+      display: block;
+    }
+  
+    .menu.active {
+      display: flex;
+      transform: translateX(0);
+    }
+  
+    .menu li {
+      display: block;
+      margin: 10px 0;
+      width: 100%;
+    }
+  
+    .menu li a {
+      width: 100%;
+      padding: 10px 20px;
+    }
+  
+    .menu li a:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 5px;
+    }
+  
+    .nav-item mat-icon {
+      font-size: 24px;
+      color: #000;
+    }
+  }
+  
+  .nav-item {
+    margin-right: 5px; /* Agrega espacio entre los elementos si están en línea */
+  }
+  
+  .profile-pic {
+    margin-right: 10px; /* Aumenta el margen derecho de la imagen para separarla más */
+    position: absolute;
+    right: 10px; /* La imagen se alinea a la derecha con un pequeño margen */
+  }
+  
+  .logout-btn {
+    margin-left: 5px; /* Agrega margen izquierdo al botón de cerrar sesión */
+  }
+  </style>
+  
     
     
 <header>
-    <div class="container">
-      <div class="row align-items-center">
-        <div class="col-md-3 col-sm-3 col-3">
-          <div class="menu_icon" (click)="openMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-          <div class="logo">
-            <img src="../assets/logoblanco.jpg" alt="" srcset="">
-          </div>
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-3 col-sm-3 col-3">
+        <div class="menu_icon" (click)="openMenu()">
+          <span></span>
+          <span></span>
+          <span></span>
         </div>
-        <div class="col-md-9 col-sm-9 col-9">
-          <div class="menu text-end" [class.active]="menuVariable">
-            <ul class="nav">
-              <ng-container *ngIf="isLoggedIn">
-                <li class="nav-item">
-                  <a class="nav-link active" routerLink="/user/inicio" routerLinkActive="active-link">Inicio</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" routerLink="/user/productospublicos" routerLinkActive="active-link">Productos</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" routerLink="/user/perfil" routerLinkActive="active-link">Mi perfil</a>
-                </li>
-                <br>
-                <li class="nav-item">
-                  <a class="nav-link active" routerLink="/user/mi-carrito" routerLinkActive="active-link">
-                    <mat-icon> shopping_cart</mat-icon>
-                     <!-- Mostrar el número de productos solo si hay productos en el carrito -->
+        <div class="logo">
+          <img src="../assets/logoblanco.jpg" alt="" srcset="" width="190" height="80">
+        </div>
+      </div>
+      <div class="col-md-9 col-sm-9 col-9">
+        <div class="menu text-end" [class.active]="menuVariable">
+          <ul class="nav">
+            <ng-container *ngIf="isLoggedIn">
+              <li class="nav-item">
+                <a class="nav-link active" routerLink="/user/inicio" routerLinkActive="active-link">Inicio</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLink="/user/productospublicos" routerLinkActive="active-link">Productos</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLink="/user/perfil" routerLinkActive="active-link">Mi perfil</a>
+              </li>
+              <br>
+              <li class="nav-item">
+                <a class="nav-link active" routerLink="/user/mi-carrito" routerLinkActive="active-link">
+                  <mat-icon> shopping_cart</mat-icon>
                   <span *ngIf="totalItemsCarrito > 0" class="badge bg-danger">{{ totalItemsCarrito }}</span>
-                  </a>
-                </li>
+                </a>
+              </li>
 
-                <li class="nav-item">
-                  <div class="logout-btn">
-                    <button (click)="cerrarSesion()" class="btn btn-outline-light">Cerrar sesión</button>
-                  </div>
-                </li>
-              </ng-container>
-              <ng-container *ngIf="!isLoggedIn">
-                <li class="nav-item">
-                  <a class="nav-link" routerLink="/" routerLinkActive="active-link">Productos</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" routerLink="/login" routerLinkActive="active-link">Login</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" routerLink="/registro" routerLinkActive="active-link">Registrarse</a>
-                </li>
-              </ng-container>
-            </ul>
-          </div>
+              <li class="nav-item">
+                <div class="logout-btn">
+                  <button (click)="cerrarSesion()" class="btn btn-outline-light">Cerrar sesión</button>
+                </div>
+              </li>
+
+              <li class="nav-item">
+                <div class="profile-pic">
+                  <img *ngIf="dataUser.url" [src]="dataUser.url" alt="Perfil" class="rounded-circle" width="80" height="60">
+                </div>
+              </li>
+              
+              
+              
+            </ng-container>
+            <ng-container *ngIf="!isLoggedIn">
+              <li class="nav-item">
+                <a class="nav-link" routerLink="/" routerLinkActive="active-link">Productos</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLink="/login" routerLinkActive="active-link">Login</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLink="/registro" routerLinkActive="active-link">Registrarse</a>
+              </li>
+            </ng-container>
+          </ul>
         </div>
       </div>
     </div>
-  </header>
-  
+  </div>
+</header>

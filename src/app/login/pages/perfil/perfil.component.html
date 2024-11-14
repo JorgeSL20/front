@@ -1,3 +1,102 @@
+<style>
+  /* Estilo general de la página */
+.container {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.card {
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.card-title {
+  font-size: 1.5rem;
+  color: #007bff;
+  font-weight: bold;
+}
+
+.list-group-item {
+  font-size: 1rem;
+  padding: 12px;
+}
+
+.list-group-item strong {
+  color: #333;
+}
+
+.img-fluid {
+  border-radius: 50%;
+  margin-top: 20px;
+  border: 2px solid #007bff;
+}
+
+.card-footer {
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-top: 1px solid #e9ecef;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+  padding: 10px 20px;
+  font-size: 1rem;
+  text-align: center;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+  .container {
+    margin-top: 20px;
+  }
+
+  .card {
+    border-radius: 8px;
+    box-shadow: none;
+  }
+
+  .card-body {
+    padding: 15px;
+  }
+
+  .img-fluid {
+    max-width: 80px;
+    border: 2px solid #007bff;
+  }
+
+  .card-footer {
+    padding: 10px;
+  }
+
+  .btn-primary {
+    width: 100%;
+  }
+}
+
+</style>
+
 <app-header></app-header>
 
 <div class="container mt-5">
@@ -15,15 +114,16 @@
             <li class="list-group-item"><strong>Correo Electrónico:</strong> {{ dataUser.email }}</li>
             <li class="list-group-item"><strong>Pregunta para recuperacion:</strong> {{ dataUser.pregunta }}</li>
             <li class="list-group-item"><strong>Respuesta para recuperacion:</strong> {{ dataUser.respuesta }}</li>
+            <li class="list-group-item"><strong>Foto de perfil</strong><br><img [src]="dataUser.url" alt="Imagen del usuario" class="img-fluid img-thumbnail" style="max-width: 100px;"></li>
           </ul>
         </div>
-        <div class="card-footer text-center"> <!-- Agregamos la clase text-center aquí -->
-          <button routerLink="/user/editarperfil" class="btn btn-primary">Editar Perfil</button> <!-- Quitamos la clase btn-block -->
+        <div class="card-footer text-center">
+          <button routerLink="/user/editarperfil" class="btn btn-primary">Editar Perfil</button>
         </div>
       </div>
     </div>
   </div>
 </div>
+
 <br><br><br><br>
 <app-footer></app-footer>
-
