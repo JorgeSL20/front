@@ -43,6 +43,6 @@ export class AppModule {
       navigator.serviceWorker.register('/custom-service-worker.js')
         .then(reg => console.log('Custom Service Worker registrado:', reg))
         .catch(err => console.error('Error al registrar el Custom Service Worker:', err));
-    }
+    }
   }
 }
