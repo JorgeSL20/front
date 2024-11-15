@@ -9,7 +9,7 @@ if (environment.production && environment.useServiceWorker) {
 
   // Registro del Service Worker
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/custom-service-worker.js') // Cambia a '/sw.js'
+    navigator.serviceWorker.register('./custom-service-worker.js') // Cambia a '/sw.js'
       .then((registration) => {
         console.log('Service Worker registrado con éxito:', registration);
 
