@@ -15,8 +15,8 @@ self.addEventListener('install', (event) => {
   
   function showNotification() {
     if (Notification.permission === 'granted') {
-      self.registration.showNotification("¡Tienes una cita pendiente!", {
-        body: "Agenda una cita o mira nuestros servicios",
+      self.registration.showNotification("¡Dale un vistaso a nuestros productos!", {
+        body: "Miara nuestros productos",
         icon: './assets/logo.png'
       }).catch(error => {
         console.error("Error al mostrar la notificación:", error);
