@@ -24,19 +24,19 @@ self.addEventListener('install', (event) => {
   
   
   self.addEventListener('message', (event) => {
-  console.log('Mensaje recibido del cliente:', event.data);
+    console.log('Mensaje recibido del cliente:', event.data);
+    
+    if (event.data && event.data.type === 'SHOW_NOTIFICATION') {
+      showNotification();
+    }
   
-  if (event.data && event.data.type === 'SHOW_NOTIFICATION') {
-    showNotification();
-  }
-
-  event.waitUntil(
-    self.clients.matchAll().then((clients) => {
-      clients.forEach(client => {
-        client.postMessage({ message: 'Respuesta desde el Service Worker' });
-      });
-    })
-  );
-});
-
+    event.waitUntil(
+      self.clients.matchAll().then((clients) => {
+        clients.forEach(client => {
+          client.postMessage({ message: 'Respuesta desde el Service Worker' });
+        });
+      })
+    );
+  });
+  
   
