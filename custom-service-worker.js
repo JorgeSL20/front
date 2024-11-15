@@ -5,23 +5,27 @@ self.addEventListener('install', (event) => {
   
   self.addEventListener('activate', (event) => {
     console.log('Service Worker activado');
-    event.waitUntil(self.clients.claim());
-  
-    // Enviar notificación de prueba al activar el Service Worker
-    showNotification();
+    event.waitUntil(
+      self.clients.claim().then(() => {
+        console.log('Claim realizado, control total del cliente');
+        showNotification();
+      })
+    );
   });
   
-  // Función para enviar una notificación
   function showNotification() {
-    self.registration.showNotification("¡Tienes una cita pendiente!", {
-      body: "Agenda una cita o mira nuestros servicios",
-      icon: './assets/logo.png'
-    }).catch(error => {
-      console.error("Error al mostrar la notificación:", error);
-    });
+    if (Notification.permission === 'granted') {
+      self.registration.showNotification("¡Tienes una cita pendiente!", {
+        body: "Agenda una cita o mira nuestros servicios",
+        icon: './assets/logo.png'
+      }).catch(error => {
+        console.error("Error al mostrar la notificación:", error);
+      });
+    } else {
+      console.warn("No se puede mostrar la notificación: permiso no concedido.");
+    }
   }
   
-  // Asegúrate de manejar los mensajes correctamente
   self.addEventListener('message', (event) => {
     console.log('Mensaje recibido:', event.data);
     event.waitUntil(
@@ -29,6 +33,7 @@ self.addEventListener('install', (event) => {
         clients.forEach(client => {
           client.postMessage({ message: 'Respuesta desde el Service Worker' });
         });
-      })
-    );
+      })
+    );
   });
+  
