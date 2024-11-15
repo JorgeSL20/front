@@ -5,35 +5,38 @@ self.addEventListener('install', (event) => {
   
   self.addEventListener('activate', (event) => {
     console.log('Service Worker activado');
-    event.waitUntil(
-      self.clients.claim().then(() => {
-        console.log('Claim realizado, control total del cliente');
-        showNotification();
-      })
-    );
+    event.waitUntil(self.clients.claim());
   });
+  
   
   function showNotification() {
     if (Notification.permission === 'granted') {
-      self.registration.showNotification("¡Dale un vistaso a nuestros productos!", {
-        body: "Miara nuestros productos",
-        icon: './assets/logo.png'
+      self.registration.showNotification("¡Dale un vistazo a nuestros productos!", {
+        body: "Mira nuestros productos",
+        icon: '/assets/logo.png'
       }).catch(error => {
         console.error("Error al mostrar la notificación:", error);
       });
     } else {
-      console.warn("No se puede mostrar la notificación: permiso no concedido.");
+      console.warn("Permiso de notificaciones no concedido.");
     }
   }
   
+  
   self.addEventListener('message', (event) => {
-    console.log('Mensaje recibido:', event.data);
-    event.waitUntil(
-      self.clients.matchAll().then((clients) => {
-        clients.forEach(client => {
-          client.postMessage({ message: 'Respuesta desde el Service Worker' });
-        });
-      })
-    );
-  });
+  console.log('Mensaje recibido del cliente:', event.data);
+  
+  if (event.data && event.data.type === 'SHOW_NOTIFICATION') {
+    showNotification();
+  }
+
+  event.waitUntil(
+    self.clients.matchAll().then((clients) => {
+      clients.forEach(client => {
+        client.postMessage({ message: 'Respuesta desde el Service Worker' });
+      });
+    })
+  );
+});
+
   
