@@ -28,6 +28,9 @@ export class LoginService {
   getUserByEmail(emai:string){
     return this.http.get<User>(this.url + 'auth/'+emai)
   }
+  getToken(): string | null {
+    return localStorage.getItem('token');
+  }
   crearUsuario(userNew:User){
     return this.http.post<User>(this.url + 'auth', userNew)
   }
