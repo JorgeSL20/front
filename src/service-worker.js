@@ -18,16 +18,3 @@ self.addEventListener('message', (event) => {
   }
 });
 
-// Función para mostrar la notificación
-function showNotification() {
-  if (Notification.permission === 'granted') {
-    self.registration.showNotification("¡Bienvenido de nuevoooooooo!", {
-      body: "Checa nuestros productos en oferta",
-      icon: './assets/logo.png', // Ruta al icono
-    }).catch(error => {
-      console.error("Error al mostrar la notificación:", error);
-    });
-  } else {
-    console.warn('Permisos de notificación no otorgados.');
-  }
-}

@@ -44,10 +44,18 @@ export class LoginComponent {
   
             // Mostrar la alerta de sesión iniciada con éxito
             this.showAlert('Sesión iniciada con éxito, Bienvenida@', 'alert-success');
-            
-            // Enviar la notificación inmediatamente después de la alerta
-            this.sendNotification();
-
+  
+            // Enviar mensaje al Service Worker
+            if ('serviceWorker' in navigator) {
+              navigator.serviceWorker.ready.then(registration => {
+                registration.active?.postMessage({
+                  type: 'LOGIN_SUCCESS'
+                });
+              }).catch(err => {
+                console.error('Error al enviar mensaje al Service Worker:', err);
+              });
+            }
+  
             if (res.role === 'admin') {
               this.router.navigate(['/admin/inicioadmin']);
             } else {
@@ -66,6 +74,7 @@ export class LoginComponent {
       console.log(error);
     }
   }
+  
   
   sendNotification() {
     // Verificar si el navegador soporta notificaciones y si el permiso fue otorgado
