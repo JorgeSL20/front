@@ -13,13 +13,18 @@ self.addEventListener('install', (event) => {
   
   // Función para enviar una notificación
   function showNotification() {
-    self.registration.showNotification("¡Tienes una cita pendiente!", {
-      body: "Agenda una cita o mira nuestros servicios",
-      icon: './assets/logo.png'
-    }).catch(error => {
-      console.error("Error al mostrar la notificación:", error);
-    });
+    if (self.registration) {
+      self.registration.showNotification("¡Notificación de prueba!", {
+        body: "Esto es una prueba de notificaciones",
+        icon: './assets/logo.png' // Asegúrate de que la ruta es correcta
+      }).catch(error => {
+        console.error("Error al mostrar la notificación:", error);
+      });
+    } else {
+      console.error("El Service Worker no está registrado.");
+    }
   }
+  
   
   // Asegúrate de manejar los mensajes correctamente
   self.addEventListener('message', (event) => {

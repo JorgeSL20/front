@@ -7,13 +7,23 @@ platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => console.error(err));
 
   if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('service-worker.js').then((registration) => {
+    navigator.serviceWorker.register('service-worker.js')
+      .then(registration => {
         console.log('Service Worker registrado:', registration);
-      }).catch((error) => {
+  
+        // Prueba enviar una notificación inmediatamente
+        if (Notification.permission === 'granted') {
+          registration.showNotification('¡Notificación de prueba!', {
+            body: 'Esto es una prueba de notificaciones',
+            icon: './assets/logo.png'
+          }).catch(error => {
+            console.error('Error al mostrar la notificación:', error);
+          });
+        }
+      })
+      .catch(error => {
         console.error('Error al registrar el Service Worker:', error);
       });
-    });
-    
   }
+  
   
