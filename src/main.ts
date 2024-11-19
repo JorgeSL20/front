@@ -14,5 +14,6 @@ platformBrowserDynamic().bootstrapModule(AppModule)
         console.error('Error al registrar el Service Worker:', error);
       });
     });
+    
   }
   
