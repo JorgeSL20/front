@@ -42,24 +42,17 @@ export class LoginComponent {
             localStorage.setItem("token", res.token.toString());
             localStorage.setItem("userRole", res.role);
   
-            // Asegurarse de que el Service Worker esté disponible y listo
-            if ('serviceWorker' in navigator && Notification.permission === 'granted') {
-              navigator.serviceWorker.ready.then(swRegistration => {
-                console.log('Service Worker está listo');
-                // Envía el mensaje directamente después de login
-                swRegistration.active?.postMessage({ type: 'LOGIN_SUCCESS' });
-              }).catch(err => {
-                console.error('Error en el Service Worker:', err);
-              });
-            }
+            // Mostrar la alerta de sesión iniciada con éxito
+            this.showAlert('Sesión iniciada con éxito, Bienvenida@', 'alert-success');
+            
+            // Enviar la notificación inmediatamente después de la alerta
+            this.sendNotification();
   
             if (res.role === 'admin') {
               this.router.navigate(['/admin/inicioadmin']);
             } else {
               this.router.navigate(['/user/inicio']);
             }
-  
-            this.showAlert('Sesión iniciada con éxito, Bienvenida@', 'alert-success');
           } else {
             this.handleLoginError(res.status);
           }
@@ -71,6 +64,20 @@ export class LoginComponent {
     } catch (error) {
       this.showAlert('Error en el servidor', 'alert-danger');
       console.log(error);
+    }
+  }
+  
+  sendNotification() {
+    // Verificar si el navegador soporta notificaciones y si el permiso fue otorgado
+    if ('serviceWorker' in navigator && Notification.permission === 'granted') {
+      navigator.serviceWorker.ready.then(swRegistration => {
+        // Enviar un mensaje al Service Worker para mostrar la notificación
+        swRegistration.active?.postMessage({ type: 'LOGIN_SUCCESS' });
+      }).catch(err => {
+        console.error('Error al registrar el Service Worker:', err);
+      });
+    } else {
+      console.warn('Permiso de notificación no otorgado o el Service Worker no está disponible.');
     }
   }
   
