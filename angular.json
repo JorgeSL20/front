@@ -16,7 +16,6 @@
             "outputPath": "dist/gatewayfront",
             "index": "src/index.html",
             "browser": "src/main.ts",
-            "ngswConfigPath": "ngsw-config.json",
             "polyfills": [
               "zone.js"
             ],
