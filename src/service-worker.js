@@ -17,7 +17,7 @@ self.addEventListener('message', (event) => {
 });
 
 function showNotification() {
-  if (Notification.permission === 'granted' && self.registration) {
+  if (Notification.permission === 'granted') {
     console.log('Mostrando notificación...'); // Depuración
     self.registration.showNotification("¡Dale un vistazo a nuestros productos!", {
       body: "Checa nuestros productos en oferta",
@@ -26,6 +26,6 @@ function showNotification() {
       console.error("Error al mostrar la notificación:", error);
     });
   } else {
-    console.warn('Permisos de notificación no otorgados o Service Worker no registrado.');
+    console.warn('Permisos de notificación no otorgados.');
   }
 }
