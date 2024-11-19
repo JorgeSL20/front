@@ -9,17 +9,17 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('message', (event) => {
-  console.log('Mensaje recibido en el Service Worker:', event.data); // Depuración
+  console.log('Mensaje recibido en el Service Worker:', event.data);
+
   if (event.data && event.data.type === 'LOGIN_SUCCESS') {
-    console.log('Evento LOGIN_SUCCESS recibido, mostrando notificación...'); // Depuración
+    console.log('Evento LOGIN_SUCCESS recibido, mostrando notificación...');
     showNotification();
   }
 });
 
 function showNotification() {
   if (Notification.permission === 'granted') {
-    console.log('Mostrando notificación...'); // Depuración
-    self.registration.showNotification("¡Dale un vistazo a nuestros productos!", {
+    self.registration.showNotification("¡Bienvenido de nuevo!", {
       body: "Checa nuestros productos en oferta",
       icon: './assets/logo.png',
     }).catch(error => {

@@ -42,9 +42,14 @@ export class LoginComponent {
             localStorage.setItem("token", res.token.toString());
             localStorage.setItem("userRole", res.role);
   
+            // Asegurarse de que el Service Worker esté disponible y listo
             if ('serviceWorker' in navigator && Notification.permission === 'granted') {
               navigator.serviceWorker.ready.then(swRegistration => {
+                console.log('Service Worker está listo');
+                // Envía el mensaje directamente después de login
                 swRegistration.active?.postMessage({ type: 'LOGIN_SUCCESS' });
+              }).catch(err => {
+                console.error('Error en el Service Worker:', err);
               });
             }
   
