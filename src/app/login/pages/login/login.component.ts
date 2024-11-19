@@ -28,7 +28,7 @@ export class LoginComponent {
       this.myForm.markAllAsTouched();
       return;
     }
-  
+
     try {
       let fecha = new Date().toLocaleDateString();
       this.loginService.getIp().subscribe(data => {
@@ -41,19 +41,24 @@ export class LoginComponent {
           if (res.status === 200) {
             localStorage.setItem("token", res.token.toString());
             localStorage.setItem("userRole", res.role);
-  
+
+            // Asegurarse de que el Service Worker está listo
             if ('serviceWorker' in navigator && Notification.permission === 'granted') {
               navigator.serviceWorker.ready.then(swRegistration => {
+                console.log('Service Worker listo');
+                // Solo después de que esté listo, enviar el mensaje
                 swRegistration.active?.postMessage({ type: 'LOGIN_SUCCESS' });
+              }).catch(error => {
+                console.error('Error al esperar que el Service Worker esté listo', error);
               });
             }
-  
+
             if (res.role === 'admin') {
               this.router.navigate(['/admin/inicioadmin']);
             } else {
               this.router.navigate(['/user/inicio']);
             }
-  
+
             this.showAlert('Sesión iniciada con éxito, Bienvenida@', 'alert-success');
           } else {
             this.handleLoginError(res.status);
@@ -68,7 +73,7 @@ export class LoginComponent {
       console.log(error);
     }
   }
-  
+
   
 
   

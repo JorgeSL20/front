@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
       }).catch(error => {
         console.error("Error al solicitar permiso para notificaciones:", error);
       });
-    }
+    }    
 
     // Suscribirse a los eventos de navegación
     this.router.events.subscribe(event => {

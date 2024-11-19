@@ -41,8 +41,13 @@ export class AppModule {
     // Verifica si el navegador soporta Service Workers y registra el personalizado
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('service-worker.js')
-        .then(reg => console.log('Custom Service Worker registrado:', reg))
-        .catch(err => console.error('Error al registrar el Custom Service Worker:', err));
+        .then(registration => {
+          console.log('Service Worker registrado con éxito:', registration);
+        })
+        .catch(error => {
+          console.error('Error al registrar el Service Worker:', error);
+        });
     }
+    
   }
 }
