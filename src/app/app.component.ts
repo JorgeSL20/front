@@ -19,6 +19,19 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    // Solicitar permisos para notificaciones
+    if ('Notification' in window && 'serviceWorker' in navigator) {
+      Notification.requestPermission().then((permission) => {
+        if (permission === 'granted') {
+          console.log('Permiso para notificaciones concedido.');
+        } else {
+          console.log('Permiso para notificaciones denegado.');
+        }
+      }).catch(error => {
+        console.error("Error al solicitar permiso para notificaciones:", error);
+      });
+    }
+
     // Suscribirse a los eventos de navegación
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
