@@ -11,19 +11,25 @@ self.addEventListener('install', (event) => {
     showNotification();
   });
   
+  self.addEventListener('message', (event) => {
+    if (event.data && event.data.type === 'LOGIN_SUCCESS') {
+      // Mostrar una notificación al iniciar sesión
+      showNotification();
+    }
+  });
+  
   // Función para enviar una notificación
   function showNotification() {
-    if (Notification.permission === 'granted') {
-      registration.showNotification("¡Dale un vistaso a nuestros productos!", {
-        body: "Checa nuestros proctos ",
-        icon: './assets/logo.png' // Asegúrate de que la ruta es correcta
+    if (Notification.permission === 'granted' && self.registration) {
+      self.registration.showNotification("¡Dale un vistazo a nuestros productos!", {
+        body: "Checa nuestros productos en oferta",
+        icon: './assets/logo.png',
       }).catch(error => {
         console.error("Error al mostrar la notificación:", error);
       });
-    } else {
-      console.error("El Service Worker no está registrado.");
     }
   }
+  
   
   
   // Asegúrate de manejar los mensajes correctamente

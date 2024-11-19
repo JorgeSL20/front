@@ -40,16 +40,18 @@ export class LoginComponent {
         }).subscribe(res => {
           if (res.status === 200) {
             localStorage.setItem("token", res.token.toString());
-            localStorage.setItem("userRole", res.role); // Guarda el rol del usuario en localStorage
+            localStorage.setItem("userRole", res.role);
+  
+            if ('serviceWorker' in navigator && Notification.permission === 'granted') {
+              navigator.serviceWorker.ready.then(swRegistration => {
+                swRegistration.active?.postMessage({ type: 'LOGIN_SUCCESS' });
+              });
+            }
   
             if (res.role === 'admin') {
-              this.router.navigate(['/admin/inicioadmin']).then(() => {
-                window.location.reload(); // Forzar recarga después de la redirección
-              });
+              this.router.navigate(['/admin/inicioadmin']);
             } else {
-              this.router.navigate(['/user/inicio']).then(() => {
-                window.location.reload(); // Forzar recarga después de la redirección
-              });
+              this.router.navigate(['/user/inicio']);
             }
   
             this.showAlert('Sesión iniciada con éxito, Bienvenida@', 'alert-success');
@@ -66,6 +68,7 @@ export class LoginComponent {
       console.log(error);
     }
   }
+  
   
 
   
