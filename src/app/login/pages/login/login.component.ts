@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { LoginService } from '../../services/login.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NotificationService } from '../../services/notification.service'; // Importa el servicio
 
 @Component({
   selector: 'app-login',
@@ -10,12 +9,7 @@ import { NotificationService } from '../../services/notification.service'; // Im
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  constructor(
-    private loginService: LoginService, 
-    private fb: FormBuilder, 
-    private router: Router,
-    private notificationService: NotificationService // Inyecta el servicio
-  ) { }
+  constructor(private loginService: LoginService, private fb: FormBuilder, private router: Router) { }
 
   emailPattern: string = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$";
   passwordVisible: boolean = false;
@@ -26,6 +20,8 @@ export class LoginComponent {
     email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
     password: ['', [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]).{8,}$/)]],
   });
+
+  // src/app/login/login.component.ts
 
   auth() {
     if (this.myForm.invalid) {
@@ -49,8 +45,8 @@ export class LoginComponent {
             // Mostrar la alerta de sesión iniciada con éxito
             this.showAlert('Sesión iniciada con éxito, Bienvenida@', 'alert-success');
             
-            // Usar el servicio NotificationService para enviar la notificación
-            this.notificationService.sendLoginNotification();
+            // Enviar la notificación inmediatamente después de la alerta
+            this.sendNotification();
 
             if (res.role === 'admin') {
               this.router.navigate(['/admin/inicioadmin']);
@@ -70,7 +66,6 @@ export class LoginComponent {
       console.log(error);
     }
   }
-
   
   sendNotification() {
     // Verificar si el navegador soporta notificaciones y si el permiso fue otorgado

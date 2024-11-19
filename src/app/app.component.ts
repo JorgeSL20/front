@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
       }).catch(error => {
         console.error("Error al solicitar permiso para notificaciones:", error);
       });
-    }    
+    }
 
     // Suscribirse a los eventos de navegación
     this.router.events.subscribe(event => {
@@ -57,12 +57,6 @@ export class AppComponent implements OnInit {
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('/ngsw-worker.js')
-          .then((registration) => {
-            console.log('Service Worker registrado con éxito:', registration);
-          })
-          .catch((error) => {
-            console.error('Error al registrar el Service Worker:', error);
-          });
       });
     }
   }
