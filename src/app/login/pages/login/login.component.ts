@@ -23,44 +23,50 @@ export class LoginComponent {
 
   // src/app/login/login.component.ts
 
-auth() {
-  if (this.myForm.invalid) {
-    this.myForm.markAllAsTouched();
-    return;
-  }
-
-  try {
-    let fecha = new Date().toLocaleDateString();
-    this.loginService.getIp().subscribe(data => {
-      this.loginService.validarUsuario({
-        email: this.myForm.controls['email'].value,
-        password: this.myForm.controls['password'].value,
-        fecha: fecha,
-        ip: data.ip
-      }).subscribe(res => {
-        if (res.status === 200) {
-          localStorage.setItem("token", res.token.toString());
-          localStorage.setItem("userRole", res.role); // Guarda el rol del usuario en localStorage
-          
-          if (res.role === 'admin') {
-            this.router.navigate(['/admin/inicioadmin']);
+  auth() {
+    if (this.myForm.invalid) {
+      this.myForm.markAllAsTouched();
+      return;
+    }
+  
+    try {
+      let fecha = new Date().toLocaleDateString();
+      this.loginService.getIp().subscribe(data => {
+        this.loginService.validarUsuario({
+          email: this.myForm.controls['email'].value,
+          password: this.myForm.controls['password'].value,
+          fecha: fecha,
+          ip: data.ip
+        }).subscribe(res => {
+          if (res.status === 200) {
+            localStorage.setItem("token", res.token.toString());
+            localStorage.setItem("userRole", res.role); // Guarda el rol del usuario en localStorage
+  
+            if (res.role === 'admin') {
+              this.router.navigate(['/admin/inicioadmin']).then(() => {
+                window.location.reload(); // Forzar recarga después de la redirección
+              });
+            } else {
+              this.router.navigate(['/user/inicio']).then(() => {
+                window.location.reload(); // Forzar recarga después de la redirección
+              });
+            }
+  
+            this.showAlert('Sesión iniciada con éxito, Bienvenida@', 'alert-success');
           } else {
-            this.router.navigate(['/user/inicio']);
+            this.handleLoginError(res.status);
           }
-          this.showAlert('Sesión iniciada con éxito, Bienvenida@', 'alert-success');
-        } else {
-          this.handleLoginError(res.status);
-        }
-      }, error => {
-        this.showAlert('Error en el servidor', 'alert-danger');
-        console.error(error);
+        }, error => {
+          this.showAlert('Error en el servidor', 'alert-danger');
+          console.error(error);
+        });
       });
-    });
-  } catch (error) {
-    this.showAlert('Error en el servidor', 'alert-danger');
-    console.log(error);
+    } catch (error) {
+      this.showAlert('Error en el servidor', 'alert-danger');
+      console.log(error);
+    }
   }
-}
+  
 
   
   handleLoginError(status: number) {
