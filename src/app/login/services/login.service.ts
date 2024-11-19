@@ -28,6 +28,10 @@ export class LoginService {
   getUserByEmail(emai:string){
     return this.http.get<User>(this.url + 'auth/'+emai)
   }
+  loginSuccess() {
+    // Cuando el login sea exitoso, emite un mensaje
+    window.postMessage({ type: 'LOGIN_SUCCESS' }, '*');
+  }
   getToken(): string | null {
     return localStorage.getItem('token');
   }

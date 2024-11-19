@@ -47,7 +47,7 @@ export class LoginComponent {
             
             // Enviar la notificación inmediatamente después de la alerta
             this.sendNotification();
-  
+
             if (res.role === 'admin') {
               this.router.navigate(['/admin/inicioadmin']);
             } else {
@@ -80,11 +80,7 @@ export class LoginComponent {
       console.warn('Permiso de notificación no otorgado o el Service Worker no está disponible.');
     }
   }
-  
 
-  
-
-  
   handleLoginError(status: number) {
     if (status === 400) {
       this.showAlert('Contraseña incorrecta', 'alert-danger');
