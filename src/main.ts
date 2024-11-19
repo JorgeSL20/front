@@ -13,8 +13,8 @@ platformBrowserDynamic().bootstrapModule(AppModule)
   
         // Prueba enviar una notificación inmediatamente
         if (Notification.permission === 'granted') {
-          registration.showNotification('¡Notificación de prueba!', {
-            body: 'Esto es una prueba de notificaciones',
+          registration.showNotification('¡Dale un vistaso a nuestros productos!', {
+            body: 'Checa nuestros proctos',
             icon: './assets/logo.png'
           }).catch(error => {
             console.error('Error al mostrar la notificación:', error);

@@ -13,9 +13,9 @@ self.addEventListener('install', (event) => {
   
   // Función para enviar una notificación
   function showNotification() {
-    if (self.registration) {
-      self.registration.showNotification("¡Notificación de prueba!", {
-        body: "Esto es una prueba de notificaciones",
+    if (Notification.permission === 'granted') {
+      registration.showNotification("¡Dale un vistaso a nuestros productos!", {
+        body: "Checa nuestros proctos ",
         icon: './assets/logo.png' // Asegúrate de que la ruta es correcta
       }).catch(error => {
         console.error("Error al mostrar la notificación:", error);
