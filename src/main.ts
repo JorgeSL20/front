@@ -10,31 +10,15 @@ if ('serviceWorker' in navigator) {
     .then(registration => {
       console.log('Service Worker registrado:', registration);
 
-      // Escuchar si hay un evento 'LOGIN_SUCCESS' en el service worker
-      navigator.serviceWorker.addEventListener('message', event => {
-        if (event.data && event.data.type === 'LOGIN_SUCCESS') {
-          console.log('Evento LOGIN_SUCCESS recibido, mostrando notificación...');
-          showNotification();
-        }
-      });
+      // Solicitar permisos de notificación
+      if (Notification.permission === 'granted') {
+        registration.showNotification('¡Bienvenido!', {
+          body: 'Nos alegra verte de nuevo.',
+          icon: './assets/logo.png'
+        });
+      }
     })
     .catch(error => {
       console.error('Error al registrar el Service Worker:', error);
     });
-}
-
-// Función para mostrar la notificación
-function showNotification() {
-  if (Notification.permission === 'granted') {
-    navigator.serviceWorker.ready.then(registration => {
-      registration.showNotification('¡Bienvenido de nuevo!', {
-        body: 'Checa nuestros productos en oferta',
-        icon: './assets/logo.png',
-      }).catch(error => {
-        console.error('Error al mostrar la notificación:', error);
-      });
-    });
-  } else {
-    console.warn('Permiso de notificación no otorgado.');
-  }
 }
