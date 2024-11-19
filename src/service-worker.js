@@ -1,11 +1,11 @@
 self.addEventListener('install', (event) => {
   console.log('Service Worker instalado');
-  self.skipWaiting(); // Activa el nuevo Service Worker inmediatamente
+  self.skipWaiting();
 });
 
 self.addEventListener('activate', (event) => {
   console.log('Service Worker activado');
-  event.waitUntil(self.clients.claim()); // Toma control de todas las páginas
+  event.waitUntil(self.clients.claim());
 });
 
 self.addEventListener('message', (event) => {
@@ -18,12 +18,11 @@ self.addEventListener('message', (event) => {
   }
 });
 
-// Función para mostrar la notificación
 function showNotification() {
   if (Notification.permission === 'granted') {
     self.registration.showNotification("¡Bienvenido de nuevo!", {
       body: "Checa nuestros productos en oferta",
-      icon: './assets/logo.png', // Ruta al icono
+      icon: './assets/logo.png',
     }).catch(error => {
       console.error("Error al mostrar la notificación:", error);
     });
