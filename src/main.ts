@@ -14,7 +14,7 @@ if ('serviceWorker' in navigator) {
       if (Notification.permission === 'granted') {
         registration.showNotification('¡Bienvenido!', {
           body: '¡Dale un vistaso a nuestros productos!',
-          icon: './assets/logo.png'
+          icon: './assets/logo-150x150.png'
         });
       }
     })
