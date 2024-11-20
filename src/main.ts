@@ -13,7 +13,7 @@ if ('serviceWorker' in navigator) {
       // Solicitar permisos de notificación
       if (Notification.permission === 'granted') {
         registration.showNotification('¡Bienvenido!', {
-          body: 'Nos alegra verte de nuevo.',
+          body: '¡Dale un vistaso a nuestros productos!',
           icon: './assets/logo.png'
         });
       }
