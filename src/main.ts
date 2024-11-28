@@ -10,29 +10,13 @@ if ('serviceWorker' in navigator) {
     .then(registration => {
       console.log('Service Worker registrado:', registration);
 
-      // Escuchar cambios en el almacenamiento local
-      window.addEventListener('storage', (event) => {
-        if (event.key === 'token' && event.newValue) {
-          console.log('Token detectado en localStorage, enviando notificación...');
-
-          if (Notification.permission === 'granted') {
-            // Enviar un mensaje al Service Worker
-            navigator.serviceWorker.ready.then(registration => {
-              registration.active?.postMessage({
-                type: 'LOGIN_SUCCESS'
-              });
-
-              // Mostrar una notificación local (opcional)
-              registration.showNotification('¡Bienvenido de nuevo!', {
-                body: 'Nos alegra verte de nuevo. Checa nuestros productos en oferta.',
-                icon: './assets/logo-150x150.png'
-              });
-            });
-          } else {
-            console.warn('Permisos de notificación no otorgados.');
-          }
-        }
-      });
+      // Solicitar permisos de notificación
+      if (Notification.permission === 'granted') {
+        registration.showNotification('!!Hola¡¡', {
+          body: '¡Dale un vistaso a nuestros productos!',
+          icon: './assets/logo-150x150.png'
+        });
+      }
     })
     .catch(error => {
       console.error('Error al registrar el Service Worker:', error);
