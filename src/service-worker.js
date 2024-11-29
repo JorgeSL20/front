@@ -18,18 +18,3 @@ self.addEventListener('message', (event) => {
   }
 });
 
-// Función para mostrar una notificación
-function showNotification() {
-  // Verifica si los permisos de notificación están otorgados
-  if (Notification.permission === 'granted') {
-    // Mostrar la notificación
-    self.registration.showNotification('¡Bienvenido de nuevo!', {
-      body: 'Estamos felices de verte por aquí.',
-      icon: './assets/logo-150x150.png',
-    }).catch(error => {
-      console.error('Error al mostrar la notificación:', error);
-    });
-  } else {
-    console.warn('Permisos de notificación no otorgados.');
-  }
-}
