@@ -33,6 +33,7 @@ import { PagoService } from './services/pago.service';
 import { CarritoService } from './services/carrito.service';
 import { AuthService } from './services/auth.service';
 import { ProductoDetallesComponent } from './pages/producto-detalles/producto-detalles.component';
+import { NotificacionesComponent } from './pages/notifications/notificationes.component';
 
 
 //CAPTCHA//
@@ -65,6 +66,7 @@ import { LoginService } from './services/login.service';
     CarritoComponent,
     PagoComponent,
     ProductoDetallesComponent,
+    NotificacionesComponent,
   ],
   imports: [
     CommonModule,
