@@ -1,0 +1,9 @@
+<div class="notification-container">
+    <h3>Notificaciones</h3>
+    <ul>
+      <li *ngFor="let notificacion of notificaciones">
+        {{ notificacion.message }}: {{ notificacion.producto.name }}
+      </li>
+    </ul>
+  </div>
+  
