@@ -29,7 +29,7 @@ export class NotificationService {
           keys: subscription.toJSON().keys, // Asegurarse de enviar solo las claves necesarias.
         };
 
-        this.http.post('https://gateway-soluciones.netlify.app/api/subscribe', subscriptionPayload).subscribe(
+        this.http.post('https://gateway-soluciones.netlify.app/subscriptions', subscriptionPayload).subscribe(
           () => console.log('Suscripción enviada al servidor con éxito.'),
           (error) => console.error('Error al enviar la suscripción al servidor:', error)
         );
