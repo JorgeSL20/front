@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { NetworkStatusService } from './network-status.service'; // Importa el servicio de conectividad
+import { NotificationService } from './login/services/notification.service';
 
 @Component({
   selector: 'app-root',
@@ -10,15 +11,20 @@ import { NetworkStatusService } from './network-status.service'; // Importa el s
 export class AppComponent implements OnInit {
   inputValue: string = '';
   outputValue: string = '';
-  public isOnline = true; // Estado inicial de conectividad: conectado
+  public isOnline = true;
+   // Estado inicial de conectividad: conectado
 
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private networkStatusService: NetworkStatusService // Inyectamos el servicio de red
+    private networkStatusService: NetworkStatusService,
+    private notificationService: NotificationService // Inyectamos el servicio de red
   ) {}
 
   ngOnInit() {
+
+    this.notificationService.subscribeToNotifications();
+    
     // Solicitar permisos para notificaciones
     if ('Notification' in window && 'serviceWorker' in navigator) {
       Notification.requestPermission().then((permission) => {
