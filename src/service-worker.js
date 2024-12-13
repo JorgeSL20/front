@@ -19,23 +19,27 @@ self.addEventListener('message', (event) => {
 });
 
 self.addEventListener('push', function (event) {
-  const data = event.data ? event.data.json() : {};  // Obtener los datos del payload
-  
-  const options = {
-    body: data.notification.body || 'Notificación sin cuerpo',
-    icon: data.notification.icon || 'https://res.cloudinary.com/dkwb9vcbb/image/upload/v1734053100/user_images/imagen_logo_n3b16q.jpg ',
-    click_action: data.notification.click_action || '/',
+  let payload = event.data ? event.data.json() : {};
+  let title = payload.title || '¡Notificación Push!';
+  let options = {
+    body: payload.body || 'Nuevo contenido disponible.',
+    icon: payload.icon || './assets/logo-150x150.png',
+    badge: './assets/badge.png',
+    data: {
+      url: payload.url || '/'
+    }
   };
 
   event.waitUntil(
-    self.registration.showNotification(data.notification.title || 'Nuevo mensaje', options)
+    self.registration.showNotification(title, options)
   );
 });
 
 self.addEventListener('notificationclick', function (event) {
   event.notification.close();
+  // Accede a 'clients' dentro del contexto del service worker
   event.waitUntil(
-    clients.openWindow(event.notification.click_action) // Abre el enlace cuando se hace clic en la notificación
+    clients.openWindow(event.notification.data.url)
   );
 });
 

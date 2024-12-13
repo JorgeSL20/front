@@ -36,6 +36,7 @@ export class AppComponent implements OnInit {
         console.error("Error al solicitar permiso para notificaciones:", error);
       });
     }
+    
 
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/ngsw-worker.js').then(function (registration) {
@@ -67,41 +68,31 @@ export class AppComponent implements OnInit {
 
     // Registrar el Service Worker y manejar suscripción a notificaciones push
     if ('serviceWorker' in navigator && 'PushManager' in window) {
-      navigator.serviceWorker
-        .register('/service-worker.js')
-        .then(function (registration) {
-          console.log('Service Worker registrado', registration);
-
-          // Verifica si el usuario ya está suscrito a las notificaciones
-          return registration.pushManager.getSubscription()
-            .then(function (subscription) {
-              if (!subscription) {
-                const vapidPublicKey = 'BFPLtdosCNKQUZOc1bmEJFWdwikcUhovdCEx4FgNdJbbOohGoOkGlGsHWAWNp9sTNGiUy42ICsOd_x0Jksclp9M'; // La clave pública VAPID
-                const convertedVapidKey = urlBase64ToUint8Array(vapidPublicKey);
-                
-                return registration.pushManager.subscribe({
-                  userVisibleOnly: true,
-                  applicationServerKey: convertedVapidKey
-                });
-              }
-              return subscription;
-            })
-            .then(function (subscription) {
-              console.log('Suscripción: ', subscription);
-              // Enviar la suscripción al servidor para guardarla
-              fetch('https://proyectogatewayback-production.up.railway.app/subscriptions', {
+      navigator.serviceWorker.ready.then((registration) => {
+        registration.pushManager.getSubscription().then((subscription) => {
+          if (!subscription) {
+            const vapidPublicKey = 'BFPLtdosCNKQUZOc1bmEJFWdwikcUhovdCEx4FgNdJbbOohGoOkGlGsHWAWNp9sTNGiUy42ICsOd_x0Jksclp9M';
+            const convertedVapidKey = urlBase64ToUint8Array(vapidPublicKey);
+    
+            registration.pushManager.subscribe({
+              userVisibleOnly: true,
+              applicationServerKey: convertedVapidKey,
+            }).then((newSubscription) => {
+              console.log('Nueva suscripción:', newSubscription);
+              // Enviar la suscripción al servidor
+              fetch('/api/subscription', {
                 method: 'POST',
-                body: JSON.stringify(subscription),
+                body: JSON.stringify(newSubscription),
                 headers: {
                   'Content-Type': 'application/json',
-                }
+                },
               });
             });
-        })
-        .catch(function (error) {
-          console.error('Error al registrar el Service Worker:', error);
+          }
         });
+      });
     }
+    
   }
 
   handleInput(): void {
