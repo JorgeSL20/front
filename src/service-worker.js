@@ -18,3 +18,15 @@ self.addEventListener('message', (event) => {
   }
 });
 
+self.addEventListener('push', function (event) {
+  const options = {
+    body: event.data.text(),
+    icon: 'https://res.cloudinary.com/dkwb9vcbb/image/upload/v1734053100/user_images/imagen_logo_n3b16q.jpg ',
+    badge: 'https://res.cloudinary.com/dkwb9vcbb/image/upload/v1734053100/user_images/imagen_logo_n3b16q.jpg ',
+  };
+
+  event.waitUntil(
+    self.registration.showNotification('Notificación Push', options)
+  );
+});
+
