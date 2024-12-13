@@ -31,9 +31,9 @@ export class CrearProductoComponent implements OnInit {
       categoria: ['', Validators.required],
       marca: ['', Validators.required],
       descripcion: ['', Validators.required],
-      cantidadMay: ['', [Validators.required, Validators.pattern("^[0-9]+(\.[0-9]{1,2})?$")]],
-      precioMen: ['', [Validators.required, Validators.pattern("^[0-9]+(\.[0-9]{1,2})?$")]],
-      precioMay: ['', [Validators.required, Validators.pattern("^[0-9]+(\.[0-9]{1,2})?$")]],
+      cantidadMay: ['', [Validators.required, Validators.pattern("^[0-9]+(\\.[0-9]{1,2})?$")]],
+      precioMen: ['', [Validators.required, Validators.pattern("^[0-9]+(\\.[0-9]{1,2})?$")]],
+      precioMay: ['', [Validators.required, Validators.pattern("^[0-9]+(\\.[0-9]{1,2})?$")]],
       existencias: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
     });
   }
@@ -116,7 +116,16 @@ export class CrearProductoComponent implements OnInit {
           this.router.navigate(['/admin/listar-producto'], { queryParams: { nuevoProductoId: response.id } });
         },
         error => {
-          console.error(error);
+          console.error('Error al crear producto:', error);
+
+          // Manejo de errores por código de estado
+          if (error.status === 409) {
+            this.showAlert('El producto ya existe o hay un conflicto.', 'alert-danger');
+          } else if (error.status === 400) {
+            this.showAlert('Datos inválidos. Por favor verifica el formulario.', 'alert-danger');
+          } else {
+            this.showAlert('Hubo un problema al crear el producto. Inténtalo de nuevo.', 'alert-danger');
+          }
         }
       );
     }
@@ -154,7 +163,5 @@ export class CrearProductoComponent implements OnInit {
       event.preventDefault();
     }
   }
-
-
 
 }
