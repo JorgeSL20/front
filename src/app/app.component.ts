@@ -37,6 +37,14 @@ export class AppComponent implements OnInit {
       });
     }
 
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/ngsw-worker.js').then(function (registration) {
+        console.log('Service Worker registrado con éxito:', registration);
+      }).catch(function (error) {
+        console.error('Error al registrar el Service Worker:', error);
+      });
+    }
+
     // Suscribirse a los eventos de navegación
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
@@ -94,7 +102,6 @@ export class AppComponent implements OnInit {
           console.error('Error al registrar el Service Worker:', error);
         });
     }
-
   }
 
   handleInput(): void {

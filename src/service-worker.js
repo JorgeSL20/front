@@ -19,14 +19,23 @@ self.addEventListener('message', (event) => {
 });
 
 self.addEventListener('push', function (event) {
+  const data = event.data ? event.data.json() : {};  // Obtener los datos del payload
+  
   const options = {
-    body: event.data.text(),
-    icon: 'https://res.cloudinary.com/dkwb9vcbb/image/upload/v1734053100/user_images/imagen_logo_n3b16q.jpg ',
-    badge: 'https://res.cloudinary.com/dkwb9vcbb/image/upload/v1734053100/user_images/imagen_logo_n3b16q.jpg ',
+    body: data.notification.body || 'Notificación sin cuerpo',
+    icon: data.notification.icon || 'https://res.cloudinary.com/dkwb9vcbb/image/upload/v1734053100/user_images/imagen_logo_n3b16q.jpg ',
+    click_action: data.notification.click_action || '/',
   };
 
   event.waitUntil(
-    self.registration.showNotification('Notificación Push', options)
+    self.registration.showNotification(data.notification.title || 'Nuevo mensaje', options)
+  );
+});
+
+self.addEventListener('notificationclick', function (event) {
+  event.notification.close();
+  event.waitUntil(
+    clients.openWindow(event.notification.click_action) // Abre el enlace cuando se hace clic en la notificación
   );
 });
 
