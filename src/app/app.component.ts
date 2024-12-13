@@ -81,7 +81,7 @@ export class AppComponent implements OnInit {
             .then(function (subscription) {
               console.log('Suscripción: ', subscription);
               // Enviar la suscripción al servidor para guardarla
-              fetch('/api/subscription', {
+              fetch('https://proyectogatewayback-production.up.railway.app/subscriptions', {
                 method: 'POST',
                 body: JSON.stringify(subscription),
                 headers: {
