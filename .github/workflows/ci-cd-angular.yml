@@ -60,7 +60,8 @@ jobs:
       # Checkout del código fuente
       - name: Checkout código
         uses: actions/checkout@v4.2.1
-        # Configuración de Node.js
+
+      # Configuración de Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
@@ -76,3 +77,35 @@ jobs:
       - name: Ejecutar pruebas de TestCafe
         run: |
           npx testcafe "chrome:headless --no-sandbox --disable-gpu --disable-dev-shm-usage --disable-software-rasterizer" test/test.js || npx testcafe "firefox:headless" test/test.js
+
+  deploy-netlify:
+    needs: [test-integrations, test-unitaries] # Solo se ejecuta si las pruebas pasan
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout del código fuente
+      - name: Checkout código
+        uses: actions/checkout@v4.2.1
+
+      # Configuración de Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.X'
+
+      # Instalación de dependencias
+      - name: Instalar dependencias
+        run: npm install
+
+      # Compilar la aplicación Angular
+      - name: Build Angular app
+        run: npm run build -- --output-path=dist
+
+      # Desplegar en Netlify
+      - name: Deploy to Netlify
+        uses: netlify/actions-cli@v2.1.0
+        with:
+          args: deploy --dir=dist/[nombre-del-proyecto] --prod
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
