@@ -99,13 +99,14 @@ jobs:
 
       # Compilar la aplicación Angular
       - name: Build Angular app
-        run: npm run build -- --output-path=dist
+        run: npm run build -- --output-path=dist --base-href=/
 
-      # Desplegar en Netlify
+      # Instalar Netlify CLI
+      - name: Instalar Netlify CLI
+        run: npm install -g netlify-cli
+
+      # Desplegar en Netlify usando Netlify CLI
       - name: Deploy to Netlify
-        uses: netlify/actions-cli@v2.1.0
-        with:
-          args: deploy --dir=dist/[nombre-del-proyecto] --prod
         env:
-          NETLIFY_AUTH_TOKEN: nfp_mg33hRmUhsDRLpHc3tndUFkJ5os5M9jo5268
-          NETLIFY_SITE_ID: 1d1c1fba-54ba-4818-8754-a80d9cc05243
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        run: netlify deploy --dir=dist/[gatewayfront] --prod --site ${{ secrets.NETLIFY_SITE_ID }}
