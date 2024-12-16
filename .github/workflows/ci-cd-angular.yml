@@ -107,5 +107,5 @@ jobs:
         with:
           args: deploy --dir=dist/[nombre-del-proyecto] --prod
         env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_AUTH_TOKEN: nfp_mg33hRmUhsDRLpHc3tndUFkJ5os5M9jo5268
+          NETLIFY_SITE_ID: 1d1c1fba-54ba-4818-8754-a80d9cc05243
