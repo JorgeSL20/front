@@ -99,7 +99,11 @@ jobs:
 
       # Compilar la aplicación Angular
       - name: Build Angular app
-        run: npm run build -- --output-path=dist --base-href=/
+        run: npm run build -- --output-path=dist/gatewayfront --base-href=/
+
+      # Verificar contenido del directorio generado
+      - name: Verificar contenido del directorio dist
+        run: ls -R dist/
 
       # Instalar Netlify CLI
       - name: Instalar Netlify CLI
@@ -111,4 +115,3 @@ jobs:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         run: netlify deploy --dir=dist/gatewayfront --prod --site ${{ secrets.NETLIFY_SITE_ID }}
-
