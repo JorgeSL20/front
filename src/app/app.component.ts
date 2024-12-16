@@ -37,7 +37,6 @@ export class AppComponent implements OnInit {
       });
     }
     
-
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/ngsw-worker.js').then(function (registration) {
         console.log('Service Worker registrado con éxito:', registration);
