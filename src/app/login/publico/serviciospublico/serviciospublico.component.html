@@ -149,10 +149,10 @@
         <div class="btn-container">
           <button class="btn btn-primary" (click)="abrirModal(producto)" style="margin-right: 10px;">Detalles</button>
           <button class="btn btn-success" (click)="agregarAlCarrito(producto.id)" *ngIf="producto.existencias > 0">
-            Añadir al 
+            Añadir al carrito
           </button>
           <button class="btn btn-disabled" *ngIf="producto.existencias === 0" disabled>
-            Añadir al 
+            Añadir al carrito
           </button>
         </div>
       </div>
