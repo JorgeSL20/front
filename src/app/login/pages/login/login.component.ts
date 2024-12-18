@@ -14,7 +14,7 @@ export class LoginComponent {
   emailPattern: string = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$";
   passwordVisible: boolean = false;
   logosinfondo: string = "assets/images/logosinfondo.png";
-  siteKey = '6Ld9vlUpAAAAAIBxg_WAyAL3v782D0Sv_HefWBjy';
+  siteKey = '6LevSZ8qAAAAAMxodna7btRr7IQ5fJbmCrc5WWrW';
   validRecatcha: boolean = true;
   myForm: FormGroup = this.fb.group({
     email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
