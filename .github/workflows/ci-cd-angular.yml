@@ -109,10 +109,17 @@ jobs:
       - name: Instalar Netlify CLI
         run: npm install -g netlify-cli
 
-      # Desplegar en Netlify usando Netlify CLI
       # Desplegar en Netlify
       - name: Deploy to Netlify
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-        run: ls -la dist/gatewayfront netlify deploy --dir=dist/gatewayfront --prod
+        run: |
+            # Verificar contenido del directorio de salida
+            echo "Contenido del directorio dist/gatewayfront:"
+            ls -la dist/gatewayfront  # Este comando lista el contenido del directorio
+            
+            # Desplegar en Netlify
+            netlify deploy --dir=dist/gatewayfront --prod
+
+
