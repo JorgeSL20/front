@@ -110,7 +110,7 @@ jobs:
         run: npm install -g netlify-cli
 
       # Desplegar en Netlify sin enviar los tokens
-      - name: Deploy to Netlify (sin tokens)
+      - name: Deploy to Netlify
         run: |
           # Verificar contenido del directorio de salida
           echo "Contenido del directorio dist/gatewayfront:"
