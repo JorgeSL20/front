@@ -110,8 +110,8 @@ jobs:
         run: npm install -g netlify-cli
 
       # Desplegar en Netlify usando Netlify
-      - name: Deploy to Netlify
-        env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-        run: netlify deploy --dir=dist/gatewayfront --prod --site ${{ secrets.NETLIFY_SITE_ID }}
+      #- name: Deploy to Netlify
+       # env:
+       #   NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+       #   NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+       # run: netlify deploy --dir=dist/gatewayfront --prod --site ${{ secrets.NETLIFY_SITE_ID }}
