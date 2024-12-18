@@ -116,9 +116,8 @@ jobs:
           echo "Contenido del directorio dist/gatewayfront:"
           ls -la dist/gatewayfront  # Este comando lista el contenido del directorio
           
-          # Simulación de despliegue en Netlify
+          #Despliegue en Netlify
           echo "Despliegue Netlify"
-          # Aquí puedes agregar un mensaje o solo dejarlo pasar sin hacer el despliegue real
           # netlify deploy --dir=dist/gatewayfront --prod
 
 
