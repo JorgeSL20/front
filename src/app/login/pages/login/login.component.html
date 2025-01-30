@@ -37,8 +37,6 @@
                 </div>
               </div>
 
-              <!-- Mensajes de error -->
-
               <!-- Contraseña -->
               <div class="mb-3">
                 <label for="password" class="form-label">Contraseña</label>
@@ -56,10 +54,8 @@
                 </div>
               </div>
 
-              <!-- Mensajes de error -->
-
               <!-- Captcha -->
-              <ngx-recaptcha2 (success)="activarBtnCapcha($event)" class="captcha" #captchaElem [siteKey]="siteKey"></ngx-recaptcha2>
+              <!-- <ngx-recaptcha2 (success)="activarBtnCapcha($event)" class="captcha" #captchaElem [siteKey]="siteKey"></ngx-recaptcha2> -->
 
               <!-- Recuperar contraseña -->
               <div class="mb-3">
@@ -71,12 +67,9 @@
                 <button type="submit" class="btn btn-primary" [disabled]="myForm.invalid || validRecatcha">Iniciar sesión</button>
               </div>
 
-              
               <!-- ¿No tienes una cuenta? -->
               <p>¿No tienes una cuenta?</p>
-              <a [routerLink]="['/registro']" >Registrate</a>
-            
-
+              <a [routerLink]="['/registro']">Registrate</a>
             </form>
           </div>
         </div>
